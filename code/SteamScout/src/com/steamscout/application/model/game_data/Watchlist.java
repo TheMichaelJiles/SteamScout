@@ -16,6 +16,9 @@ public class Watchlist implements Iterable<Game> {
 	
 	/**
 	 * Creates a new Watchlist object.
+	 * 
+	 * @precondition none
+	 * @postcondition size() == 0
 	 */
 	public Watchlist() {
 		this.games = new ArrayList<Game>();
@@ -39,6 +42,20 @@ public class Watchlist implements Iterable<Game> {
 	}
 	
 	/**
+	 * Gets whether or not this watchlist contains the specified
+	 * game. 
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param game the game to check against this watchlist.
+	 * @return true if this watchlist contains the specified game; false otherwise.
+	 */
+	public boolean contains(Game game) {
+		return this.games.contains(game);
+	}
+	
+	/**
 	 * Adds the specified game to this watchlist.
 	 * 
 	 * @precondition !contains(game)
@@ -47,7 +64,7 @@ public class Watchlist implements Iterable<Game> {
 	 * @param game the game to add to this watchlist.
 	 */
 	public void addGame(Game game) {
-		if (this.games.contains(game)) {
+		if (this.contains(game)) {
 			throw new IllegalArgumentException();
 		}
 		
@@ -65,5 +82,15 @@ public class Watchlist implements Iterable<Game> {
 	 */
 	public void removeGame(Game game) {
 		this.games.remove(game);
+	}
+	
+	/**
+	 * Clears this watchlist of all games.
+	 * 
+	 * @precondition none
+	 * @postcondition size() == 0
+	 */
+	public void clear() {
+		this.games.clear();
 	}
 }
