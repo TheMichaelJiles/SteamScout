@@ -26,6 +26,7 @@ public class Game {
 	 * 
 	 * @precondition title != null
 	 * @postcondition getTitle().equals(title) && getAppId() == appId
+	 * 				  && getStudioDescription.equals("") && getSteamLink().equals("")
 	 * 
 	 * @param title the title of the game.
 	 * @param appId this game's corresponding steam app id.
@@ -37,6 +38,8 @@ public class Game {
 		
 		this.title = title;
 		this.appId = appId;
+		this.studioDescription = "";
+		this.steamLink = "";
 	}
 	
 	@Override
@@ -54,6 +57,26 @@ public class Game {
 		return super.equals(obj);
 	}
 
+	/**
+	 * Gets a description of this game's fields.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return a description of this game's fields.
+	 */
+	public String getDescription() {
+		return "Title: " + this.title + System.lineSeparator()
+			 + "AppId: " + this.appId + System.lineSeparator()
+			 + "SteamLink: " + this.steamLink + System.lineSeparator()
+			 + "StudioDescription: " + this.studioDescription + System.lineSeparator()
+			 + "InitialPrice: " + this.initialPrice + System.lineSeparator()
+			 + "CurrentPrice: " + this.currentPrice + System.lineSeparator()
+			 + "IsOnSale: " + this.isOnSale + System.lineSeparator()
+			 + "UserPriceThreshold: " + this.userPriceThreshold + System.lineSeparator()
+			 + System.lineSeparator();
+	}
+	
 	/**
 	 * Sets this games current price to the specified value.
 	 * 
