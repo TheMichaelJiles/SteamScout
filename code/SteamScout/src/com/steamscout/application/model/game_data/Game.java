@@ -28,6 +28,7 @@ public class Game {
 	 * @postcondition getTitle().equals(title) && getAppId() == appId
 	 * 
 	 * @param title the title of the game.
+	 * @param appId this game's corresponding steam app id.
 	 */
 	public Game(int appId, String title) {
 		if (title == null) {
