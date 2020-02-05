@@ -5,10 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 import com.steamscout.application.model.api.AppListAPI;
 
+@Ignore
 public class TestRaptorValley {
 
 	@Test
