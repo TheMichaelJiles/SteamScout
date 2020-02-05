@@ -14,8 +14,8 @@ public class TestIterator {
 	@Test
 	public void testCanIterate() {
 		Watchlist list = new Watchlist();
-		list.addGame(new Game(5, "test"));
-		list.addGame(new Game(6, "test0"));
+		list.add(new Game(5, "test"));
+		list.add(new Game(6, "test0"));
 		
 		int sum = 0;
 		Iterator<Game> iter = list.iterator();

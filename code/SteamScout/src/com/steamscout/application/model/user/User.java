@@ -47,7 +47,7 @@ public class User {
 	 */
 	public User(Credentials credentials, Collection<Game> games) {
 		this(credentials);
-		this.watchlist.addAllGames(games);
+		this.watchlist.addAll(games);
 	}
 
 	/**

@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 
-public class TestAddAllGames {
+public class TestAddAll {
 
 	@Test
 	public void testNotAllowNullCollection() {
 		Watchlist list = new Watchlist();
-		assertThrows(IllegalArgumentException.class, () -> list.addAllGames(null));
+		assertThrows(IllegalArgumentException.class, () -> list.addAll(null));
 	}
 	
 	@Test
@@ -30,7 +30,7 @@ public class TestAddAllGames {
 		games.add(game2);
 		
 		Watchlist list = new Watchlist();
-		list.addAllGames(games);
+		list.addAll(games);
 		
 		assertAll(() -> assertEquals(true, list.contains(game0)),
 				() -> assertEquals(true, list.contains(game1)),
@@ -49,8 +49,8 @@ public class TestAddAllGames {
 		games.add(game2);
 		
 		Watchlist list = new Watchlist();
-		list.addGame(game0);
-		list.addAllGames(games);
+		list.add(game0);
+		list.addAll(games);
 		
 		assertAll(() -> assertEquals(true, list.contains(game0)),
 				() -> assertEquals(true, list.contains(game1)),

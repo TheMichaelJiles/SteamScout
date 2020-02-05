@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.steamscout.application.model.api.GameSearchAPI;
 import com.steamscout.application.model.game_data.Game;
 
-@Ignore
+@Disabled
 public class TestTropico {
 
 	@Test

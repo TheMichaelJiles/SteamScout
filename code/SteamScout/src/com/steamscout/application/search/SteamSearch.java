@@ -26,9 +26,9 @@ public class SteamSearch {
 	 * @postcondition none
 	 * 
 	 * @param term the term to query against the steam database.
-	 * @return an iterable of game objects that match the term on the steam database.
+	 * @return a collection of game objects that match the term on the steam database.
 	 */
-	public static Iterable<Game> query(String term) {
+	public static Collection<Game> query(String term) {
 		Collection<Game> matchedGames = new ArrayList<Game>();
 		try {
 			Collection<Integer> matchedIds = new ArrayList<Integer>();

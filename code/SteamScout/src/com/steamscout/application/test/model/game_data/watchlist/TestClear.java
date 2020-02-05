@@ -20,8 +20,8 @@ public class TestClear {
 	@Test
 	public void testClearingMultipleGames() {
 		Watchlist list = new Watchlist();
-		list.addGame(new Game(4, "test"));
-		list.addGame(new Game(5, "boooo"));
+		list.add(new Game(4, "test"));
+		list.add(new Game(5, "boooo"));
 		list.clear();
 		
 		assertEquals(0, list.size());

@@ -7,16 +7,16 @@ import org.junit.jupiter.api.Test;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 
-public class TestAddGame {
+public class TestAdd {
 
 	@Test
 	public void testSuccessfulAddition() {
 		Game test = new Game(4, "Luke");
 		Watchlist list = new Watchlist();
 		
-		list.addGame(test);
+		list.add(test);
 		
-		assertEquals(1, list.size());
+		assertEquals(false, list.isEmpty());
 	}
 	
 	@Test
@@ -24,8 +24,8 @@ public class TestAddGame {
 		Game test = new Game(4, "Luke");
 		Watchlist list = new Watchlist();
 		
-		list.addGame(test);
-		list.addGame(test);
+		list.add(test);
+		list.add(test);
 		
 		assertEquals(1, list.size());
 	}

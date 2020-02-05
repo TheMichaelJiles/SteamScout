@@ -28,9 +28,9 @@ public class NotificationCheck {
 	 * @postcondition none
 	 * 
 	 * @param games the collection of games to check against the steam api.
-	 * @return an iterable of Notification objects.
+	 * @return a collection of Notification objects.
 	 */
-	public static Iterable<Notification> query(Collection<Game> games) {
+	public static Collection<Notification> query(Collection<Game> games) {
 		if (games == null) {
 			throw new IllegalArgumentException("games should not be null.");
 		}
