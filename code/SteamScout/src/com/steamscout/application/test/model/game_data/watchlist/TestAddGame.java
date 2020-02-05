@@ -20,12 +20,14 @@ public class TestAddGame {
 	}
 	
 	@Test
-	public void testNotAllowSameGame() {
+	public void testDoesNotAddSameGame() {
 		Game test = new Game(4, "Luke");
 		Watchlist list = new Watchlist();
 		
 		list.addGame(test);
-		assertThrows(IllegalArgumentException.class, () -> list.addGame(test));
+		list.addGame(test);
+		
+		assertEquals(1, list.size());
 	}
 
 }

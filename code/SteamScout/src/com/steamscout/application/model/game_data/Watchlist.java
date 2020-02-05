@@ -1,6 +1,7 @@
 package com.steamscout.application.model.game_data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,19 +57,37 @@ public class Watchlist implements Iterable<Game> {
 	}
 	
 	/**
-	 * Adds the specified game to this watchlist.
+	 * Adds the specified game to this watchlist if this
+	 * watchlist does not already contain the game.
 	 * 
-	 * @precondition !contains(game)
+	 * @precondition none
 	 * @postcondition size() == size()@prev + 1
 	 * 
 	 * @param game the game to add to this watchlist.
 	 */
 	public void addGame(Game game) {
-		if (this.contains(game)) {
-			throw new IllegalArgumentException();
+		if (!this.contains(game)) {
+			this.games.add(game);	
+		}
+	}
+	
+	/**
+	 * Adds all games that are not already in this watchlist to this
+	 * watchlist.
+	 * 
+	 * @precondition games != null
+	 * @postcondition all games not already in this watchlist are now in watchlist.
+	 * 
+	 * @param games the collection of games to add to this watchlist.
+	 */
+	public void addAllGames(Collection<Game> games) {
+		if (games == null) {
+			throw new IllegalArgumentException("games should not be null.");
 		}
 		
-		this.games.add(game);
+		for (Game currentGame : games) {
+			this.addGame(currentGame);
+		}
 	}
 	
 	/**
