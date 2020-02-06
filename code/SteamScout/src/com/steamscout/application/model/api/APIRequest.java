@@ -47,7 +47,7 @@ public abstract class APIRequest {
 	 */
 	public abstract Object makeRequest() throws IOException;
 	
-	protected JSONObject poll() throws IOException {
+	protected JSONObject pollApi() throws IOException {
 		String result = null;
 		
 		HttpResponse response = this.client.execute(this.request);

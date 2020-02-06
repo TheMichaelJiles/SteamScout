@@ -13,7 +13,7 @@ import com.steamscout.application.model.game_data.Watchlist;
 public class TestContainsAll {
 
 	@Test
-	public void test() {
+	public void testWatchlistContainsAllFromOtherList() {
 		Game game0 = new Game(0, "a");
 		Game game1 = new Game(1, "aa");
 		Game game2 = new Game(2, "aaa");

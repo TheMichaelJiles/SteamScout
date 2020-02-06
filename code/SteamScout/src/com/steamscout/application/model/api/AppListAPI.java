@@ -32,7 +32,7 @@ public class AppListAPI extends APIRequest {
 	public Map<Integer, String> makeRequest() throws IOException {
 		Map<Integer, String> games = new HashMap<Integer, String>();
 			
-		JSONObject json = this.poll();
+		JSONObject json = this.pollApi();
 		JSONObject applist = json.getJSONObject("applist");
 		JSONObject apps = applist.getJSONObject("apps");
 		JSONArray array = apps.getJSONArray("app");

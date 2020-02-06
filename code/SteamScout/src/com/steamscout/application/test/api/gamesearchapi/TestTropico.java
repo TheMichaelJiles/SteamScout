@@ -4,23 +4,80 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.Disabled;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import com.steamscout.application.model.api.GameSearchAPI;
+import com.steamscout.application.model.api.exceptions.GameNotFoundException;
 import com.steamscout.application.model.game_data.Game;
 
-@Disabled
 public class TestTropico {
 
+	private class NoErrorGameSearchAPI extends GameSearchAPI {
+
+		public NoErrorGameSearchAPI() {
+			super(57690);
+		}
+
+		@Override
+		protected JSONObject pollApi() throws IOException {
+			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
+			return new JSONObject(testJson);
+		}
+		
+	}
+	
+	private class UnsuccessfulGameSearchAPI extends GameSearchAPI {
+
+		public UnsuccessfulGameSearchAPI() {
+			super(57690);
+		}
+
+		@Override
+		protected JSONObject pollApi() throws IOException {
+			final String testJson = "{\"57690\": {\"success\": false, \"data\": {\"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
+			return new JSONObject(testJson);
+		}
+		
+	}
+	
+	private class NotAGameGameSearchAPI extends GameSearchAPI {
+
+		public NotAGameGameSearchAPI() {
+			super(57690);
+		}
+
+		@Override
+		protected JSONObject pollApi() throws IOException {
+			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"type\": \"dlc\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
+			return new JSONObject(testJson);
+		}
+		
+	}
+	
 	@Test
 	public void testPullsData() throws IOException {
-		GameSearchAPI api = new GameSearchAPI(57690);
+		NoErrorGameSearchAPI api = new NoErrorGameSearchAPI();
 		Game tropico = api.makeRequest();
 		
 		assertAll(() -> assertEquals("Tropico 4", tropico.getTitle()),
 				() -> assertEquals(57690, tropico.getAppId()),
-				() -> assertEquals("Haemimont Games", tropico.getStudioDescription()));
+				() -> assertEquals("Haemimont Games", tropico.getStudioDescription()),
+				() -> assertEquals(19.99, tropico.getInitialPrice(), 0.00001),
+				() -> assertEquals(19.99, tropico.getCurrentPrice(), 0.00001),
+				() -> assertEquals(false, tropico.isOnSale()),
+				() -> assertEquals("https://store.steampowered.com/app/57690", tropico.getSteamLink()));
 	}
 
+	@Test
+	public void testUnsuccessfulRequest() throws IOException {
+		UnsuccessfulGameSearchAPI api = new UnsuccessfulGameSearchAPI();
+		assertThrows(GameNotFoundException.class, () -> api.makeRequest());
+	}
+	
+	@Test
+	public void testFoundItemButNotAGameRequest() throws IOException {
+		NotAGameGameSearchAPI api = new NotAGameGameSearchAPI();
+		assertThrows(GameNotFoundException.class, () -> api.makeRequest());
+	}
 }

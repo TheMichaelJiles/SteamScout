@@ -39,7 +39,7 @@ public class User {
 	 * Creates a new User object with the specified credentials and 
 	 * games to put in this User's watchlist.
 	 * 
-	 * @precondition credentials != null && games != null
+	 * @precondition credentials != null && games != null && !games.contains(null)
 	 * @postcondition getCredentials().equals(credentials) && getWatchlist().size() == games.size()
 	 * 
 	 * @param credentials the credentials for this user.

@@ -37,7 +37,7 @@ public class GameSearchAPI extends APIRequest {
 
 	@Override
 	public Game makeRequest() throws IOException {
-		JSONObject json = this.poll();
+		JSONObject json = this.pollApi();
 		JSONObject root = json.getJSONObject(String.valueOf(this.appId));
 		if (!root.getBoolean("success")) {
 			throw new GameNotFoundException(this.appId);
