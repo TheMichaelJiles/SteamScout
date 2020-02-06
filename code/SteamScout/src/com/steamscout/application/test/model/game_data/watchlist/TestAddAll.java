@@ -19,6 +19,22 @@ public class TestAddAll {
 	}
 	
 	@Test
+	public void testDoesNotAllowCollectionWithNullElement() {
+		Game game0 = new Game(0, "a");
+		Game game1 = new Game(1, "aa");
+		Game game2 = new Game(2, "aaa");
+		
+		Collection<Game> games = new ArrayList<Game>();
+		games.add(game0);
+		games.add(game1);
+		games.add(game2);
+		games.add(null);
+		
+		Watchlist list = new Watchlist();
+		assertThrows(IllegalArgumentException.class, () -> list.addAll(games));
+	}
+	
+	@Test
 	public void testAddsAllUniqueGames() {
 		Game game0 = new Game(0, "a");
 		Game game1 = new Game(1, "aa");

@@ -42,6 +42,10 @@ public class Watchlist implements Collection<Game> {
 	
 	@Override
 	public boolean add(Game game) {
+		if (game == null) {
+			throw new IllegalArgumentException("game should not be null.");
+		}
+		
 		if (!this.contains(game)) {
 			return this.games.add(game);	
 		}
@@ -53,6 +57,9 @@ public class Watchlist implements Collection<Game> {
 	public boolean addAll(Collection<? extends Game> games) {
 		if (games == null) {
 			throw new IllegalArgumentException("games should not be null.");
+		}
+		if (games.contains(null)) {
+			throw new IllegalArgumentException("games should not contain null.");
 		}
 		
 		for (Game currentGame : games) {
