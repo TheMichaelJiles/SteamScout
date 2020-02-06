@@ -35,6 +35,24 @@ public class ViewModel {
 	
 	private StringProperty searchTermProperty;
 	
+	private static ViewModel viewModel;
+	
+	/**
+	 * Gets the singleton global view model.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the view model.
+	 */
+	public static ViewModel get() {
+		if (viewModel == null) {
+			return new ViewModel();
+		}
+		
+		return viewModel;
+	}
+	
 	/**
 	 * Creates a new ViewModel object.
 	 * 
@@ -43,7 +61,7 @@ public class ViewModel {
 	 * 				 && watchlistProperty().getValue().size() == 0 && searchResultsProperty.getValue().size() == 0
 	 * 				 && searchTermProperty().getValue().equals("")
 	 */
-	public ViewModel() {
+	private ViewModel() {
 		this.initializeProperties();
 	}
 	
