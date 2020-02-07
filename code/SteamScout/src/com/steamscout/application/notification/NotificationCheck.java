@@ -8,6 +8,8 @@ import com.steamscout.application.model.api.GameSearchAPI;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.Notification;
 
+import javafx.concurrent.Task;
+
 /**
  * Contains a static method that allows for a collection of games
  * to be checked against the steam api.
@@ -15,8 +17,31 @@ import com.steamscout.application.model.notification.Notification;
  * @author Thomas Whaley
  *
  */
-public class NotificationCheck {
+public class NotificationCheck extends Task<Collection<Notification>> {
 
+	private Collection<Game> games;
+	
+	/**
+	 * Creates a new NotificationCheck Task.
+	 * 
+	 * @precondition games != null
+	 * @postcondition none
+	 * 
+	 * @param games the games to check for.
+	 */
+	public NotificationCheck(Collection<Game> games) {
+		if (games == null) {
+			throw new IllegalArgumentException("games should not be null.");
+		}
+		
+		this.games = games;
+	}
+	
+	@Override
+	protected Collection<Notification> call() throws Exception {
+		return this.query();
+	}
+	
 	/**
 	 * Queries the steam api against the specified collection of games.
 	 * For each game, it will contact the steam api to retrieve the most current
@@ -30,11 +55,7 @@ public class NotificationCheck {
 	 * @param games the collection of games to check against the steam api.
 	 * @return a collection of Notification objects.
 	 */
-	public static Collection<Notification> query(Collection<Game> games) {
-		if (games == null) {
-			throw new IllegalArgumentException("games should not be null.");
-		}
-		
+	private Collection<Notification> query() {
 		Collection<Notification> notifications = new ArrayList<Notification>();
 		for (Game currentGame : games) {
 			GameSearchAPI steamSearch = new GameSearchAPI(currentGame.getAppId());
@@ -50,4 +71,5 @@ public class NotificationCheck {
 		}
 		return notifications;
 	}
+
 }

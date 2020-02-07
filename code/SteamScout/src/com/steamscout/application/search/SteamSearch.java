@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import com.steamscout.application.model.api.AppListAPI;
 import com.steamscout.application.model.api.GameSearchAPI;
@@ -17,7 +18,41 @@ import com.steamscout.application.model.game_data.Game;
  * @author Thomas Whaley
  *
  */
-public class SteamSearch {
+public class SteamSearch implements Runnable {
+	
+	private String term;
+	
+	private Consumer<Collection<Game>> response;
+	
+	/**
+	 * Creates a new SteamSearch object that can search
+	 * the steam api for the specified term.
+	 * 
+	 * @precondition term != null
+	 * @postcondition none
+	 * 
+	 * @param term the term to search the api for.
+	 */
+	public SteamSearch(String term, Consumer<Collection<Game>> response) {
+		if (term == null) {
+			throw new IllegalArgumentException("term should not be null.");
+		}
+		if (response == null) {
+			throw new IllegalArgumentException("response should not be null.");
+		}
+		
+		this.term = term;
+		this.response = response;
+	}
+	
+	@Override
+	public void run() {
+		try {
+			this.response.accept(this.query());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * Performs a query on the steam database with the specified search term.
@@ -28,33 +63,30 @@ public class SteamSearch {
 	 * @param term the term to query against the steam database.
 	 * @return a collection of game objects that match the term on the steam database.
 	 */
-	public static Collection<Game> query(String term) {
+	private Collection<Game> query() throws IOException {
 		Collection<Game> matchedGames = new ArrayList<Game>();
-		try {
-			Collection<Integer> matchedIds = new ArrayList<Integer>();
+		Collection<Integer> matchedIds = new ArrayList<Integer>();
 			
-			AppListAPI steamAppList = new AppListAPI();
-			Map<Integer, String> games = steamAppList.makeRequest();
-			games.forEach((id, name) -> {
-				if (name.toLowerCase().contains(term.toLowerCase())) {
-					matchedIds.add(id);
-				}
-			});
-			
-			for (Integer id : matchedIds) {
-				GameSearchAPI steamSearch = new GameSearchAPI(id);
-				try {
-					Game loadedGame = steamSearch.makeRequest();
-					matchedGames.add(loadedGame);	
-				} catch (GameNotFoundException e) {
-					System.err.println(e.getMessage());
-				}
+		AppListAPI steamAppList = new AppListAPI();
+		Map<Integer, String> games = steamAppList.makeRequest();
+		games.forEach((id, name) -> {
+			if (name.toLowerCase().contains(this.term.toLowerCase())) {
+				matchedIds.add(id);
 			}
-		} catch (IOException e) {
-			System.err.println("query ended earlier than expected due to IOException.");
-			e.printStackTrace();
+		});
+			
+		for (Integer id : matchedIds) {
+			GameSearchAPI steamSearch = new GameSearchAPI(id);
+			try {
+				Game loadedGame = steamSearch.makeRequest();
+				matchedGames.add(loadedGame);	
+			} catch (GameNotFoundException e) {
+				System.err.println(e.getMessage());
+			}
 		}
+		
 		
 		return matchedGames;
 	}
+
 }

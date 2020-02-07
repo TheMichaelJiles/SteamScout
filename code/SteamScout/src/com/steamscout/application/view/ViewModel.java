@@ -5,8 +5,6 @@ import com.steamscout.application.model.user.User;
 import com.steamscout.application.notification.NotificationCheck;
 import com.steamscout.application.search.SteamSearch;
 
-import java.util.Collection;
-
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.Notification;
@@ -47,7 +45,7 @@ public class ViewModel {
 	 */
 	public static ViewModel get() {
 		if (viewModel == null) {
-			return new ViewModel();
+			viewModel = new ViewModel();
 		}
 		
 		return viewModel;
@@ -87,13 +85,19 @@ public class ViewModel {
 	 * are then set to the searchResultsProperty().
 	 * 
 	 * @precondition none
-	 * @postcondition searchResultsProperty().getValue().size() == searchResultsProperty().getValue().size()@prev
-	 * 			   || searchResultsProperty().getValue().size() > searchResultsProperty().getValue().size()@prev
-	 *             || searchResultsProperty().getValue().size() < searchResultsProperty().getValue().size()@prev
+	 * @postcondition none
 	 */
 	public void performSearch() {
-		Collection<Game> matchedGames = SteamSearch.query(this.searchTermProperty.getValue());
-		this.searchResultsProperty.setValue(FXCollections.observableArrayList(matchedGames));
+		SteamSearch api = new SteamSearch(this.searchTermProperty.getValue(), matchedGames -> {
+			for (Game game : matchedGames) {
+				System.out.println(game.getDescription());
+			}
+			this.searchResultsProperty.setValue(FXCollections.observableArrayList(matchedGames));
+		});
+		
+		Thread searchThread = new Thread(api);
+		searchThread.setDaemon(true);
+		searchThread.start();
 	}
 	
 	/**
@@ -102,13 +106,18 @@ public class ViewModel {
 	 * the game, then notifications are generated and set to the notificationsProperty().
 	 * 
 	 * @precondition none
-	 * @postcondition notificationsProperty().getValue().size() == notificationsProperty().getValue().size()@prev
-	 * 			   || notificationsProperty().getValue().size() > notificationsProperty().getValue().size()@prev
-	 *             || notificationsProperty().getValue().size() < notificationsProperty().getValue().size()@prev
+	 * @postcondition none
 	 */
 	public void loadNotifications() {
-		Collection<Notification> notifications = NotificationCheck.query(this.userProperty.getValue().getWatchlist());
-		this.notificationsProperty.setValue(FXCollections.observableArrayList(notifications));
+		NotificationCheck api = new NotificationCheck(this.userProperty.getValue().getWatchlist());
+		api.setOnCancelled(event -> {
+			// TODO: put notification load rainy day code here.
+		});
+		api.setOnSucceeded(event -> {
+			this.notificationsProperty.setValue(FXCollections.observableArrayList(api.getValue()));
+		});
+		Thread apiThread = new Thread(api);
+		apiThread.start();
 	}
 	
 	/**

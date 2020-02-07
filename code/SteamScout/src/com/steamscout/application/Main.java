@@ -4,6 +4,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.steamscout.application.view.ViewModel;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -36,6 +38,9 @@ public class Main extends Application {
 			primaryStage.setTitle(TITLE);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			ViewModel.get().searchTermProperty().setValue("skyrim");
+			ViewModel.get().performSearch();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
