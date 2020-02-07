@@ -21,17 +21,18 @@ public class Main extends Application {
 	public static final String TITLE = "Steam Scout";
 	
 	public static final String LOGIN_PAGE_FILENAME = "LoginPage.fxml";
+	public static final String INITIALIZATION_PAGE_FILENAME = "InitializationPage.fxml";
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Path landingPagePath = Paths.get(".", "view", "fxml", LOGIN_PAGE_FILENAME);
+			Path landingPagePath = Paths.get(".", "view", "fxml", INITIALIZATION_PAGE_FILENAME);
 			URL landingPageUrl = Main.class.getResource(landingPagePath.toString());
 			
 			FXMLLoader loader = new FXMLLoader(landingPageUrl);
 			Pane landingPane = loader.load();
 			
-			Scene scene = new Scene(landingPane, 1280, 720);
+			Scene scene = new Scene(landingPane);
 			
 			primaryStage.setTitle(TITLE);
 			primaryStage.setScene(scene);

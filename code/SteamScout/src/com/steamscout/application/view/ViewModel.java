@@ -4,10 +4,13 @@ import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Map;
 
-import com.steamscout.application.model.api.tasks.NotificationCheck;
+import com.steamscout.application.model.api.tasks.NotificationChecker;
 import com.steamscout.application.model.api.tasks.SteamSearch;
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.model.game_data.SteamGames;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.Notification;
 
@@ -36,6 +39,9 @@ public final class ViewModel {
 	private StringProperty browsePageSearchTermProperty;
 	private ObjectProperty<Game> browsePageSelectedGameProperty;
 	
+	private SteamGames steamGames;
+	private SteamSearch search;
+	
 	private static ViewModel viewModel;
 	
 	/**
@@ -60,25 +66,67 @@ public final class ViewModel {
 	 * @precondition none
 	 * @postcondition userProperty().getValue() == null && notificationsProperty().getValue().size() == 0
 	 * 				 && watchlistProperty().getValue().size() == 0 && searchResultsProperty.getValue().size() == 0
-	 * 				 && browsePageSearchTermProperty().getValue().equals("")
+	 * 				 && browsePageSearchTermProperty().getValue().equals("") && browsePageSelectedGameProperty().getValue() == null
+	 * 			     && getSteamGames() != null
 	 */
 	private ViewModel() {
 		this.initializeProperties();
+		
+		this.steamGames = new SteamGames();
+		this.search = new SteamSearch(this.steamGames);
 	}
 	
 	/**
-	 * Adds a single game to the user's watchlist and updates the watchlist
-	 * property accordingly.
+	 * Inserts the specified data into the this view model for use by the SteamGames object.
+	 * The purpose of this is to guarantee we only have to make the api call for getting names and 
+	 * ids once - on application startup during loading screen. This method should only be called once.
+	 * Successive calls to this method will result in IllegalArgumentExceptions -> 
+	 * see com.application.model.game_data.SteamGames
+	 * 
+	 * @precondition steamData != null
+	 * @postcondition !getSteamGames().getTitles().isEmpty() && !getSteamGames().getIds().isEmpty()
+	 * 
+	 * @param steamData the data to give the SteamData object.
+	 */
+	public void insertSteamData(Map<String, Integer> steamData) {
+		if (steamData == null) {
+			throw new IllegalArgumentException("steamData should not be null.");
+		}
+		
+		this.steamGames.initializeGames(steamData);
+	}
+	
+	/**
+	 * Adds the currently selected game on the browse page to the user's watchlist 
+	 * and updates the watchlist property accordingly.
 	 * 
 	 * @precondition none
 	 * @postcondition if userProperty().getValue() != null, 
 	 * 				  then watchlistProperty().getValue().size() == watchlistProperty().getValue().size()@prev + 1
 	 */
-	public void addGameToWatchlist() {
+	public void addSelectedGameToWatchlist() {
+		this.addGameToWatchlist(this.browsePageSelectedGameProperty.getValue());
+	}
+	
+	/**
+	 * Adds the specified game to the user's watchlist and updates
+	 * the watchlist property accordingly.
+	 * 
+	 * @precondition game != null
+	 * @postcondition if userProperty().getValue() != null, 
+	 * 				  then watchlistProperty().getValue().size() == watchlistProperty().getValue().size()@prev + 1
+	 * 
+	 * @param game the game to add to the user's watchlist.
+	 */
+	public void addGameToWatchlist(Game game) {
+		if (game == null) {
+			throw new IllegalArgumentException("game should not be null.");
+		}
+		
 		User currentUser = this.userProperty.getValue();
 		if (currentUser != null) {
 			Watchlist userWatchlist = currentUser.getWatchlist();
-			userWatchlist.add(this.browsePageSelectedGameProperty.getValue());
+			userWatchlist.add(game);
 			this.watchlistProperty.setValue(FXCollections.observableArrayList(userWatchlist));
 		}
 	}
@@ -91,9 +139,9 @@ public final class ViewModel {
 	 * @postcondition none
 	 */
 	public void performSearch() {
-		SteamSearch api = new SteamSearch(this.browsePageSearchTermProperty.getValue());
 		try {
-			this.searchResultsProperty.setValue(FXCollections.observableArrayList(api.query()));
+			Collection<Game> searchResults = this.search.query(this.browsePageSearchTermProperty.getValue());
+			this.searchResultsProperty.setValue(FXCollections.observableArrayList(searchResults));
 		} catch (IOException e) {
 			// TODO: handle failed search.
 		}
@@ -108,9 +156,9 @@ public final class ViewModel {
 	 * @postcondition none
 	 */
 	public void loadNotifications() {
-		NotificationCheck api = new NotificationCheck(this.userProperty.getValue().getWatchlist());
 		try {
-			this.notificationsProperty.setValue(FXCollections.observableArrayList(api.query()));
+			Collection<Notification> notifications = NotificationChecker.query(this.userProperty.getValue().getWatchlist());
+			this.notificationsProperty.setValue(FXCollections.observableArrayList(notifications));
 		} catch (IOException e) {
 			// TODO: handle failed notification load
 		}
@@ -208,12 +256,24 @@ public final class ViewModel {
 	public ObjectProperty<Game> browsePageSelectedGameProperty() {
 		return this.browsePageSelectedGameProperty;
 	}
+	
+	/**
+	 * Gets the steam games manager.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the steam games manager.
+	 */
+	public SteamGames getSteamGames() {
+		return this.steamGames;
+	}
 
 	private void initializeProperties() {
 		this.userProperty = new SimpleObjectProperty<User>();
-		this.notificationsProperty = new SimpleListProperty<Notification>();
-		this.watchlistProperty = new SimpleListProperty<Game>();
-		this.searchResultsProperty = new SimpleListProperty<Game>();
+		this.notificationsProperty = new SimpleListProperty<Notification>(FXCollections.emptyObservableList());
+		this.watchlistProperty = new SimpleListProperty<Game>(FXCollections.emptyObservableList());
+		this.searchResultsProperty = new SimpleListProperty<Game>(FXCollections.emptyObservableList());
 		this.browsePageSearchTermProperty = new SimpleStringProperty("");
 		this.browsePageSelectedGameProperty = new SimpleObjectProperty<Game>();
 	}

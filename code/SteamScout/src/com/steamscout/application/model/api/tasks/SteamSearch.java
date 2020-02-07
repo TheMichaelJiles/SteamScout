@@ -3,15 +3,13 @@ package com.steamscout.application.model.api.tasks;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
-
-import com.steamscout.application.model.api.AppListAPI;
 import com.steamscout.application.model.api.GameSearchAPI;
 import com.steamscout.application.model.api.exceptions.GameNotFoundException;
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.model.game_data.SteamGames;
 
 /**
- * Contains static methods that search steam for useful
+ * Contains the ability to search steam for useful
  * data.
  * 
  * @author Thomas Whaley
@@ -19,46 +17,44 @@ import com.steamscout.application.model.game_data.Game;
  */
 public class SteamSearch {
 	
-	private String term;
+	private SteamGames games;
 	
 	/**
 	 * Creates a new SteamSearch object that can search
-	 * the steam api for the specified term.
+	 * the steam api for game objects with titles that match
+	 * a given string.
 	 * 
-	 * @precondition term != null
+	 * @precondition games != null
 	 * @postcondition none
 	 * 
-	 * @param term the term to search the api for.
+	 * @param games titles of all games on steam.
 	 */
-	public SteamSearch(String term) {
-		if (term == null) {
-			throw new IllegalArgumentException("term should not be null.");
+	public SteamSearch(SteamGames games) {
+		if (games == null) {
+			throw new IllegalArgumentException("games should not be null.");
 		}
 
-		this.term = term;
+		this.games = games;
 	}
 	
 	/**
 	 * Performs a query on the steam database with the specified search term.
 	 * 
-	 * @precondition none
+	 * @precondition term != null
 	 * @postcondition none
+	 * 
+	 * @param term the search term to query against steam games.
 	 * 
 	 * @throws IOException if an error occurs polling the api.
 	 * @return a collection of game objects that match the term on the steam database.
 	 */
-	public Collection<Game> query() throws IOException {
+	public Collection<Game> query(String term) throws IOException {
+		if (term == null) {
+			throw new IllegalArgumentException("term should not be null.");
+		}
 		Collection<Game> matchedGames = new ArrayList<Game>();
-		Collection<Integer> matchedIds = new ArrayList<Integer>();
-			
-		AppListAPI steamAppList = new AppListAPI();
-		Map<Integer, String> games = steamAppList.makeRequest();
-		games.forEach((id, name) -> {
-			if (name.toLowerCase().contains(this.term.toLowerCase())) {
-				matchedIds.add(id);
-			}
-		});
-			
+		
+		Iterable<Integer> matchedIds = this.games.getMatchingIds(term);	
 		for (Integer id : matchedIds) {
 			GameSearchAPI steamSearch = new GameSearchAPI(id);
 			try {

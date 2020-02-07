@@ -15,29 +15,8 @@ import com.steamscout.application.model.notification.Notification;
  * @author Thomas Whaley
  *
  */
-public class NotificationCheck {
+public class NotificationChecker {
 
-	private Collection<Game> games;
-	
-	/**
-	 * Creates a new NotificationCheck Task.
-	 * 
-	 * @precondition games != null && !games.contains(null)
-	 * @postcondition none
-	 * 
-	 * @param games the games to check for.
-	 */
-	public NotificationCheck(Collection<Game> games) {
-		if (games == null) {
-			throw new IllegalArgumentException("games should not be null.");
-		}
-		if (games.contains(null)) {
-			throw new IllegalArgumentException("games should not contain null.");
-		}
-		
-		this.games = games;
-	}
-	
 	/**
 	 * Queries the steam api against the specified collection of games.
 	 * For each game, it will contact the steam api to retrieve the most current
@@ -45,15 +24,24 @@ public class NotificationCheck {
 	 * the game's current price is less than the price threshold set by the user,
 	 * it will generate a notification for that game.
 	 * 
-	 * @precondition none
+	 * @precondition games != null && !games.contains(null)
 	 * @postcondition none
+	 * 
+	 * @param games the games to check for notifications.
 	 * 
 	 * @throws IOException if an error occurs when using the api.
 	 * @return a collection of Notification objects.
 	 */
-	public Collection<Notification> query() throws IOException {
+	public static Collection<Notification> query(Collection<Game> games) throws IOException {
+		if (games == null) {
+			throw new IllegalArgumentException("games should not be null.");
+		}
+		if (games.contains(null)) {
+			throw new IllegalArgumentException("games should not contain null.");
+		}
+		
 		Collection<Notification> notifications = new ArrayList<Notification>();
-		for (Game currentGame : this.games) {
+		for (Game currentGame : games) {
 			GameSearchAPI steamSearch = new GameSearchAPI(currentGame.getAppId());
 			Game updatedCurrentGame = steamSearch.makeRequest();	
 			if (updatedCurrentGame.isOnSale() || (updatedCurrentGame.getCurrentPrice() <= currentGame.getUserPriceThreshold())) {

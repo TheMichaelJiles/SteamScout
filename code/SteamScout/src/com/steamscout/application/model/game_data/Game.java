@@ -28,6 +28,8 @@ public class Game {
 	 * @precondition title != null
 	 * @postcondition getTitle().equals(title) && getAppId() == appId
 	 * 				  && getStudioDescription.equals("") && getSteamLink().equals("")
+	 * 				  && getImageUrl().equals("") && getCurrentPrice() == 0 &&
+	 * 				  getInitialPrice() == 0 && !isOnSale() && getUserPriceThreshold() == 0
 	 * 
 	 * @param title the title of the game.
 	 * @param appId this game's corresponding steam app id.
@@ -41,6 +43,7 @@ public class Game {
 		this.appId = appId;
 		this.studioDescription = "";
 		this.steamLink = "";
+		this.imageUrl = "";
 	}
 	
 	@Override

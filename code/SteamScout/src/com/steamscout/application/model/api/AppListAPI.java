@@ -29,8 +29,8 @@ public class AppListAPI extends APIRequest {
 	}
 	
 	@Override
-	public Map<Integer, String> makeRequest() throws IOException {
-		Map<Integer, String> games = new HashMap<Integer, String>();
+	public Map<String, Integer> makeRequest() throws IOException {
+		Map<String, Integer> games = new HashMap<String, Integer>();
 			
 		JSONObject json = this.pollApi();
 		JSONObject applist = json.getJSONObject("applist");
@@ -38,7 +38,7 @@ public class AppListAPI extends APIRequest {
 		JSONArray array = apps.getJSONArray("app");
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject currentObject = array.getJSONObject(i);
-			games.put(currentObject.getInt("appid"), currentObject.getString("name"));
+			games.put(currentObject.getString("name"), currentObject.getInt("appid"));
 		}
 			
 		return games;

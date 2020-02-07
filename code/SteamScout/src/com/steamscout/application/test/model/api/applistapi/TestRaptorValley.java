@@ -24,9 +24,9 @@ public class TestRaptorValley {
 	@Test
 	public void testMakeRequest() throws IOException {
 		TestAppListAPI api = new TestAppListAPI();
-		Map<Integer, String> games = api.makeRequest();
+		Map<String, Integer> games = api.makeRequest();
 		
-		assertEquals("Raptor Valley", games.get(524120));
+		assertEquals(524120, games.get("Raptor Valley"));
 	}
 
 }

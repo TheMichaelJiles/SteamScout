@@ -44,6 +44,12 @@ public class TestConstructor {
 	}
 	
 	@Test
+	public void testNotAllowNullImageUrl() {
+		Game game = new Game(1, "bop");
+		assertThrows(IllegalArgumentException.class, () -> game.setImageUrl(null));
+	}
+	
+	@Test
 	public void testValidPostconditions() {
 		Game game = new Game(1, "bop");
 		game.setStudioDescription("boo");
@@ -52,6 +58,7 @@ public class TestConstructor {
 		game.setInitialPrice(5);
 		game.setUserPriceThreshold(6);
 		game.setOnSale(false);
+		game.setImageUrl("dongdig");
 		
 		assertAll(() -> assertEquals("bop", game.getTitle()),
 				() -> assertEquals("boo", game.getStudioDescription()),
@@ -60,6 +67,7 @@ public class TestConstructor {
 				() -> assertEquals(5, game.getInitialPrice(), 0.000001),
 				() -> assertEquals(6, game.getUserPriceThreshold(), 0.000001),
 				() -> assertEquals(false, game.isOnSale()),
-				() -> assertEquals(1, game.getAppId()));
+				() -> assertEquals(1, game.getAppId()),
+				() -> assertEquals("dongdig", game.getImageUrl()));
 	}
 }

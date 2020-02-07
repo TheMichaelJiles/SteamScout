@@ -13,6 +13,20 @@ import com.steamscout.application.model.game_data.Game;
 
 public class TestTropico {
 
+	private class InvalidJson extends GameSearchAPI {
+		
+		public InvalidJson() {
+			super(57690);
+		}
+
+		@Override
+		protected JSONObject pollApi() throws IOException {
+			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"header_image\": \"imageurl\", \"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"developers\": [\"Haemimont Games\"]}}}";
+			return new JSONObject(testJson);
+		}
+		
+	}
+	
 	private class NoErrorGameSearchAPI extends GameSearchAPI {
 
 		public NoErrorGameSearchAPI() {
@@ -21,7 +35,7 @@ public class TestTropico {
 
 		@Override
 		protected JSONObject pollApi() throws IOException {
-			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
+			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"header_image\": \"imageurl\", \"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
 			return new JSONObject(testJson);
 		}
 		
@@ -35,7 +49,7 @@ public class TestTropico {
 
 		@Override
 		protected JSONObject pollApi() throws IOException {
-			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 5}, \"developers\": [\"Haemimont Games\"]}}}";
+			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"header_image\": \"imageurl\", \"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 5}, \"developers\": [\"Haemimont Games\"]}}}";
 			return new JSONObject(testJson);
 		}
 		
@@ -49,7 +63,7 @@ public class TestTropico {
 
 		@Override
 		protected JSONObject pollApi() throws IOException {
-			final String testJson = "{\"57690\": {\"success\": false, \"data\": {\"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
+			final String testJson = "{\"57690\": {\"success\": false, \"data\": {\"header_image\": \"imageurl\", \"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
 			return new JSONObject(testJson);
 		}
 		
@@ -63,7 +77,7 @@ public class TestTropico {
 
 		@Override
 		protected JSONObject pollApi() throws IOException {
-			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"type\": \"dlc\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
+			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"header_image\": \"imageurl\", \"type\": \"dlc\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
 			return new JSONObject(testJson);
 		}
 		
@@ -103,5 +117,11 @@ public class TestTropico {
 		assertThrows(GameNotFoundException.class, () -> api.makeRequest());
 	}
 	
-	
+	@Test
+	public void testInvalidJson() throws IOException {
+		assertThrows(GameNotFoundException.class, () -> {
+			InvalidJson api = new InvalidJson();
+			api.makeRequest();
+		});
+	}
 }
