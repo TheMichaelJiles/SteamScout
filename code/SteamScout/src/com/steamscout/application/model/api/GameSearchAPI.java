@@ -3,6 +3,7 @@ package com.steamscout.application.model.api;
 import java.io.IOException;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.steamscout.application.model.api.exceptions.GameNotFoundException;
@@ -37,18 +38,26 @@ public class GameSearchAPI extends APIRequest {
 
 	@Override
 	public Game makeRequest() throws IOException {
-		JSONObject json = this.pollApi();
-		JSONObject root = json.getJSONObject(String.valueOf(this.appId));
-		if (!root.getBoolean("success")) {
+		try {
+			JSONObject json = this.pollApi();
+			JSONObject root = json.getJSONObject(String.valueOf(this.appId));
+			if (!root.getBoolean("success")) {
+				throw new GameNotFoundException(this.appId);
+			}
+			JSONObject data = root.getJSONObject("data");
+			if (!data.getString("type").equals("game")) {
+				throw new GameNotFoundException(this.appId);
+			}
+			JSONObject priceOverview = data.getJSONObject("price_overview");
+			JSONArray developers = data.getJSONArray("developers");
+			
+			return this.createGameFromJson(developers, data, priceOverview);
+		} catch (JSONException e) {
 			throw new GameNotFoundException(this.appId);
 		}
-		JSONObject data = root.getJSONObject("data");
-		if (!data.getString("type").equals("game")) {
-			throw new GameNotFoundException(this.appId);
-		}
-		JSONObject priceOverview = data.getJSONObject("price_overview");
-		JSONArray developers = data.getJSONArray("developers");
-		
+	}
+	
+	private Game createGameFromJson(JSONArray developers, JSONObject data, JSONObject priceOverview) {
 		StringBuilder builder = new StringBuilder();
 		developers.forEach(dev -> builder.append(dev));
 		String gameStudioDescription = builder.toString();
@@ -58,6 +67,7 @@ public class GameSearchAPI extends APIRequest {
 		double gameCurrentPrice = priceOverview.getInt("final") / 100.0;
 		double gameInitialPrice = priceOverview.getInt("initial") / 100.0;
 		boolean gameIsOnSale = priceOverview.getInt("discount_percent") > 0;
+		String gameImageUrl = data.getString("header_image");
 		
 		Game game = new Game(gameAppId, gameTitle);
 		game.setStudioDescription(gameStudioDescription);
@@ -65,6 +75,7 @@ public class GameSearchAPI extends APIRequest {
 		game.setCurrentPrice(gameCurrentPrice);
 		game.setInitialPrice(gameInitialPrice);
 		game.setOnSale(gameIsOnSale);
+		game.setImageUrl(gameImageUrl);
 		
 		return game;
 	}

@@ -33,7 +33,8 @@ public final class ViewModel {
 	private ListProperty<Game> watchlistProperty;
 	private ListProperty<Game> searchResultsProperty;
 	
-	private StringProperty searchTermProperty;
+	private StringProperty browsePageSearchTermProperty;
+	private ObjectProperty<Game> browsePageSelectedGameProperty;
 	
 	private static ViewModel viewModel;
 	
@@ -59,14 +60,14 @@ public final class ViewModel {
 	 * @precondition none
 	 * @postcondition userProperty().getValue() == null && notificationsProperty().getValue().size() == 0
 	 * 				 && watchlistProperty().getValue().size() == 0 && searchResultsProperty.getValue().size() == 0
-	 * 				 && searchTermProperty().getValue().equals("")
+	 * 				 && browsePageSearchTermProperty().getValue().equals("")
 	 */
 	private ViewModel() {
 		this.initializeProperties();
 	}
 	
 	/**
-	 * Adds a single game to the user's watchlist and updateds the watchlist
+	 * Adds a single game to the user's watchlist and updates the watchlist
 	 * property accordingly.
 	 * 
 	 * @precondition none
@@ -77,7 +78,7 @@ public final class ViewModel {
 		User currentUser = this.userProperty.getValue();
 		if (currentUser != null) {
 			Watchlist userWatchlist = currentUser.getWatchlist();
-			userWatchlist.add(null);
+			userWatchlist.add(this.browsePageSelectedGameProperty.getValue());
 			this.watchlistProperty.setValue(FXCollections.observableArrayList(userWatchlist));
 		}
 	}
@@ -90,7 +91,7 @@ public final class ViewModel {
 	 * @postcondition none
 	 */
 	public void performSearch() {
-		SteamSearch api = new SteamSearch(this.searchTermProperty.getValue());
+		SteamSearch api = new SteamSearch(this.browsePageSearchTermProperty.getValue());
 		try {
 			this.searchResultsProperty.setValue(FXCollections.observableArrayList(api.query()));
 		} catch (IOException e) {
@@ -192,8 +193,20 @@ public final class ViewModel {
 	 * 
 	 * @return the searchTermProperty.
 	 */
-	public StringProperty searchTermProperty() {
-		return this.searchTermProperty;
+	public StringProperty browsePageSearchTermProperty() {
+		return this.browsePageSearchTermProperty;
+	}
+	
+	/**
+	 * Gets the selected game property for the currently selected game on the browse page.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the selected game property for the currently selected game on the browse page.
+	 */
+	public ObjectProperty<Game> browsePageSelectedGameProperty() {
+		return this.browsePageSelectedGameProperty;
 	}
 
 	private void initializeProperties() {
@@ -201,6 +214,7 @@ public final class ViewModel {
 		this.notificationsProperty = new SimpleListProperty<Notification>();
 		this.watchlistProperty = new SimpleListProperty<Game>();
 		this.searchResultsProperty = new SimpleListProperty<Game>();
-		this.searchTermProperty = new SimpleStringProperty("");
+		this.browsePageSearchTermProperty = new SimpleStringProperty("");
+		this.browsePageSelectedGameProperty = new SimpleObjectProperty<Game>();
 	}
 }

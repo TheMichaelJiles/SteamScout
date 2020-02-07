@@ -20,6 +20,7 @@ public class Game {
 	private String title;
 	private String studioDescription;
 	private String steamLink;
+	private String imageUrl;
 	
 	/**
 	 * Creates a new Game object that encapsulates information.
@@ -75,6 +76,22 @@ public class Game {
 			 + "IsOnSale: " + this.isOnSale + System.lineSeparator()
 			 + "UserPriceThreshold: " + this.userPriceThreshold + System.lineSeparator()
 			 + System.lineSeparator();
+	}
+	
+	/**
+	 * Sets this games image url to the specified value.
+	 * 
+	 * @precondition imageUrl != null
+	 * @postcondition getImageUrl().equals(imageUrl)
+	 * 
+	 * @param imageUrl this game's image url.
+	 */
+	public void setImageUrl(String imageUrl) {
+		if (imageUrl == null) {
+			throw new IllegalArgumentException("imageUrl should not be null.");
+		}
+		
+		this.imageUrl = imageUrl;
 	}
 	
 	/**
@@ -169,6 +186,18 @@ public class Game {
 		this.isOnSale = isOnSale;
 	}
 
+	/**
+	 * Gets this game's image url.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return this game's image url.
+	 */
+	public String getImageUrl() {
+		return this.imageUrl;
+	}
+	
 	/**
 	 * Gets this game's steam store app id.
 	 * 

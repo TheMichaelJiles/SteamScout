@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.game_listcell.GameListCellCodeBehind">
+   <children>
+      <ImageView fx:id="gameImageView" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <Label fx:id="gameTitleLabel" layoutX="332.0" layoutY="14.0" maxWidth="150.0" text="Title" wrapText="true" AnchorPane.leftAnchor="332.0" AnchorPane.topAnchor="14.0" />
+      <Label fx:id="gameAppIdLabel" layoutX="332.0" layoutY="46.0" text="App ID" AnchorPane.leftAnchor="332.0" AnchorPane.topAnchor="46.0" />
+      <Label fx:id="gameCurrentPriceLabel" layoutX="333.0" layoutY="64.0" text="Current Price" AnchorPane.leftAnchor="333.0" AnchorPane.topAnchor="64.0" />
+      <Label fx:id="gameOnSaleLabel" layoutX="234.0" layoutY="81.0" text="ON SALE" textFill="#ff2323" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="81.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="gameSteamLinkLabel" layoutX="234.0" layoutY="102.0" onMouseClicked="#onGameSteamLinkLabelClicked" onMouseEntered="#onGameSteamLinkLabelEnter" text="View on steam store" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="102.0" />
+      <Label layoutX="230.0" layoutY="14.0" text="Title: " AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="14.0" />
+      <Label layoutX="233.0" layoutY="46.0" text="Steam ID: " AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="46.0" />
+      <Label layoutX="227.0" layoutY="64.0" text="Current Price: " AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="64.0" />
+      <Button fx:id="addToWatchlistButton" layoutX="230.0" layoutY="138.0" mnemonicParsing="false" onAction="#onAddToWatchlistButtonAction" prefHeight="26.0" prefWidth="134.0" text="Add to Watchlist" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="138.0" />
+   </children>
+</AnchorPane>
