@@ -1,4 +1,4 @@
-package com.steamscout.application.test.api.applistapi;
+package com.steamscout.application.test.model.api.applistapi;
 
 import static org.junit.jupiter.api.Assertions.*;
 

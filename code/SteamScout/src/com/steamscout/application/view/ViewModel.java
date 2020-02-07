@@ -2,9 +2,11 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
-import com.steamscout.application.notification.NotificationCheck;
-import com.steamscout.application.search.SteamSearch;
 
+import java.io.IOException;
+
+import com.steamscout.application.model.api.tasks.NotificationCheck;
+import com.steamscout.application.model.api.tasks.SteamSearch;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.Notification;
@@ -24,7 +26,7 @@ import javafx.collections.FXCollections;
  * @author Thomas Whaley
  *
  */
-public class ViewModel {
+public final class ViewModel {
 
 	private ObjectProperty<User> userProperty;
 	private ListProperty<Notification> notificationsProperty;
@@ -88,16 +90,12 @@ public class ViewModel {
 	 * @postcondition none
 	 */
 	public void performSearch() {
-		SteamSearch api = new SteamSearch(this.searchTermProperty.getValue(), matchedGames -> {
-			for (Game game : matchedGames) {
-				System.out.println(game.getDescription());
-			}
-			this.searchResultsProperty.setValue(FXCollections.observableArrayList(matchedGames));
-		});
-		
-		Thread searchThread = new Thread(api);
-		searchThread.setDaemon(true);
-		searchThread.start();
+		SteamSearch api = new SteamSearch(this.searchTermProperty.getValue());
+		try {
+			this.searchResultsProperty.setValue(FXCollections.observableArrayList(api.query()));
+		} catch (IOException e) {
+			// TODO: handle failed search.
+		}
 	}
 	
 	/**
@@ -110,14 +108,11 @@ public class ViewModel {
 	 */
 	public void loadNotifications() {
 		NotificationCheck api = new NotificationCheck(this.userProperty.getValue().getWatchlist());
-		api.setOnCancelled(event -> {
-			// TODO: put notification load rainy day code here.
-		});
-		api.setOnSucceeded(event -> {
-			this.notificationsProperty.setValue(FXCollections.observableArrayList(api.getValue()));
-		});
-		Thread apiThread = new Thread(api);
-		apiThread.start();
+		try {
+			this.notificationsProperty.setValue(FXCollections.observableArrayList(api.query()));
+		} catch (IOException e) {
+			// TODO: handle failed notification load
+		}
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package com.steamscout.application.test.api.gamesearchapi;
+package com.steamscout.application.test.model.api.gamesearchapi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +22,20 @@ public class TestTropico {
 		@Override
 		protected JSONObject pollApi() throws IOException {
 			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 0}, \"developers\": [\"Haemimont Games\"]}}}";
+			return new JSONObject(testJson);
+		}
+		
+	}
+	
+	private class OnSaleGameSearchAPI extends GameSearchAPI {
+
+		public OnSaleGameSearchAPI() {
+			super(57690);
+		}
+
+		@Override
+		protected JSONObject pollApi() throws IOException {
+			final String testJson = "{\"57690\": {\"success\": true, \"data\": {\"type\": \"game\", \"name\": \"Tropico 4\", \"steam_appid\": 57690, \"price_overview\": {\"final\": 1999, \"initial\": 1999, \"discount_percent\": 5}, \"developers\": [\"Haemimont Games\"]}}}";
 			return new JSONObject(testJson);
 		}
 		
@@ -70,6 +84,14 @@ public class TestTropico {
 	}
 
 	@Test
+	public void testGameOnSale() throws IOException {
+		OnSaleGameSearchAPI api = new OnSaleGameSearchAPI();
+		Game tropico = api.makeRequest();
+		
+		assertEquals(true, tropico.isOnSale());
+	}
+	
+	@Test
 	public void testUnsuccessfulRequest() throws IOException {
 		UnsuccessfulGameSearchAPI api = new UnsuccessfulGameSearchAPI();
 		assertThrows(GameNotFoundException.class, () -> api.makeRequest());
@@ -80,4 +102,6 @@ public class TestTropico {
 		NotAGameGameSearchAPI api = new NotAGameGameSearchAPI();
 		assertThrows(GameNotFoundException.class, () -> api.makeRequest());
 	}
+	
+	
 }

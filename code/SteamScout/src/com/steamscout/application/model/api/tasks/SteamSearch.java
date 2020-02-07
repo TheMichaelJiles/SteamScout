@@ -1,10 +1,9 @@
-package com.steamscout.application.search;
+package com.steamscout.application.model.api.tasks;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import com.steamscout.application.model.api.AppListAPI;
 import com.steamscout.application.model.api.GameSearchAPI;
@@ -18,11 +17,9 @@ import com.steamscout.application.model.game_data.Game;
  * @author Thomas Whaley
  *
  */
-public class SteamSearch implements Runnable {
+public class SteamSearch {
 	
 	private String term;
-	
-	private Consumer<Collection<Game>> response;
 	
 	/**
 	 * Creates a new SteamSearch object that can search
@@ -33,25 +30,12 @@ public class SteamSearch implements Runnable {
 	 * 
 	 * @param term the term to search the api for.
 	 */
-	public SteamSearch(String term, Consumer<Collection<Game>> response) {
+	public SteamSearch(String term) {
 		if (term == null) {
 			throw new IllegalArgumentException("term should not be null.");
 		}
-		if (response == null) {
-			throw new IllegalArgumentException("response should not be null.");
-		}
-		
+
 		this.term = term;
-		this.response = response;
-	}
-	
-	@Override
-	public void run() {
-		try {
-			this.response.accept(this.query());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	/**
@@ -60,10 +44,10 @@ public class SteamSearch implements Runnable {
 	 * @precondition none
 	 * @postcondition none
 	 * 
-	 * @param term the term to query against the steam database.
+	 * @throws IOException if an error occurs polling the api.
 	 * @return a collection of game objects that match the term on the steam database.
 	 */
-	private Collection<Game> query() throws IOException {
+	public Collection<Game> query() throws IOException {
 		Collection<Game> matchedGames = new ArrayList<Game>();
 		Collection<Integer> matchedIds = new ArrayList<Integer>();
 			
@@ -81,7 +65,6 @@ public class SteamSearch implements Runnable {
 				Game loadedGame = steamSearch.makeRequest();
 				matchedGames.add(loadedGame);	
 			} catch (GameNotFoundException e) {
-				System.err.println(e.getMessage());
 			}
 		}
 		

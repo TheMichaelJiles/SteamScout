@@ -1,4 +1,4 @@
-package com.steamscout.application.notification;
+package com.steamscout.application.model.api.tasks;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,8 +8,6 @@ import com.steamscout.application.model.api.GameSearchAPI;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.Notification;
 
-import javafx.concurrent.Task;
-
 /**
  * Contains a static method that allows for a collection of games
  * to be checked against the steam api.
@@ -17,14 +15,14 @@ import javafx.concurrent.Task;
  * @author Thomas Whaley
  *
  */
-public class NotificationCheck extends Task<Collection<Notification>> {
+public class NotificationCheck {
 
 	private Collection<Game> games;
 	
 	/**
 	 * Creates a new NotificationCheck Task.
 	 * 
-	 * @precondition games != null
+	 * @precondition games != null && !games.contains(null)
 	 * @postcondition none
 	 * 
 	 * @param games the games to check for.
@@ -33,13 +31,11 @@ public class NotificationCheck extends Task<Collection<Notification>> {
 		if (games == null) {
 			throw new IllegalArgumentException("games should not be null.");
 		}
+		if (games.contains(null)) {
+			throw new IllegalArgumentException("games should not contain null.");
+		}
 		
 		this.games = games;
-	}
-	
-	@Override
-	protected Collection<Notification> call() throws Exception {
-		return this.query();
 	}
 	
 	/**
@@ -49,25 +45,21 @@ public class NotificationCheck extends Task<Collection<Notification>> {
 	 * the game's current price is less than the price threshold set by the user,
 	 * it will generate a notification for that game.
 	 * 
-	 * @precondition games != null
+	 * @precondition none
 	 * @postcondition none
 	 * 
-	 * @param games the collection of games to check against the steam api.
+	 * @throws IOException if an error occurs when using the api.
 	 * @return a collection of Notification objects.
 	 */
-	private Collection<Notification> query() {
+	public Collection<Notification> query() throws IOException {
 		Collection<Notification> notifications = new ArrayList<Notification>();
-		for (Game currentGame : games) {
+		for (Game currentGame : this.games) {
 			GameSearchAPI steamSearch = new GameSearchAPI(currentGame.getAppId());
-			try {
-				Game updatedCurrentGame = steamSearch.makeRequest();	
-				if (updatedCurrentGame.isOnSale() || (updatedCurrentGame.getCurrentPrice() <= currentGame.getUserPriceThreshold())) {
-					Notification notification = new Notification();
-					notifications.add(notification);
-				}
-			} catch (IOException e) {
-				System.err.println(currentGame.getAppId() + ": notification update query failed.");
-			}
+			Game updatedCurrentGame = steamSearch.makeRequest();	
+			if (updatedCurrentGame.isOnSale() || (updatedCurrentGame.getCurrentPrice() <= currentGame.getUserPriceThreshold())) {
+				Notification notification = new Notification();
+				notifications.add(notification);
+			}	
 		}
 		return notifications;
 	}
