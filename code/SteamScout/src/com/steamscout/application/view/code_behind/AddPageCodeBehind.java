@@ -1,4 +1,4 @@
-package com.steamscout.application.view;
+package com.steamscout.application.view.code_behind;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.InitializationPageCodeBehind">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.InitializationPageCodeBehind">
    <children>
       <Label layoutX="57.0" layoutY="92.0" text="Pulling Steam Data" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="92.0" />
       <Label fx:id="loadingLabel" layoutX="190.0" layoutY="92.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="92.0" />

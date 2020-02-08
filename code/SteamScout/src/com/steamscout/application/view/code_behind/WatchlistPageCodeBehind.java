@@ -1,4 +1,4 @@
-package com.steamscout.application.view;
+package com.steamscout.application.view.code_behind;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,8 +36,6 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private Button searchButton;
-    
-    private ViewModel viewmodel;
 
     @FXML
     private void onBrowsePageButtonAction(ActionEvent event) {

@@ -1,4 +1,4 @@
-package com.steamscout.application.view;
+package com.steamscout.application.view.code_behind;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -6,6 +6,8 @@ import java.util.Queue;
 import com.steamscout.application.model.game_data.SteamGameLoader;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.util.TimeLimitedAction;
+import com.steamscout.application.view.UIFilePaths;
+import com.steamscout.application.view.ViewModel;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

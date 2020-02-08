@@ -1,4 +1,4 @@
-package com.steamscout.application.view;
+package com.steamscout.application.view.code_behind;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,7 +37,7 @@ public class BrowsingPageCodeBehind {
     private Button searchButton;
     
     @FXML
-    void initialize() {
+    private void initialize() {
     	this.gameResultsListView.setCellFactory(listView -> new GameListCell());
     }
 

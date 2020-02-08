@@ -1,4 +1,6 @@
-package com.steamscout.application.view;
+package com.steamscout.application.view.code_behind;
+
+import com.steamscout.application.view.ViewModel;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,8 +27,6 @@ public class LoginPageCodeBehind {
 	@FXML
 	private Button loginButton;
 
-	private ViewModel viewmodel;
-
 	@FXML
 	private void onCreateAccountPageButtonAction(ActionEvent event) {
 
@@ -34,7 +34,7 @@ public class LoginPageCodeBehind {
 
 	@FXML
 	private void onLoginButtonAction(ActionEvent event) {
-		this.viewmodel.loginUser();
+		ViewModel.get().loginUser();
 	}
 
 }
