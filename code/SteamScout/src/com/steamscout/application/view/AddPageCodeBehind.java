@@ -30,12 +30,12 @@ public class AddPageCodeBehind {
     private Button cancelButton;
 
     @FXML
-    void onAddButtonAction(ActionEvent event) {
+    private void onAddButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onCancelButtonAction(ActionEvent event) {
+    private void onCancelButtonAction(ActionEvent event) {
 
     }
 

@@ -25,17 +25,17 @@ public class NotificationsPageCodeBehind {
     private Button logoutButton;
 
     @FXML
-    void onBrowsePageButtonAction(ActionEvent event) {
+    private void onBrowsePageButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onLogoutButtonAction(ActionEvent event) {
+    private void onLogoutButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onWatchlistPageButtonAction(ActionEvent event) {
+    private void onWatchlistPageButtonAction(ActionEvent event) {
 
     }
 

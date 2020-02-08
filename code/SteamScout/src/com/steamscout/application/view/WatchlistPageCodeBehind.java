@@ -40,38 +40,34 @@ public class WatchlistPageCodeBehind {
     private ViewModel viewmodel;
 
     @FXML
-    void onBrowsePageButtonAction(ActionEvent event) {
+    private void onBrowsePageButtonAction(ActionEvent event) {
 
     	
     }
 
     @FXML
-    void onLogoutButtonAction(ActionEvent event) {
+    private void onLogoutButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onModifyButtonAction(ActionEvent event) {
+    private void onModifyButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onNotificationPageButtonAction(ActionEvent event) {
+    private void onNotificationPageButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onRemoveButtonAction(ActionEvent event) {
+    private void onRemoveButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onSearchButtonAction(ActionEvent event) {
+    private void onSearchButtonAction(ActionEvent event) {
 
     }
-
-	public void setViewModel(ViewModel viewmodel) {
-		this.viewmodel = viewmodel;
-	}
 
 }

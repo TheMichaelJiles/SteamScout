@@ -4,6 +4,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.steamscout.application.view.UIFilePaths;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -20,13 +22,10 @@ public class Main extends Application {
 	
 	public static final String TITLE = "Steam Scout";
 	
-	public static final String LOGIN_PAGE_FILENAME = "LoginPage.fxml";
-	public static final String INITIALIZATION_PAGE_FILENAME = "InitializationPage.fxml";
-	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Path landingPagePath = Paths.get(".", "view", "fxml", INITIALIZATION_PAGE_FILENAME);
+			Path landingPagePath = Paths.get(".", "view", "fxml", UIFilePaths.INITIALIZATION_PAGE_FILENAME);
 			URL landingPageUrl = Main.class.getResource(landingPagePath.toString());
 			
 			FXMLLoader loader = new FXMLLoader(landingPageUrl);

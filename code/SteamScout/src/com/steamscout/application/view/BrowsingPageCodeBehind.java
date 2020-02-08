@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.view.game_listcell.GameListCell;
 
 /**
  * Browsing page code behind that connects to ViewModel
@@ -17,7 +19,7 @@ public class BrowsingPageCodeBehind {
     private TextField searchBarTextField;
 
     @FXML
-    private ListView<?> gameResultsListView;
+    private ListView<Game> gameResultsListView;
 
     @FXML
     private Button watchlistPageButton;
@@ -33,29 +35,34 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private Button searchButton;
+    
+    @FXML
+    void initialize() {
+    	this.gameResultsListView.setCellFactory(listView -> new GameListCell());
+    }
 
     @FXML
-    void onAddButtonAction(ActionEvent event) {
+    private void onAddButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onLogoutButtonAction(ActionEvent event) {
+    private void onLogoutButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onNotificationPageButtonAction(ActionEvent event) {
+    private void onNotificationPageButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onSearchButtonAction(ActionEvent event) {
+    private void onSearchButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    void onWatchlistPageButtonAction(ActionEvent event) {
+    private void onWatchlistPageButtonAction(ActionEvent event) {
 
     }
 

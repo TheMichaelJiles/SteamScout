@@ -22,7 +22,7 @@ public class CreateAccountPageCodeBehind {
     private Button createButton;
 
     @FXML
-    void onCreateButtonAction(ActionEvent event) {
+    private void onCreateButtonAction(ActionEvent event) {
 
     }
 

@@ -4,11 +4,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.steamscout.application.model.game_data.SteamGameLoader;
+import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.util.TimeLimitedAction;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * A loading page that loads necessary data before the
@@ -47,7 +49,8 @@ public class InitializationPageCodeBehind {
     }
 	
     private void transitionToApplication() {
-    	// TODO: transition to application scene.
+    	Stage currentStage = (Stage) this.loadingLabel.getScene().getWindow();
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, currentStage);
     }
     
     private void startLoading() {
