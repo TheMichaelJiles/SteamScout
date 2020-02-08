@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.LoginPageCodeBehind">
+   <children>
+      <TextField fx:id="usernameTextField" layoutX="218.0" layoutY="160.0" promptText="username" />
+      <TextField fx:id="passwordTextField" layoutX="218.0" layoutY="208.0" promptText="password" />
+      <Label layoutX="266.0" layoutY="113.0" text="Login" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="createAccountPageButton" layoutX="212.0" layoutY="257.0" mnemonicParsing="false" onAction="#onCreateAccountPageButtonAction" text="Create Account" />
+      <Button fx:id="loginButton" layoutX="332.0" layoutY="257.0" mnemonicParsing="false" onAction="#onLoginButtonAction" text="Login" />
+   </children>
 </AnchorPane>
-
