@@ -45,7 +45,7 @@ public class NotificationChecker {
 			GameSearchAPI steamSearch = new GameSearchAPI(currentGame.getAppId());
 			Game updatedCurrentGame = steamSearch.makeRequest();	
 			if (updatedCurrentGame.isOnSale() || (updatedCurrentGame.getCurrentPrice() <= currentGame.getUserPriceThreshold())) {
-				Notification notification = new Notification();
+				Notification notification = new Notification(updatedCurrentGame);
 				notifications.add(notification);
 			}	
 		}
