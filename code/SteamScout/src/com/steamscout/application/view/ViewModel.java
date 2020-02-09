@@ -149,7 +149,7 @@ public final class ViewModel {
 		try {
 			Collection<Game> searchResults = this.search.query(this.browsePageSearchTermProperty.getValue());
 			this.searchResultsProperty.setValue(FXCollections.observableArrayList(searchResults));
-		} catch (IOException e) {
+		} catch (InterruptedException e) {
 			// TODO: handle failed search.
 		}
 	}

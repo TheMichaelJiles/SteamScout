@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import com.steamscout.application.util.ParallelIterable;
 
 /**
  * This class wraps the titles and appids for each and 
@@ -76,19 +80,22 @@ public class SteamGames {
 	 * 
 	 * @param term the term to find matching ids for.
 	 * @return a grouping of ids that are mapped with a name that contains the given term.
+	 * @throws InterruptedException 
 	 */
-	public Collection<Integer> getMatchingIds(String term) {
+	public List<Integer> getMatchingIds(String term) throws InterruptedException {
 		if (term == null) {
 			throw new IllegalArgumentException("term should not be null.");
 		}
 		
-		Collection<Integer> matchedIds = new ArrayList<Integer>();
-		for (String title : this.games.keySet()) {
+		List<String> matches = Collections.synchronizedList(new ArrayList<String>());
+		ParallelIterable<String> titles = new ParallelIterable<String>(this.games.keySet());
+		titles.forEach(title -> {
 			if (title.toLowerCase().contains(term.toLowerCase())) {
-				matchedIds.add(this.games.get(title));
+				matches.add(title);
 			}
-		}
-		return matchedIds;
+		});
+		
+		return matches.stream().map(match -> this.games.get(match)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -114,4 +121,5 @@ public class SteamGames {
 	public Collection<Integer> getIds() {
 		return Collections.unmodifiableCollection(this.games.values());
 	}
+
 }

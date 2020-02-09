@@ -30,25 +30,25 @@ public class TestGetMatchingIds {
 	}
 
 	@Test
-	public void testNoMatches() {
+	public void testNoMatches() throws InterruptedException {
 		Collection<Integer> ids = this.games.getMatchingIds("awlerkghlkw");
 		assertEquals(0, ids.size());
 	}
 	
 	@Test
-	public void testAllLowerCaseMatches() {
+	public void testAllLowerCaseMatches() throws InterruptedException {
 		Collection<Integer> ids = this.games.getMatchingIds("te");
 		assertEquals(2, ids.size());
 	}
 	
 	@Test
-	public void testAllUpperCaseMatches() {
+	public void testAllUpperCaseMatches() throws InterruptedException {
 		Collection<Integer> ids = this.games.getMatchingIds("TE");
 		assertEquals(2, ids.size());
 	}
 	
 	@Test
-	public void testOnlyOneMatch() {
+	public void testOnlyOneMatch() throws InterruptedException {
 		Collection<Integer> ids = this.games.getMatchingIds("test0");
 		assertEquals(1, ids.size());
 	}

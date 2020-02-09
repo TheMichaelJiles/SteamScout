@@ -3,10 +3,14 @@ package com.steamscout.application.model.api.tasks;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import com.steamscout.application.model.api.GameSearchAPI;
 import com.steamscout.application.model.api.exceptions.GameNotFoundException;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
+import com.steamscout.application.util.ParallelIterable;
 
 /**
  * Contains the ability to search steam for useful
@@ -47,22 +51,24 @@ public class SteamSearch {
 	 * 
 	 * @throws IOException if an error occurs polling the api.
 	 * @return a collection of game objects that match the term on the steam database.
+	 * @throws InterruptedException 
 	 */
-	public Collection<Game> query(String term) throws IOException {
+	public Collection<Game> query(String term) throws InterruptedException {
 		if (term == null) {
 			throw new IllegalArgumentException("term should not be null.");
 		}
-		Collection<Game> matchedGames = new ArrayList<Game>();
 		
-		Iterable<Integer> matchedIds = this.games.getMatchingIds(term);	
-		for (Integer id : matchedIds) {
+		List<Integer> matchedIds = this.games.getMatchingIds(term);	
+		Collection<Game> matchedGames = Collections.synchronizedCollection(new ArrayList<Game>());
+		ParallelIterable<Integer> ids = new ParallelIterable<Integer>(matchedIds);
+		ids.forEach(id -> {
 			GameSearchAPI steamSearch = new GameSearchAPI(id);
 			try {
 				Game loadedGame = steamSearch.makeRequest();
 				matchedGames.add(loadedGame);	
-			} catch (GameNotFoundException e) {
+			} catch (GameNotFoundException | IOException e) {
 			}
-		}
+		});
 		
 		
 		return matchedGames;
