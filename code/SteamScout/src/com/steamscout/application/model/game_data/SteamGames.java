@@ -83,6 +83,18 @@ public class SteamGames {
 	 * @throws InterruptedException 
 	 */
 	public List<Integer> getMatchingIds(String term) throws InterruptedException {
+		List<String> matchingTitles = this.getMatchingTitles(term);
+		
+		return matchingTitles.stream().map(match -> this.games.get(match)).collect(Collectors.toList());
+	}
+	
+	public Collection<Game> getMatchingGames(String term) throws InterruptedException {
+		List<String> matchingTitles = this.getMatchingTitles(term);
+		
+		return matchingTitles.stream().map(match -> new Game(this.games.get(match), match)).collect(Collectors.toList());
+	}
+	
+	public List<String> getMatchingTitles(String term) throws InterruptedException {
 		if (term == null) {
 			throw new IllegalArgumentException("term should not be null.");
 		}
@@ -95,7 +107,7 @@ public class SteamGames {
 			}
 		});
 		
-		return matches.stream().map(match -> this.games.get(match)).collect(Collectors.toList());
+		return matches;
 	}
 	
 	/**

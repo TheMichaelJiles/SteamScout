@@ -5,9 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.util.PageConnectionUtility;
+import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
-import com.steamscout.application.view.browse_game_listcell.BrowseGameListCell;
+import com.steamscout.application.view.game_listcell.GameListCell;
 
 /**
  * Browsing page code behind that connects to ViewModel
@@ -39,13 +43,13 @@ public class BrowsingPageCodeBehind {
     
     @FXML
     private void initialize() {
-    	this.gameResultsListView.setCellFactory(listView -> new BrowseGameListCell());
+    	this.gameResultsListView.setCellFactory(listView -> new GameListCell());
     	this.setUpBindings();
     }
 
     @FXML
     private void onAddButtonAction(ActionEvent event) {
-
+    	ViewModel.get().addSelectedGameToWatchlist();
     }
 
     @FXML
@@ -55,7 +59,7 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private void onNotificationPageButtonAction(ActionEvent event) {
-
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, (Stage) this.addButton.getScene().getWindow());
     }
 
     @FXML
@@ -65,7 +69,7 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private void onWatchlistPageButtonAction(ActionEvent event) {
-
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, (Stage) this.addButton.getScene().getWindow());
     }
 
     private void setUpBindings() {
@@ -74,9 +78,11 @@ public class BrowsingPageCodeBehind {
     	ViewModel vm = ViewModel.get();
     	vm.browsePageSearchTermProperty().bind(this.searchBarTextField.textProperty());
     	this.gameResultsListView.itemsProperty().bind(vm.searchResultsProperty());
+    	vm.browsePageSelectedGameProperty().bind(this.gameResultsListView.getSelectionModel().selectedItemProperty());
     }
     
     private void setUpDisableBindings() {
     	this.searchButton.disableProperty().bind(this.searchBarTextField.textProperty().isEmpty());
+    	this.addButton.disableProperty().bind(this.gameResultsListView.getSelectionModel().selectedItemProperty().isNull());
     }
 }

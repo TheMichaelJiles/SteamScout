@@ -3,7 +3,8 @@ package com.steamscout.application.view.code_behind;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
-import com.steamscout.application.view.watchlist_game_listcell.WatchlistGameListCell;
+import com.steamscout.application.view.ViewModel;
+import com.steamscout.application.view.game_listcell.GameListCell;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +46,8 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void initialize() {
-    	this.watchlistListView.setCellFactory(listview -> new WatchlistGameListCell());
+    	this.watchlistListView.setCellFactory(listview -> new GameListCell());
+    	this.setUpBindings();
     }
     
     @FXML
@@ -65,7 +67,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void onNotificationPageButtonAction(ActionEvent event) {
-
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, ((Stage) this.searchButton.getScene().getWindow()));
     }
 
     @FXML
@@ -78,4 +80,8 @@ public class WatchlistPageCodeBehind {
 
     }
 
+    private void setUpBindings() {
+    	ViewModel vm = ViewModel.get();
+    	this.watchlistListView.itemsProperty().bind(vm.watchlistProperty());
+    }
 }

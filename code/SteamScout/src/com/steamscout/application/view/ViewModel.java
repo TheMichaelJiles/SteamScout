@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.steamscout.application.model.api.tasks.NotificationChecker;
-import com.steamscout.application.model.api.tasks.SteamSearch;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
 import com.steamscout.application.model.game_data.Watchlist;
@@ -39,7 +38,6 @@ public final class ViewModel {
 	private ObjectProperty<Game> browsePageSelectedGameProperty;
 
 	private SteamGames steamGames;
-	private SteamSearch search;
 
 	private static ViewModel viewModel;
 
@@ -75,7 +73,6 @@ public final class ViewModel {
 		this.initializeProperties();
 
 		this.steamGames = new SteamGames();
-		this.search = new SteamSearch(this.steamGames);
 	}
 
 	/**
@@ -147,10 +144,10 @@ public final class ViewModel {
 	 */
 	public void performSearch() {
 		try {
-			Collection<Game> searchResults = this.search.query(this.browsePageSearchTermProperty.getValue());
+			Collection<Game> searchResults = this.steamGames.getMatchingGames(this.browsePageSearchTermProperty.getValue());
 			this.searchResultsProperty.setValue(FXCollections.observableArrayList(searchResults));
 		} catch (InterruptedException e) {
-			// TODO: handle failed search.
+			// TODO: handle failed search. NOTE: This is very unlikely to occur.
 		}
 	}
 
@@ -160,10 +157,12 @@ public final class ViewModel {
 	 * lower than the price threshold set on the game, then notifications are
 	 * generated and set to the notificationsProperty().
 	 * 
+	 * NOTE: WE NEED TO DISCUSS THIS. THIS API CALL MUST BE HIGHLY CONTROLLED.
+	 * 
 	 * @precondition none
 	 * @postcondition none
 	 */
-	public void loadNotifications() {
+	private void loadNotifications() {
 		try {
 			Collection<Notification> notifications = NotificationChecker
 					.query(this.userProperty.getValue().getWatchlist());
