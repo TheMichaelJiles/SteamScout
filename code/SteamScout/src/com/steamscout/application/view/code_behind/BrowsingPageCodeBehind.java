@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.view.ViewModel;
 import com.steamscout.application.view.browse_game_listcell.BrowseGameListCell;
 
 /**
@@ -39,6 +40,7 @@ public class BrowsingPageCodeBehind {
     @FXML
     private void initialize() {
     	this.gameResultsListView.setCellFactory(listView -> new BrowseGameListCell());
+    	this.setUpBindings();
     }
 
     @FXML
@@ -58,7 +60,7 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private void onSearchButtonAction(ActionEvent event) {
-
+    	ViewModel.get().performSearch();
     }
 
     @FXML
@@ -66,4 +68,15 @@ public class BrowsingPageCodeBehind {
 
     }
 
+    private void setUpBindings() {
+    	this.setUpDisableBindings();
+    	
+    	ViewModel vm = ViewModel.get();
+    	vm.browsePageSearchTermProperty().bind(this.searchBarTextField.textProperty());
+    	this.gameResultsListView.itemsProperty().bind(vm.searchResultsProperty());
+    }
+    
+    private void setUpDisableBindings() {
+    	this.searchButton.disableProperty().bind(this.searchBarTextField.textProperty().isEmpty());
+    }
 }
