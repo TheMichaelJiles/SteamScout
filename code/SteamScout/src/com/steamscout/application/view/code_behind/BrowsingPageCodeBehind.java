@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import com.steamscout.application.model.game_data.Game;
-import com.steamscout.application.view.game_listcell.GameListCell;
+import com.steamscout.application.view.browse_game_listcell.BrowseGameListCell;
 
 /**
  * Browsing page code behind that connects to ViewModel
@@ -38,7 +38,7 @@ public class BrowsingPageCodeBehind {
     
     @FXML
     private void initialize() {
-    	this.gameResultsListView.setCellFactory(listView -> new GameListCell());
+    	this.gameResultsListView.setCellFactory(listView -> new BrowseGameListCell());
     }
 
     @FXML

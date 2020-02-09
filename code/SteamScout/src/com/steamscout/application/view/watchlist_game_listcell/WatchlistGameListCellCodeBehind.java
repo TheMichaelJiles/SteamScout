@@ -1,4 +1,4 @@
-package com.steamscout.application.view.game_listcell;
+package com.steamscout.application.view.watchlist_game_listcell;
 
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
@@ -21,12 +21,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * The code behind for a particular GameListCell.fxml
+ * The code behind for a particular WatchlistGameListCell.fxml
  * 
  * @author Thomas Whaley
  *
  */
-public class GameListCellCodeBehind {
+public class WatchlistGameListCellCodeBehind {
 
 	@FXML
     private AnchorPane pane;
@@ -48,17 +48,25 @@ public class GameListCellCodeBehind {
 
     @FXML
     private Label gameSteamLinkLabel;
-    
+
     @FXML
-    private Button addToWatchlistButton;
-    
+    private Button changeCriteriaButton;
+
+    @FXML
+    private Button removeButton;
+
     private Game sourceGame;
     
     @FXML
-    private void onAddToWatchlistButtonAction(ActionEvent event) {
-    	// TODO: add the source game to watchlist.
+    private void onChangeCriteriaButtonAction(ActionEvent event) {
+    	// TODO: Open change criteria popup/scene for this listcells game.
     }
     
+    @FXML
+    private void onRemoveButtonAction(ActionEvent event) {
+    	// TODO: Remove this game from the user's watchlist.
+    }
+
     @FXML
     private void onGameSteamLinkLabelClicked(MouseEvent event) {
     	Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
@@ -75,7 +83,7 @@ public class GameListCellCodeBehind {
     private void onGameSteamLinkLabelEnter(MouseEvent event) {
     	this.gameSteamLinkLabel.setStyle("-fx-cursor: hand");
     }
-    
+
     /**
      * Initializes the contents of this list cell to the data within the specified
      * game object.
