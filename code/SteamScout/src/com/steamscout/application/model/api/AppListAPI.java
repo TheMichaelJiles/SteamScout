@@ -16,7 +16,7 @@ import org.json.JSONObject;
  */
 public class AppListAPI extends APIRequest {
 
-	private static final String APP_LIST_API_URL = "http://api.steampowered.com/ISteamApps/GetAppList/v0001/";
+	private static final String APP_LIST_API_URL = "http://api.steampowered.com/ISteamApps/GetAppList/v0002/";
 	
 	/**
 	 * Creates a new AppListAPI object.
@@ -34,10 +34,9 @@ public class AppListAPI extends APIRequest {
 			
 		JSONObject json = this.pollApi();
 		JSONObject applist = json.getJSONObject("applist");
-		JSONObject apps = applist.getJSONObject("apps");
-		JSONArray array = apps.getJSONArray("app");
-		for (int i = 0; i < array.length(); i++) {
-			JSONObject currentObject = array.getJSONObject(i);
+		JSONArray apps = applist.getJSONArray("apps");
+		for (int i = 0; i < apps.length(); i++) {
+			JSONObject currentObject = apps.getJSONObject(i);
 			games.put(currentObject.getString("name"), currentObject.getInt("appid"));
 		}
 			
