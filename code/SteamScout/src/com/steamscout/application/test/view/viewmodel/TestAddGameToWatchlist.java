@@ -2,6 +2,7 @@ package com.steamscout.application.test.view.viewmodel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,13 @@ public class TestAddGameToWatchlist {
 	public void setUp() {
 		ViewModel.get().watchlistProperty().getValue().clear();
 		ViewModel.get().userProperty().setValue(null);
+	}
+	
+	@AfterEach
+	public void tearDown() {
+		ViewModel.get().watchlistProperty().getValue().clear();
+		ViewModel.get().userProperty().setValue(null);
+		ViewModel.get().browsePageSelectedGameProperty().setValue(null);
 	}
 	
 	@Test

@@ -12,7 +12,7 @@ import java.util.List;
 public class ListUtil {
 
 	/**
-	 * Takes the specified list and splits it in half the specfied number of times.
+	 * Takes the specified list and splits it in half the specified number of times.
 	 * This is best explained with an example, Given the list = [0, 1, 2, 3, 4, 5, 6, 7].
 	 * split(list, 0) == [[0, 1, 2, 3, 4, 5, 6, 7]], split(list, 1) == [[0, 1, 2, 3], [4, 5, 6, 7]] and
 	 * split(list, 2) == [[0, 1], [2, 3], [4, 5], [6, 7]]. So with numberOfSplits == 1, this method splits

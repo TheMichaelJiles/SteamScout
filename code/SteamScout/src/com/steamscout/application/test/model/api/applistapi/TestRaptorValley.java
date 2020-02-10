@@ -16,7 +16,7 @@ public class TestRaptorValley {
 
 		@Override
 		protected JSONObject pollApi() throws IOException {
-			final String testJson = "{\"applist\": {\"apps\": {\"app\": [{\"appid\": 524120, \"name\": \"Raptor Valley\"}]}}}";
+			final String testJson = "{\"applist\": {\"apps\": [{\"appid\": 524120, \"name\": \"Raptor Valley\"}]}}";
 			return new JSONObject(testJson);
 		}
 	}

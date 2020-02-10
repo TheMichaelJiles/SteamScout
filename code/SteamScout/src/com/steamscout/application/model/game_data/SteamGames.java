@@ -71,12 +71,22 @@ public class SteamGames {
 	}
 	
 	/**
+	 * Clears all the games in this collection.
+	 * 
+	 * @precondition none
+	 * @postcondition getTitles.isEmpty() && getIds().isEmpty()
+	 */
+	public void clear() {
+		this.games.clear();
+	}
+	
+	/**
 	 * Gets all of the ids that are mapped with a name that
 	 * contains the given term. The containment check is not 
 	 * case-sensitive.
 	 * 
 	 * @precondition term != null
-	 * @postcondition none
+	 * @postcondition getIds().containsAll(getMatchingIds(term))
 	 * 
 	 * @param term the term to find matching ids for.
 	 * @return a grouping of ids that are mapped with a name that contains the given term.
@@ -88,12 +98,33 @@ public class SteamGames {
 		return matchingTitles.stream().map(match -> this.games.get(match)).collect(Collectors.toList());
 	}
 	
+	/**
+	 * Gets a collection of game objects with titles that contain
+	 * the given term.
+	 * 
+	 * @precondition term != null
+	 * @postcondition getTitles().containsAll(getMatchingGames(term).stream().map(game -> game.getTitle()).collect(Collectors.toList()))
+	 * 
+	 * @param term the term to compare against this SteamGames object's titles.
+	 * @return a collection of game objects with titles that contain the given term.
+	 * @throws InterruptedException if the search threads are interrupted.
+	 */
 	public Collection<Game> getMatchingGames(String term) throws InterruptedException {
 		List<String> matchingTitles = this.getMatchingTitles(term);
 		
 		return matchingTitles.stream().map(match -> new Game(this.games.get(match), match)).collect(Collectors.toList());
 	}
 	
+	/**
+	 * Gets a list of steam titles that contain the given search term.
+	 * 
+	 * @precondition term != null
+	 * @postcondition getTitles().containsAll(getMatchingTitles(term))
+	 * 
+	 * @param term the term to compare against the steam titles.
+	 * @return a list of titles that are contained in the steam games.
+	 * @throws InterruptedException if the search threads are interrupted.
+	 */
 	public List<String> getMatchingTitles(String term) throws InterruptedException {
 		if (term == null) {
 			throw new IllegalArgumentException("term should not be null.");

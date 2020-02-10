@@ -1,6 +1,5 @@
 package com.steamscout.application.view;
 
-import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
 import java.io.IOException;
@@ -10,7 +9,6 @@ import java.util.Map;
 import com.steamscout.application.model.api.tasks.NotificationChecker;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
-import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.Notification;
 
 import javafx.beans.property.ListProperty;
@@ -27,7 +25,7 @@ import javafx.collections.FXCollections;
  * @author Thomas Whaley
  *
  */
-public final class ViewModel {
+public abstract class ViewModel {
 
 	private ObjectProperty<User> userProperty;
 	private ListProperty<Notification> notificationsProperty;
@@ -51,7 +49,7 @@ public final class ViewModel {
 	 */
 	public static ViewModel get() {
 		if (viewModel == null) {
-			viewModel = new ViewModel();
+			viewModel = new BehaviorViewModel();
 		}
 
 		return viewModel;
@@ -69,7 +67,7 @@ public final class ViewModel {
 	 *                browsePageSelectedGameProperty().getValue() == null &&
 	 *                getSteamGames() != null
 	 */
-	private ViewModel() {
+	protected ViewModel() {
 		this.initializeProperties();
 
 		this.steamGames = new SteamGames();
@@ -89,13 +87,7 @@ public final class ViewModel {
 	 * 
 	 * @param steamData the data to give the SteamData object.
 	 */
-	public void insertSteamData(Map<String, Integer> steamData) {
-		if (steamData == null) {
-			throw new IllegalArgumentException("steamData should not be null.");
-		}
-
-		this.steamGames.initializeGames(steamData);
-	}
+	public abstract void insertSteamData(Map<String, Integer> steamData);
 
 	/**
 	 * Adds the currently selected game on the browse page to the user's watchlist
@@ -106,9 +98,7 @@ public final class ViewModel {
 	 *                watchlistProperty().getValue().size() ==
 	 *                watchlistProperty().getValue().size()@prev + 1
 	 */
-	public void addSelectedGameToWatchlist() {
-		this.addGameToWatchlist(this.browsePageSelectedGameProperty.getValue());
-	}
+	public abstract void addSelectedGameToWatchlist();
 
 	/**
 	 * Adds the specified game to the user's watchlist and updates the watchlist
@@ -121,18 +111,7 @@ public final class ViewModel {
 	 * 
 	 * @param game the game to add to the user's watchlist.
 	 */
-	public void addGameToWatchlist(Game game) {
-		if (game == null) {
-			throw new IllegalArgumentException("game should not be null.");
-		}
-
-		User currentUser = this.userProperty.getValue();
-		if (currentUser != null) {
-			Watchlist userWatchlist = currentUser.getWatchlist();
-			userWatchlist.add(game);
-			this.watchlistProperty.setValue(FXCollections.observableArrayList(userWatchlist));
-		}
-	}
+	public abstract void addGameToWatchlist(Game game);
 
 	/**
 	 * Performs a search using the steam api and the value within
@@ -142,14 +121,7 @@ public final class ViewModel {
 	 * @precondition none
 	 * @postcondition none
 	 */
-	public void performSearch() {
-		try {
-			Collection<Game> searchResults = this.steamGames.getMatchingGames(this.browsePageSearchTermProperty.getValue());
-			this.searchResultsProperty.setValue(FXCollections.observableArrayList(searchResults));
-		} catch (InterruptedException e) {
-			// TODO: handle failed search. NOTE: This is very unlikely to occur.
-		}
-	}
+	public abstract void performSearch();
 
 	/**
 	 * Performs a search using the steam api against all games in the user's
@@ -185,11 +157,7 @@ public final class ViewModel {
 	 *                STARTED WHEN THEY HIT LOGIN WE CAN CALL THIS METHOD TO
 	 *                INITIALIZE THE SYSTEM.
 	 */
-	public void loginUser() {
-		User newUser = new User(new Credentials("TestUser", "1234"));
-		this.userProperty.setValue(newUser);
-		this.watchlistProperty.setValue(FXCollections.observableArrayList(newUser.getWatchlist()));
-	}
+	public abstract void loginUser();
 
 	/**
 	 * Gets the userProperty for the current user of the system.
