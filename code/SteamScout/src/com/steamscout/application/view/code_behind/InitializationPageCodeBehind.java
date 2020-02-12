@@ -62,8 +62,14 @@ public class InitializationPageCodeBehind {
     		ViewModel.get().insertSteamData(loader.getValue());
     		this.transitionToApplication();
     	});
-    	loader.setOnFailed(event -> System.exit(1));
-    	loader.setOnCancelled(event -> System.exit(1));
+    	loader.setOnFailed(event -> {
+    		loader.exceptionProperty().getValue().printStackTrace();
+    		System.exit(1);
+    	});
+    	loader.setOnCancelled(event -> {
+    		loader.exceptionProperty().getValue().printStackTrace();
+    		System.exit(1);
+    	});
     	Thread loadingThread = new Thread(loader);
     	loadingThread.start();
     }
