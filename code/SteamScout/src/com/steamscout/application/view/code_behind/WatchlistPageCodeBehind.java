@@ -52,12 +52,12 @@ public class WatchlistPageCodeBehind {
     
     @FXML
     private void onBrowsePageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.BROWSING_PAGE_FILENAME, ((Stage) this.searchButton.getScene().getWindow()));
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.BROWSING_PAGE_FILENAME, this.getCurrentStage());
     }
 
     @FXML
     private void onLogoutButtonAction(ActionEvent event) {
-
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
     }
 
     @FXML
@@ -67,7 +67,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void onNotificationPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, ((Stage) this.searchButton.getScene().getWindow()));
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
     }
 
     @FXML
@@ -79,7 +79,11 @@ public class WatchlistPageCodeBehind {
     private void onSearchButtonAction(ActionEvent event) {
 
     }
-
+    
+    private Stage getCurrentStage() {
+    	return ((Stage) this.searchButton.getScene().getWindow());
+    }
+    
     private void setUpBindings() {
     	ViewModel vm = ViewModel.get();
     	this.watchlistListView.itemsProperty().bind(vm.watchlistProperty());

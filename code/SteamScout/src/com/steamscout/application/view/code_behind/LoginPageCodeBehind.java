@@ -31,6 +31,11 @@ public class LoginPageCodeBehind {
 	private Button loginButton;
 
 	@FXML
+	void initialize() {
+		
+	}
+
+	@FXML
 	private void onCreateAccountPageButtonAction(ActionEvent event) {
 
 	}
@@ -38,7 +43,11 @@ public class LoginPageCodeBehind {
 	@FXML
 	private void onLoginButtonAction(ActionEvent event) {
 		ViewModel.get().loginUser();
-		PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, ((Stage) this.loginButton.getScene().getWindow()));
+		PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
+	}
+	
+	private Stage getCurrentStage() {
+		return ((Stage) this.loginButton.getScene().getWindow());
 	}
 
 }

@@ -54,12 +54,12 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private void onLogoutButtonAction(ActionEvent event) {
-
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
     }
 
     @FXML
     private void onNotificationPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, (Stage) this.addButton.getScene().getWindow());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
     }
 
     @FXML
@@ -69,7 +69,11 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private void onWatchlistPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, (Stage) this.addButton.getScene().getWindow());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
+    }
+    
+    private Stage getCurrentStage() {
+    	return (Stage) this.addButton.getScene().getWindow();
     }
 
     private void setUpBindings() {
