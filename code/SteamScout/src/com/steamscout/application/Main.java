@@ -28,7 +28,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Path landingPagePath = Paths.get(".", "view", "fxml", UIFilePaths.LOGIN_PAGE_FILENAME);
+			Path landingPagePath = Paths.get(".", "view", "fxml", UIFilePaths.INITIALIZATION_PAGE_FILENAME);
 			URL landingPageUrl = Main.class.getResource(landingPagePath.toString());
 			
 			FXMLLoader loader = new FXMLLoader(landingPageUrl);
