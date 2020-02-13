@@ -5,11 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 
 import com.steamscout.application.model.game_data.Game;
-import com.steamscout.application.util.PageConnectionUtility;
-import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
 import com.steamscout.application.view.game_listcell.GameListCell;
 
@@ -27,19 +25,13 @@ public class BrowsingPageCodeBehind {
     private ListView<Game> gameResultsListView;
 
     @FXML
-    private Button watchlistPageButton;
-
-    @FXML
     private Button addButton;
 
     @FXML
-    private Button notificationPageButton;
-
-    @FXML
-    private Button logoutButton;
-
-    @FXML
     private Button searchButton;
+    
+    @FXML
+    private VBox mainNavigationBar;
     
     @FXML
     private void initialize() {
@@ -53,27 +45,8 @@ public class BrowsingPageCodeBehind {
     }
 
     @FXML
-    private void onLogoutButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
-    }
-
-    @FXML
-    private void onNotificationPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
-    }
-
-    @FXML
     private void onSearchButtonAction(ActionEvent event) {
     	ViewModel.get().performSearch();
-    }
-
-    @FXML
-    private void onWatchlistPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
-    }
-    
-    private Stage getCurrentStage() {
-    	return (Stage) this.addButton.getScene().getWindow();
     }
 
     private void setUpBindings() {

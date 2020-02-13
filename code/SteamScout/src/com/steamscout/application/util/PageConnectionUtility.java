@@ -39,11 +39,9 @@ public class PageConnectionUtility {
 			FXMLLoader loader = new FXMLLoader(watchlistPageURL);
 			Pane pane = loader.load();
 			Scene scene = new Scene(pane);
-			// Stage currentStage = (Stage) ((Node)
-			// event.getSource()).getScene().getWindow();
 			stage.setScene(scene);
-		} catch (IOException e) {
-
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
