@@ -72,6 +72,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void onRemoveButtonAction(ActionEvent event) {
+    	ViewModel.get().removeSelectedGameFromWatchlist();
 
     }
 
@@ -85,7 +86,14 @@ public class WatchlistPageCodeBehind {
     }
     
     private void setUpBindings() {
+    	this.setUpDisableBindings();
+    	
     	ViewModel vm = ViewModel.get();
     	this.watchlistListView.itemsProperty().bind(vm.watchlistProperty());
+    	vm.watchlistPageSelectedGameProperty().bind(this.watchlistListView.getSelectionModel().selectedItemProperty());
+    }
+    
+    private void setUpDisableBindings() {
+    	this.removeButton.disableProperty().bind(this.watchlistListView.getSelectionModel().selectedItemProperty().isNull());
     }
 }

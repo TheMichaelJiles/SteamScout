@@ -13,7 +13,7 @@ import javafx.collections.FXCollections;
 /**
  * Contains the behavior of the view model as it interacts with the model.
  * 
- * @author Thomas Whaley
+ * @author Thomas Whaley, Nathan Lightholder
  *
  */
 public class BehaviorViewModel extends ViewModel {
@@ -34,6 +34,25 @@ public class BehaviorViewModel extends ViewModel {
 	@Override
 	public void addSelectedGameToWatchlist() {
 		this.addGameToWatchlist(this.browsePageSelectedGameProperty().getValue());
+	}
+	
+	@Override
+	public void removeSelectedGameFromWatchlist() {
+		this.removeGameFromWatchlist(this.watchlistPageSelectedGameProperty().getValue());
+	}
+	
+	@Override
+	public void removeGameFromWatchlist(Game game) {
+		if (game == null) {
+			throw new IllegalArgumentException("game should not be null.");
+		}
+
+		User currentUser = this.userProperty().getValue();
+		if (currentUser != null) {
+			Watchlist userWatchlist = currentUser.getWatchlist();
+			userWatchlist.remove(game);
+			this.watchlistProperty().setValue(FXCollections.observableArrayList(userWatchlist));
+		}
 	}
 
 	@Override
