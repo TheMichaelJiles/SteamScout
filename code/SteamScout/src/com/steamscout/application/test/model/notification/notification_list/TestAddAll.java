@@ -1,4 +1,4 @@
-package com.steamscout.application.test.model.notification_list;
+package com.steamscout.application.test.model.notification.notification_list;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;

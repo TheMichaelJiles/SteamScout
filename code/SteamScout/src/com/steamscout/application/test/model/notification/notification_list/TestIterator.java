@@ -1,6 +1,8 @@
-package com.steamscout.application.test.model.notification_list;
+package com.steamscout.application.test.model.notification.notification_list;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Iterator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,7 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.model.notification.NotificationList;
 
-class TestToArray {
+public class TestIterator {
 	
 	private Notification testNotification;
 	private Notification testNotification2;
@@ -33,28 +35,22 @@ class TestToArray {
 		testGame3.setSteamLink("link");
 		this.testNotification3 = new Notification(testGame3);
 	}
-
-	@Test
-	void testBasicToArray() {
-		NotificationList notificationsList = new NotificationList();
-		notificationsList.add(this.testNotification);
-		notificationsList.add(this.testNotification2);
-		notificationsList.add(this.testNotification3);
-		
-		assertEquals(3, notificationsList.toArray().length);
-	}
 	
 	@Test
-	void testToArrayWithSmallerArray() {
+	public void testCanIterate() {
 		NotificationList notificationsList = new NotificationList();
 		notificationsList.add(this.testNotification);
 		notificationsList.add(this.testNotification2);
 		notificationsList.add(this.testNotification3);
 		
-		Notification[] testArray = new Notification[2];
-		testArray = notificationsList.toArray(testArray);
+		double total = 0;
+		Iterator<Notification> iterator = notificationsList.iterator();
+		while (iterator.hasNext()) {
+			Notification currentNotification = iterator.next();
+			total += currentNotification.getCurrentPrice();
+		}
 		
-		assertEquals(this.testNotification2, testArray[1]);
+		assertEquals(120, total);
 	}
 
 }

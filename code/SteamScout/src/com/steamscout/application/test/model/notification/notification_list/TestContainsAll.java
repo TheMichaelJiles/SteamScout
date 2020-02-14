@@ -1,6 +1,9 @@
-package com.steamscout.application.test.model.notification_list;
+package com.steamscout.application.test.model.notification.notification_list;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +12,7 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.model.notification.NotificationList;
 
-class TestClear {
+class TestContainsAll {
 	
 	private Notification testNotification;
 	private Notification testNotification2;
@@ -35,31 +38,32 @@ class TestClear {
 	}
 
 	@Test
-	void testClearWithNoItemInList() {
-		NotificationList list = new NotificationList();
-		list.clear();
+	void testCotnainsAllFailsWithMissingElement() {
+		NotificationList notificationsList = new NotificationList();
+		notificationsList.add(this.testNotification);
+		notificationsList.add(this.testNotification3);
 		
-		assertEquals(0, list.size());
+		List<Notification> list = new ArrayList<Notification>();
+		list.add(this.testNotification);
+		list.add(this.testNotification2);
+		list.add(this.testNotification3);
+		
+		assertFalse(notificationsList.containsAll(list));
 	}
 	
 	@Test
-	void testClearWithOneItemInList() {
-		NotificationList list = new NotificationList();
-		list.add(this.testNotification);
-		list.clear();
+	void testCotnainsAllWithAllElements() {
+		NotificationList notificationsList = new NotificationList();
+		notificationsList.add(this.testNotification);
+		notificationsList.add(this.testNotification2);
+		notificationsList.add(this.testNotification3);
 		
-		assertEquals(0, list.size());
-	}
-	
-	@Test
-	void testClearWithMultipleItemsInList() {
-		NotificationList list = new NotificationList();
+		List<Notification> list = new ArrayList<Notification>();
 		list.add(this.testNotification);
-		list.add(testNotification2);
-		list.add(testNotification3);
-		list.clear();
+		list.add(this.testNotification2);
+		list.add(this.testNotification3);
 		
-		assertEquals(0, list.size());
+		assertTrue(notificationsList.containsAll(list));
 	}
 
 }

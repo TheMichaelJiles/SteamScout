@@ -1,4 +1,4 @@
-package com.steamscout.application.test.model.notification;
+package com.steamscout.application.test.model.notification.notification;
 
 import static org.junit.jupiter.api.Assertions.*;
 

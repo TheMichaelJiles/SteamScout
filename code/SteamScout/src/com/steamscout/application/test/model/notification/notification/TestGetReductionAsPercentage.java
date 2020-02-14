@@ -1,4 +1,4 @@
-package com.steamscout.application.test.model.notification;
+package com.steamscout.application.test.model.notification.notification;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,16 +7,16 @@ import org.junit.jupiter.api.Test;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.Notification;
 
-class TestGetPriceReduction {
+class TestGetReductionAsPercentage {
 
 	@Test
-	void testGetPriceReduction() {
+	void testGetReductionasPercentage() {
 		Game aGame = new Game(00000, "Pizza Salesman");
-		aGame.setCurrentPrice(50.00);
+		aGame.setCurrentPrice(30.00);
 		aGame.setInitialPrice(60.00);
 		Notification aNotification = new Notification(aGame);
 		
-		assertEquals(10.00, aNotification.getPriceReduction());
+		assertEquals(0.5, aNotification.getReductionAsPercentage());
 	}
 
 }

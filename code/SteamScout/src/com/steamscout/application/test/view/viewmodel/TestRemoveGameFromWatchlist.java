@@ -34,6 +34,7 @@ class TestRemoveGameFromWatchlist {
 		ViewModel.get().watchlistProperty().getValue().clear();
 		ViewModel.get().userProperty().setValue(null);
 		ViewModel.get().watchlistPageSelectedGameProperty().setValue(null);
+		ViewModel.get().browsePageSelectedGameProperty().setValue(null);
 	}
 	
 	@Test

@@ -1,4 +1,4 @@
-package com.steamscout.application.test.model.notification_list;
+package com.steamscout.application.test.model.notification.notification_list;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +12,7 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.model.notification.NotificationList;
 
-class TestRemove {
+class TestRetainAll {
 	
 	private Notification testNotification;
 	private Notification testNotification2;
@@ -36,9 +36,9 @@ class TestRemove {
 		testGame3.setSteamLink("link");
 		this.testNotification3 = new Notification(testGame3);
 	}
-	
+
 	@Test
-	void testRemoveAllClearsSpecifiedElements() {
+	void testRetainAllGamesInArrayList() {
 		NotificationList notificationsList = new NotificationList();
 		notificationsList.add(this.testNotification);
 		notificationsList.add(this.testNotification2);
@@ -47,35 +47,34 @@ class TestRemove {
 		List<Notification> list = new ArrayList<Notification>();
 		list.add(this.testNotification);
 		list.add(this.testNotification3);
-		notificationsList.removeAll(list);
+		notificationsList.retainAll(list);
 		
-		assertEquals(1, notificationsList.size());
-	}
-
-	@Test
-	void testRemoveObjectThatDoesntExistIsFalse() {
-		NotificationList notificationsList = new NotificationList();
-		notificationsList.add(this.testNotification);
-		notificationsList.add(this.testNotification2);
-		
-		assertFalse(notificationsList.remove(testNotification3));
+		assertEquals(2, notificationsList.size());
 	}
 	
 	@Test
-	void testRemoveObjectDecreasesSize() {
+	void testRetainAllOnAnEmptyList() {
 		NotificationList notificationsList = new NotificationList();
-		notificationsList.add(this.testNotification);
-		notificationsList.add(this.testNotification2);
 		
-		notificationsList.remove(this.testNotification2);
+		List<Notification> list = new ArrayList<Notification>();
+		list.add(this.testNotification);
+		list.add(this.testNotification3);
+		notificationsList.retainAll(list);
 		
-		assertEquals(1, notificationsList.size());
+		assertEquals(0, notificationsList.size());
 	}
 	
 	@Test
-	void testRemoveNullReturnsFalse() {
+	void testRetainAllUsingEmptyList() {
 		NotificationList notificationsList = new NotificationList();
-		assertFalse(notificationsList.remove(null));
+		notificationsList.add(this.testNotification);
+		notificationsList.add(this.testNotification2);
+		notificationsList.add(this.testNotification3);
+		
+		List<Notification> list = new ArrayList<Notification>();
+		notificationsList.retainAll(list);
+		
+		assertEquals(0, notificationsList.size());
 	}
 
 }

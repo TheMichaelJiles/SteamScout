@@ -1,8 +1,6 @@
-package com.steamscout.application.test.model.notification_list;
+package com.steamscout.application.test.model.notification.notification_list;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.Iterator;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +9,7 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.model.notification.NotificationList;
 
-public class TestIterator {
+class TestClear {
 	
 	private Notification testNotification;
 	private Notification testNotification2;
@@ -35,22 +33,33 @@ public class TestIterator {
 		testGame3.setSteamLink("link");
 		this.testNotification3 = new Notification(testGame3);
 	}
+
+	@Test
+	void testClearWithNoItemInList() {
+		NotificationList list = new NotificationList();
+		list.clear();
+		
+		assertEquals(0, list.size());
+	}
 	
 	@Test
-	public void testCanIterate() {
-		NotificationList notificationsList = new NotificationList();
-		notificationsList.add(this.testNotification);
-		notificationsList.add(this.testNotification2);
-		notificationsList.add(this.testNotification3);
+	void testClearWithOneItemInList() {
+		NotificationList list = new NotificationList();
+		list.add(this.testNotification);
+		list.clear();
 		
-		double total = 0;
-		Iterator<Notification> iterator = notificationsList.iterator();
-		while (iterator.hasNext()) {
-			Notification currentNotification = iterator.next();
-			total += currentNotification.getCurrentPrice();
-		}
+		assertEquals(0, list.size());
+	}
+	
+	@Test
+	void testClearWithMultipleItemsInList() {
+		NotificationList list = new NotificationList();
+		list.add(this.testNotification);
+		list.add(testNotification2);
+		list.add(testNotification3);
+		list.clear();
 		
-		assertEquals(120, total);
+		assertEquals(0, list.size());
 	}
 
 }

@@ -1,9 +1,6 @@
-package com.steamscout.application.test.model.notification_list;
+package com.steamscout.application.test.model.notification.notification_list;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +9,7 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.model.notification.NotificationList;
 
-class TestRetainAll {
+class TestToArray {
 	
 	private Notification testNotification;
 	private Notification testNotification2;
@@ -38,43 +35,26 @@ class TestRetainAll {
 	}
 
 	@Test
-	void testRetainAllGamesInArrayList() {
+	void testBasicToArray() {
 		NotificationList notificationsList = new NotificationList();
 		notificationsList.add(this.testNotification);
 		notificationsList.add(this.testNotification2);
 		notificationsList.add(this.testNotification3);
 		
-		List<Notification> list = new ArrayList<Notification>();
-		list.add(this.testNotification);
-		list.add(this.testNotification3);
-		notificationsList.retainAll(list);
-		
-		assertEquals(2, notificationsList.size());
+		assertEquals(3, notificationsList.toArray().length);
 	}
 	
 	@Test
-	void testRetainAllOnAnEmptyList() {
-		NotificationList notificationsList = new NotificationList();
-		
-		List<Notification> list = new ArrayList<Notification>();
-		list.add(this.testNotification);
-		list.add(this.testNotification3);
-		notificationsList.retainAll(list);
-		
-		assertEquals(0, notificationsList.size());
-	}
-	
-	@Test
-	void testRetainAllUsingEmptyList() {
+	void testToArrayWithSmallerArray() {
 		NotificationList notificationsList = new NotificationList();
 		notificationsList.add(this.testNotification);
 		notificationsList.add(this.testNotification2);
 		notificationsList.add(this.testNotification3);
 		
-		List<Notification> list = new ArrayList<Notification>();
-		notificationsList.retainAll(list);
+		Notification[] testArray = new Notification[2];
+		testArray = notificationsList.toArray(testArray);
 		
-		assertEquals(0, notificationsList.size());
+		assertEquals(this.testNotification2, testArray[1]);
 	}
 
 }

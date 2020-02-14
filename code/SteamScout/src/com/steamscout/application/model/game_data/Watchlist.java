@@ -37,6 +37,8 @@ public class Watchlist implements Collection<Game> {
 	 * @precondition game != null &&
 	 * 				 criteria != null &&
 	 * 				 contains(game)
+	 * @postcondition getNotificationCriteria(game).equals(criteria)
+	 * 
 	 * @param game
 	 * @param criteria
 	 */
