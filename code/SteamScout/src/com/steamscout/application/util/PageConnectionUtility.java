@@ -1,6 +1,5 @@
 package com.steamscout.application.util;
 
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,9 +33,9 @@ public class PageConnectionUtility {
 	 */
 	public static void transitionPageTo(String filePath, Stage stage) {
 		try {
-			Path watchlistPagePath = Paths.get(".", "view", "fxml", filePath);
-			URL watchlistPageURL = Main.class.getResource(watchlistPagePath.toString());
-			FXMLLoader loader = new FXMLLoader(watchlistPageURL);
+			Path pagePath = Paths.get(".", "view", "fxml", filePath);
+			URL pageUrl = Main.class.getResource(pagePath.toString());
+			FXMLLoader loader = new FXMLLoader(pageUrl);
 			Pane pane = loader.load();
 			Scene scene = new Scene(pane);
 			stage.setScene(scene);
