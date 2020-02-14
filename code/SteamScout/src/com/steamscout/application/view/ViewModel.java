@@ -22,7 +22,7 @@ import javafx.collections.FXCollections;
 /**
  * Acts as the intermediary between the view and model packages in SteamScout.
  * 
- * @author Thomas Whaley
+ * @author Thomas Whaley, Nathan Lightholder
  *
  */
 public abstract class ViewModel {
@@ -30,6 +30,7 @@ public abstract class ViewModel {
 	private ObjectProperty<User> userProperty;
 	private ListProperty<Notification> notificationsProperty;
 	private ListProperty<Game> watchlistProperty;
+	private ObjectProperty<Game> watchlistPageSelectedGameProperty;
 	private ListProperty<Game> searchResultsProperty;
 
 	private StringProperty browsePageSearchTermProperty;
@@ -99,6 +100,16 @@ public abstract class ViewModel {
 	 *                watchlistProperty().getValue().size()@prev + 1
 	 */
 	public abstract void addSelectedGameToWatchlist();
+	
+	/**
+	 * Removes the game selected in the watchlist page listview
+	 * and watchlist
+	 * 
+	 * @precondtion none
+	 * @postcondition watchlistProperty().getValue().size() ==
+	 *                watchlistProperty().getValue().size()@prev - 1
+	 */
+	public abstract void removeSelectedGameFromWatchlist();
 
 	/**
 	 * Adds the specified game to the user's watchlist and updates the watchlist
@@ -112,6 +123,18 @@ public abstract class ViewModel {
 	 * @param game the game to add to the user's watchlist.
 	 */
 	public abstract void addGameToWatchlist(Game game);
+	
+	/**
+	 * Removes the game specified from the watchlist
+	 * 
+	 * @precondition game != null
+	 * @postcondition if userProperty().getValue() != null, then
+	 *                watchlistProperty().getValue().size() ==
+	 *                watchlistProperty().getValue().size()@prev - 1
+	 *                
+	 * @param game the game to be removed from the watchlist
+	 */
+	public abstract void removeGameFromWatchlist(Game game);
 
 	/**
 	 * Performs a search using the steam api and the value within
@@ -196,6 +219,19 @@ public abstract class ViewModel {
 	public ListProperty<Game> watchlistProperty() {
 		return this.watchlistProperty;
 	}
+	
+	/**
+	 * Gets the watclistPage selected game property. Which holds the selected
+	 * item in the list view.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return watchlistPageSelectedGameProperty
+	 */
+	public ObjectProperty<Game> watchlistPageSelectedGameProperty() {
+		return this.watchlistPageSelectedGameProperty;
+	}
 
 	/**
 	 * Gets the searchResultsProperty. This contains a list of games that can be
@@ -257,5 +293,6 @@ public abstract class ViewModel {
 		this.searchResultsProperty = new SimpleListProperty<Game>(FXCollections.emptyObservableList());
 		this.browsePageSearchTermProperty = new SimpleStringProperty("");
 		this.browsePageSelectedGameProperty = new SimpleObjectProperty<Game>();
+		this.watchlistPageSelectedGameProperty = new SimpleObjectProperty<Game>();
 	}
 }

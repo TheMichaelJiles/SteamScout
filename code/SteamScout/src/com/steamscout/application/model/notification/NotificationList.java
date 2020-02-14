@@ -9,7 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author Nlight160
+ * NotificationList functions as a collection for Notifications
+ * 
+ * @Author Nathan Lightholder
  *
  */
 public class NotificationList implements Collection<Notification> {
