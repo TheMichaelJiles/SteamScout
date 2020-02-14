@@ -48,6 +48,7 @@ public class WatchlistPageCodeBehind {
     private void initialize() {
     	this.watchlistListView.setCellFactory(listview -> new GameListCell());
     	this.setUpBindings();
+    	this.setUpListeners();
     }
     
     @FXML
@@ -83,6 +84,15 @@ public class WatchlistPageCodeBehind {
     
     private Stage getCurrentStage() {
     	return ((Stage) this.searchButton.getScene().getWindow());
+    }
+    
+    private void setUpListeners() {
+    	this.watchlistListView.setOnMouseClicked(event -> {
+    		// TODO: Probably change this to context menu instead.
+    		if (this.watchlistListView.getSelectionModel().getSelectedItem() != null && event.getClickCount() == 2) {
+    			PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
+    		}
+    	});
     }
     
     private void setUpBindings() {

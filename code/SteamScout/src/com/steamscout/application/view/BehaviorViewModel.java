@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
+import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
@@ -58,7 +59,7 @@ public class BehaviorViewModel extends ViewModel {
 	@Override
 	public void addGameToWatchlist(Game game) {
 		if (game == null) {
-			throw new IllegalArgumentException("game should not be null.");
+			throw new IllegalArgumentException("game to add to watchlist should not be null.");
 		}
 
 		User currentUser = this.userProperty().getValue();
@@ -84,6 +85,18 @@ public class BehaviorViewModel extends ViewModel {
 		User newUser = new User(new Credentials("TestUser", "1234"));
 		this.userProperty().setValue(newUser);
 		this.watchlistProperty().setValue(FXCollections.observableArrayList(newUser.getWatchlist()));
+	}
+
+	@Override
+	public void setSelectedGameNotificationCriteria(boolean onSale, boolean belowThreshold, double targetPrice) {
+		Watchlist watchlist = this.userProperty().getValue().getWatchlist();
+		
+		NotificationCriteria criteria = new NotificationCriteria();
+		criteria.shouldNotifyOnSale(onSale);
+		criteria.shouldNotifyWhenBelowTargetPrice(belowThreshold);
+		criteria.setTargetPrice(targetPrice);
+		
+		watchlist.putNotificationCriteria(this.watchlistPageSelectedGameProperty().getValue(), criteria);
 	}
 	
 	

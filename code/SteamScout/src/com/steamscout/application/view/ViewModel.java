@@ -89,6 +89,18 @@ public abstract class ViewModel {
 	 * @param steamData the data to give the SteamData object.
 	 */
 	public abstract void insertSteamData(Map<String, Integer> steamData);
+	
+	/**
+	 * Sets the notification criteria for the currently selected game on the watchlist page.
+	 * 
+	 * @precondition userProperty().getValue() != null
+	 * @postcondition none
+	 * 
+	 * @param onSale notify when on sale.
+	 * @param belowThreshold notify when below threshold.
+	 * @param targetPrice threshold target price.
+	 */
+	public abstract void setSelectedGameNotificationCriteria(boolean onSale, boolean belowThreshold, double targetPrice);
 
 	/**
 	 * Adds the currently selected game on the browse page to the user's watchlist

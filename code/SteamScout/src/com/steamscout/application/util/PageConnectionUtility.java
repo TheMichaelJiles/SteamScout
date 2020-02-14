@@ -9,6 +9,7 @@ import com.steamscout.application.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -39,6 +40,34 @@ public class PageConnectionUtility {
 			Pane pane = loader.load();
 			Scene scene = new Scene(pane);
 			stage.setScene(scene);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Creates a new Stage as a child of the passed in Stage. The new stage is a modal
+	 * stage that will prevent interacting with the application while the stage is open.
+	 * 
+	 * @precondition filePath must exist
+	 * @postcondition a new Stage is created and shown.
+	 * 
+	 * @param filePath the path to the fxml file to which the Stage's pane will be based on.
+	 * @param stage the current stage.
+	 */
+	public static void openModal(String filePath, Stage stage) {
+		try {
+			Path pagePath = Paths.get(".", "view", "fxml", filePath);
+			URL pageUrl = Main.class.getResource(pagePath.toString());
+			FXMLLoader loader = new FXMLLoader(pageUrl);
+			Pane pane = loader.load();
+			Scene scene = new Scene(pane);
+			
+			Stage newStage = new Stage();
+			newStage.setScene(scene);
+			newStage.initModality(Modality.WINDOW_MODAL);
+			newStage.initOwner(stage);
+			newStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

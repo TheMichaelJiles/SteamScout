@@ -2,8 +2,12 @@ package com.steamscout.application.model.game_data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import com.steamscout.application.model.notification.NotificationCriteria;
 
 /**
  * Stores a collection of games. Each user manages a watchlist.
@@ -14,6 +18,7 @@ import java.util.List;
 public class Watchlist implements Collection<Game> {
 
 	private List<Game> games;
+	private Map<Game, NotificationCriteria> criteria;
 	
 	/**
 	 * Creates a new Watchlist object.
@@ -23,6 +28,47 @@ public class Watchlist implements Collection<Game> {
 	 */
 	public Watchlist() {
 		this.games = new ArrayList<Game>();
+		this.criteria = new HashMap<Game, NotificationCriteria>();
+	}
+	
+	/**
+	 * Sets the notification criteria for the specified game.
+	 * 
+	 * @precondition game != null &&
+	 * 				 criteria != null &&
+	 * 				 contains(game)
+	 * @param game
+	 * @param criteria
+	 */
+	public void putNotificationCriteria(Game game, NotificationCriteria criteria) {
+		if (game == null) {
+			throw new IllegalArgumentException("game should not be null for notification criteria.");
+		}
+		if (criteria == null) {
+			throw new IllegalArgumentException("criteria should not be null.");
+		}
+		if (!this.contains(game)) {
+			throw new IllegalArgumentException("game must be on this watchlist.");
+		}
+		
+		this.criteria.put(game, criteria);
+	}
+	
+	/**
+	 * Gets the notification criteria for the specified game.
+	 * 
+	 * @precondition game != null
+	 * @postcondition none
+	 * 
+	 * @param game the game to get the notification criteria for.
+	 * @return the NotificationCriteria for the specified criteria or null if the game has no criteria stored.
+	 */
+	public NotificationCriteria getNotificationCriteria(Game game) {
+		if (game == null) {
+			throw new IllegalArgumentException("game should not be null when getting criteria.");
+		}
+		
+		return this.criteria.get(game);
 	}
 	
 	@Override

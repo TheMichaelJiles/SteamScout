@@ -14,4 +14,5 @@ public class UIFilePaths {
 	public static final String CREATE_ACCOUNT_PAGE_FILENAME = "CreateAccountPage.fxml";
 	public static final String NOTIFICATIONS_PAGE_FILENAME = "NotificationsPage.fxml";
 	public static final String WATCHLIST_PAGE_FILENAME = "WatchlistPage.fxml";
+	public static final String NOTIFICATION_CRITERIA_PAGE_FILENAME = "NotificationCriteriaPage.fxml";
 }
