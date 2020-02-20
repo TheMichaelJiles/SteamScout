@@ -6,8 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.util.PageConnectionUtility;
+import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
 import com.steamscout.application.view.game_listcell.GameListCell;
 
@@ -31,7 +34,13 @@ public class BrowsingPageCodeBehind {
     private Button searchButton;
     
     @FXML
-    private VBox mainNavigationBar;
+    private Button watchlistPageButton;
+
+    @FXML
+    private Button notificationsPageButton;
+
+    @FXML
+    private Button logoutButton;
     
     @FXML
     private void initialize() {
@@ -48,6 +57,21 @@ public class BrowsingPageCodeBehind {
     private void onSearchButtonAction(ActionEvent event) {
     	ViewModel.get().performSearch();
     }
+    
+    @FXML
+    private void onNotificationsPageButtonAction(ActionEvent event) {
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
+    }
+    
+    @FXML
+    void onWatchlistPageButtonAction(ActionEvent event) {
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
+    }
+    
+    @FXML
+    void onLogoutButtonAction(ActionEvent event) {
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
+    }
 
     private void setUpBindings() {
     	this.setUpDisableBindings();
@@ -61,5 +85,9 @@ public class BrowsingPageCodeBehind {
     private void setUpDisableBindings() {
     	this.searchButton.disableProperty().bind(this.searchBarTextField.textProperty().isEmpty());
     	this.addButton.disableProperty().bind(this.gameResultsListView.getSelectionModel().selectedItemProperty().isNull());
+    }
+    
+    private Stage getCurrentStage() {
+    	return ((Stage) this.searchButton.getScene().getWindow());
     }
 }
