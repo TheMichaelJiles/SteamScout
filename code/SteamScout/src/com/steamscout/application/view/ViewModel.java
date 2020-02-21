@@ -2,11 +2,8 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.User;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.Map;
 
-import com.steamscout.application.model.api.tasks.NotificationChecker;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
 import com.steamscout.application.model.notification.Notification;
@@ -91,6 +88,28 @@ public abstract class ViewModel {
 	public abstract void insertSteamData(Map<String, Integer> steamData);
 	
 	/**
+	 * Performs a search on the current user's watchlist for games that
+	 * match the given search term. Updates the watchlistProperty with
+	 * the results.
+	 * 
+	 * @precondition searchTerm != null
+	 * @postcondition watchlistProperty().getValue().containsAll(
+	 * 				  userProperty().getValue().getWatchlist().getMatchingGames(searchTerm))
+	 * 
+	 * @param searchTerm the term to search the watchlist with.
+	 */
+	public abstract void performWatchlistSearch(String searchTerm);
+	
+	/**
+	 * Resets the watchlistProperty to contain all items in the current
+	 * users watchlist.
+	 * 
+	 * @precondition none
+	 * @postcondition watchlistProperty().getValue().containsAll(userProperty().getValue().getWatchlist())
+	 */
+	public abstract void resetWatchlistProperty();
+	
+	/**
 	 * Sets the notification criteria for the currently selected game on the watchlist page.
 	 * 
 	 * @precondition userProperty().getValue() != null
@@ -117,7 +136,7 @@ public abstract class ViewModel {
 	 * Removes the game selected in the watchlist page listview
 	 * and watchlist
 	 * 
-	 * @precondtion none
+	 * @precondition none
 	 * @postcondition watchlistProperty().getValue().size() ==
 	 *                watchlistProperty().getValue().size()@prev - 1
 	 */
@@ -157,27 +176,6 @@ public abstract class ViewModel {
 	 * @postcondition none
 	 */
 	public abstract void performSearch();
-
-	/**
-	 * Performs a search using the steam api against all games in the user's
-	 * watchlist. If any of the games on the watchlist are on sale or have a price
-	 * lower than the price threshold set on the game, then notifications are
-	 * generated and set to the notificationsProperty().
-	 * 
-	 * NOTE: WE NEED TO DISCUSS THIS. THIS API CALL MUST BE HIGHLY CONTROLLED.
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 */
-	private void loadNotifications() {
-		try {
-			Collection<Notification> notifications = NotificationChecker
-					.query(this.userProperty.getValue().getWatchlist());
-			this.notificationsProperty.setValue(FXCollections.observableArrayList(notifications));
-		} catch (IOException e) {
-			// TODO: handle failed notification load
-		}
-	}
 
 	/**
 	 * Logs in the user.

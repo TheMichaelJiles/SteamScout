@@ -43,12 +43,21 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private Button searchButton;
+    
+    @FXML
+    private Button clearSearchButton;
 
     @FXML
     private void initialize() {
     	this.watchlistListView.setCellFactory(listview -> new GameListCell());
     	this.setUpBindings();
     	this.setUpListeners();
+    }
+    
+    @FXML
+    private void onClearSearchButtonAction(ActionEvent event) {
+    	ViewModel.get().resetWatchlistProperty();
+    	this.searchBarTextField.textProperty().setValue(null);
     }
     
     @FXML
@@ -63,7 +72,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void onModifyButtonAction(ActionEvent event) {
-
+    	PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
     }
 
     @FXML
@@ -74,12 +83,11 @@ public class WatchlistPageCodeBehind {
     @FXML
     private void onRemoveButtonAction(ActionEvent event) {
     	ViewModel.get().removeSelectedGameFromWatchlist();
-
     }
 
     @FXML
     private void onSearchButtonAction(ActionEvent event) {
-
+    	ViewModel.get().performWatchlistSearch(this.searchBarTextField.textProperty().getValue());
     }
     
     private Stage getCurrentStage() {
@@ -105,5 +113,7 @@ public class WatchlistPageCodeBehind {
     
     private void setUpDisableBindings() {
     	this.removeButton.disableProperty().bind(this.watchlistListView.getSelectionModel().selectedItemProperty().isNull());
+    	this.modifyButton.disableProperty().bind(this.watchlistListView.getSelectionModel().selectedItemProperty().isNull());
+    	this.searchButton.disableProperty().bind(this.searchBarTextField.textProperty().isNull().or(this.searchBarTextField.textProperty().isEmpty()));
     }
 }

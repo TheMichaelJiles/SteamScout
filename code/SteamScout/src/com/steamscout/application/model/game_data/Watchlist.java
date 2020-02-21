@@ -2,6 +2,7 @@ package com.steamscout.application.model.game_data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -71,6 +72,31 @@ public class Watchlist implements Collection<Game> {
 		}
 		
 		return this.criteria.get(game);
+	}
+	
+	/**
+	 * Gets all matching games in this watchlist that contain the specified
+	 * search term in the game's title. This match is not case-sensitive.
+	 * 
+	 * @precondition term != null
+	 * @postcondition none
+	 * 
+	 * @param term the search term.
+	 * @return an unmodifiable collection of games whose title contains the given search term.
+	 */
+	public Collection<Game> getMatchingGames(String term) {
+		if (term == null) {
+			throw new IllegalArgumentException("term should not be null.");
+		}
+		
+		Collection<Game> matchingGames = new ArrayList<Game>();
+		for (Game currentGame : this.games) {
+			if (currentGame.getTitle().toLowerCase().contains(term.toLowerCase())) {
+				matchingGames.add(currentGame);
+			}
+		}
+		
+		return Collections.unmodifiableCollection(matchingGames);
 	}
 	
 	@Override

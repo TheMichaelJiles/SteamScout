@@ -20,7 +20,7 @@ import javafx.stage.StageStyle;
 
 public class NotificationCriteriaPageCodeBehind {
 	
-	private static final String TARGET_PRICE_REGEX = "\\$\\d+\\.\\d{2}";
+	private static final String TARGET_PRICE_REGEX = "\\$\\d*\\.\\d{0,2}";
 	private static final String TARGET_PRICE_DEFAULT = "$0.00";
 	
 	@FXML
@@ -52,7 +52,6 @@ public class NotificationCriteriaPageCodeBehind {
 
     @FXML
     private void initialize() {
-    	this.preventResizing();
     	this.setTargetEntryVisible(false);
     	this.setListeners();
     	this.fillFields();
@@ -67,16 +66,23 @@ public class NotificationCriteriaPageCodeBehind {
     private void onSubmitButtonAction(ActionEvent event) {
     	boolean onSale = this.onSaleCheckBox.selectedProperty().getValue();
     	boolean belowThreshold = this.belowThresholdCheckBox.selectedProperty().getValue();
-    	double targetPrice = Double.parseDouble(this.targetPriceTextField.textProperty().getValue().substring(1));
+    	double targetPrice = 0;
+    	try {
+    		targetPrice = Double.parseDouble(this.targetPriceTextField.textProperty().getValue().substring(1));
+    	} catch (NumberFormatException e) {
+    		targetPrice = 0;
+    	}
     	
     	ViewModel.get().setSelectedGameNotificationCriteria(onSale, belowThreshold, targetPrice);
-    	
     	this.exit();
     }
     
     private void setListeners() {
     	this.belowThresholdCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
     		this.setTargetEntryVisible(newValue);
+    		if (!newValue) {
+    			this.targetPriceTextField.textProperty().setValue(TARGET_PRICE_DEFAULT);
+    		}
     	});
     	this.targetPriceTextField.textProperty().addListener((observable, oldValue, newValue) -> {
     		if (!newValue.matches(TARGET_PRICE_REGEX)) {
@@ -98,7 +104,7 @@ public class NotificationCriteriaPageCodeBehind {
     		this.belowThresholdCheckBox.selectedProperty().setValue(criteria.shouldNotifyWhenBelowTargetPrice());
     		
     		NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.US);
-    		this.targetPriceTextField.textProperty().setValue(currency.format(criteria.getTargetPrice()));
+    		this.targetPriceTextField.textProperty().setValue(currency.format(criteria.getTargetPrice()).replaceAll(",", ""));
     	}
     }
     
@@ -112,9 +118,4 @@ public class NotificationCriteriaPageCodeBehind {
     	currentStage.close();
     }
     
-    private void preventResizing() {
-    	Stage currentStage = (Stage) this.pane.getScene().getWindow();
-    	currentStage.setResizable(false);
-    	currentStage.initStyle(StageStyle.UNDECORATED);
-    }
 }

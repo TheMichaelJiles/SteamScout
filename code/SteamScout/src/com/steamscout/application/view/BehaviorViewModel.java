@@ -98,6 +98,20 @@ public class BehaviorViewModel extends ViewModel {
 		
 		watchlist.putNotificationCriteria(this.watchlistPageSelectedGameProperty().getValue(), criteria);
 	}
+
+	@Override
+	public void performWatchlistSearch(String searchTerm) {
+		Watchlist watchlist = this.userProperty().getValue().getWatchlist();
+		Collection<Game> matches = watchlist.getMatchingGames(searchTerm);
+		
+		this.watchlistProperty().setValue(FXCollections.observableArrayList(matches));
+	}
+
+	@Override
+	public void resetWatchlistProperty() {
+		Watchlist watchlist = this.userProperty().getValue().getWatchlist();
+		this.watchlistProperty().setValue(FXCollections.observableArrayList(watchlist));
+	}
 	
 	
 }
