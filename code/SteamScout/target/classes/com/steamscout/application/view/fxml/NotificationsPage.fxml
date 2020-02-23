@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.NotificationsPageCodeBehind">
-   <children>
-      <Label layoutX="19.0" layoutY="54.0" text="Notifications">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <ListView fx:id="notificationsListView" layoutX="19.0" layoutY="88.0" prefHeight="295.0" prefWidth="390.0" />
-      <Button fx:id="watchlistPageButton" layoutX="19.0" layoutY="18.0" mnemonicParsing="false" onAction="#onWatchlistPageButtonAction" text="Watchlist" />
-      <Button fx:id="browsePageButton" layoutX="99.0" layoutY="18.0" mnemonicParsing="false" onAction="#onBrowsePageButtonAction" text="Browse" />
-      <Button fx:id="logoutButton" layoutX="170.0" layoutY="18.0" mnemonicParsing="false" onAction="#onLogoutButtonAction" text="Logout" />
-   </children>
-</AnchorPane>
+
+<BorderPane id="Notifications" fx:id="notificationsPageBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.NotificationsPageCodeBehind">
+   <right>
+      <AnchorPane prefHeight="400.0" prefWidth="443.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="26.0" layoutY="8.0" text="Notifications">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <ListView fx:id="notificationsListView" layoutX="26.0" layoutY="56.0" prefHeight="295.0" prefWidth="390.0" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

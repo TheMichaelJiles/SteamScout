@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -27,28 +29,23 @@ public class WatchlistPageCodeBehind {
     private ListView<Game> watchlistListView;
 
     @FXML
-    private Button browsePageButton;
-
-    @FXML
     private Button removeButton;
-
-    @FXML
-    private Button notificationPageButton;
-
-    @FXML
-    private Button logoutPageButton;
 
     @FXML
     private Button modifyButton;
 
     @FXML
     private Button searchButton;
+    
+    @FXML
+    private BorderPane watchlistPageBorderPane;
 
     @FXML
     private void initialize() {
     	this.watchlistListView.setCellFactory(listview -> new GameListCell());
     	this.setUpBindings();
     	this.setUpListeners();
+    	this.setUpNavigationBar();
     }
     
     @FXML
@@ -106,4 +103,14 @@ public class WatchlistPageCodeBehind {
     private void setUpDisableBindings() {
     	this.removeButton.disableProperty().bind(this.watchlistListView.getSelectionModel().selectedItemProperty().isNull());
     }
+    
+    private void setUpNavigationBar() {
+    	this.watchlistPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
+    	removeCurrentPageButton();
+    }
+
+	private void removeCurrentPageButton() {
+		VBox vbox = (VBox) this.watchlistPageBorderPane.getChildren().get(1);
+    	vbox.getChildren().removeIf(button -> button.getId().equals(this.watchlistPageBorderPane.getId()));
+	}
 }
