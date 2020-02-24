@@ -4,7 +4,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import com.steamscout.application.view.UIFilePaths;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
