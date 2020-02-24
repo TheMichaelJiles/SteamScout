@@ -19,10 +19,9 @@ import java.nio.file.Paths;
 
 import com.steamscout.application.Main;
 import com.steamscout.application.model.game_data.Game;
-<<<<<<< HEAD
+
 import com.steamscout.application.util.PageConnectionUtility;
-=======
->>>>>>> 731483d9099063e4808a8a58d4c042ed1aacee7d
+
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
 import com.steamscout.application.view.game_listcell.GameListCell;

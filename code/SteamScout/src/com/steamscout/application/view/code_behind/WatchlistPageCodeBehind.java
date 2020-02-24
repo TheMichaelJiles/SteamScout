@@ -116,7 +116,7 @@ public class WatchlistPageCodeBehind {
     
     private void setUpNavigationBar() {
     	this.watchlistPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
-    	removeCurrentPageButton();
+    	this.removeCurrentPageButton();
     }
 
 	private void removeCurrentPageButton() {
