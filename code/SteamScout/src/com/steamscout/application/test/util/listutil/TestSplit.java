@@ -52,15 +52,15 @@ public class TestSplit {
 		List<Integer> secondHalf = result.get(1);
 		assertAll(() -> assertEquals(2, result.size()),
 				() -> assertEquals(4, firstHalf.size()),
-				() -> assertEquals(0, firstHalf.get(0)),
-				() -> assertEquals(1, firstHalf.get(1)),
-				() -> assertEquals(2, firstHalf.get(2)),
-				() -> assertEquals(3, firstHalf.get(3)),
-				() -> assertEquals(4, secondHalf.size()),
-				() -> assertEquals(4, secondHalf.get(0)),
-				() -> assertEquals(5, secondHalf.get(1)),
-				() -> assertEquals(6, secondHalf.get(2)),
-				() -> assertEquals(7, secondHalf.get(3)));
+				() -> assertEquals(0, (int) firstHalf.get(0)),
+				() -> assertEquals(1, (int) firstHalf.get(1)),
+				() -> assertEquals(2, (int) firstHalf.get(2)),
+				() -> assertEquals(3, (int) firstHalf.get(3)),
+				() -> assertEquals(4, (int) secondHalf.size()),
+				() -> assertEquals(4, (int) secondHalf.get(0)),
+				() -> assertEquals(5, (int) secondHalf.get(1)),
+				() -> assertEquals(6, (int) secondHalf.get(2)),
+				() -> assertEquals(7, (int) secondHalf.get(3)));
 	}
 	
 	@Test
