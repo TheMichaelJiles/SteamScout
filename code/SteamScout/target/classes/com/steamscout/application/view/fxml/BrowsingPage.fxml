@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane id="Browse" fx:id="browsingPageBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.BrowsingPageCodeBehind">
+<BorderPane id="Browse" fx:id="browsingPageBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.BrowsingPageCodeBehind">
    <right>
       <AnchorPane prefHeight="400.0" prefWidth="443.0" BorderPane.alignment="CENTER">
          <children>
@@ -16,6 +16,7 @@
             <Button fx:id="addButton" layoutX="202.0" layoutY="346.0" mnemonicParsing="false" onAction="#onAddButtonAction" text="Add" />
             <Button fx:id="searchButton" layoutX="292.0" layoutY="38.0" mnemonicParsing="false" onAction="#onSearchButtonAction" text="Search" />
             <Label fx:id="noResultsLabel" layoutX="36.0" layoutY="67.0" text="There are no results that match the entered criteria" textFill="#901313" visible="false" />
+            <Label fx:id="gameAlreadyAddedLabel" layoutX="36.0" layoutY="67.0" text="Selected game has already been added to your watchlist!" textFill="#901313" visible="false" />
          </children>
       </AnchorPane>
    </right>

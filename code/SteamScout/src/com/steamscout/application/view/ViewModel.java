@@ -130,7 +130,7 @@ public abstract class ViewModel {
 	 *                watchlistProperty().getValue().size() ==
 	 *                watchlistProperty().getValue().size()@prev + 1
 	 */
-	public abstract void addSelectedGameToWatchlist();
+	public abstract boolean addSelectedGameToWatchlist();
 	
 	/**
 	 * Removes the game selected in the watchlist page listview
@@ -153,7 +153,7 @@ public abstract class ViewModel {
 	 * 
 	 * @param game the game to add to the user's watchlist.
 	 */
-	public abstract void addGameToWatchlist(Game game);
+	public abstract boolean addGameToWatchlist(Game game);
 	
 	/**
 	 * Removes the game specified from the watchlist

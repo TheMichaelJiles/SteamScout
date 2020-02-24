@@ -35,8 +35,8 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void addSelectedGameToWatchlist() {
-		this.addGameToWatchlist(this.browsePageSelectedGameProperty().getValue());
+	public boolean addSelectedGameToWatchlist() {
+		return this.addGameToWatchlist(this.browsePageSelectedGameProperty().getValue());
 	}
 	
 	@Override
@@ -59,17 +59,20 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void addGameToWatchlist(Game game) {
+	public boolean addGameToWatchlist(Game game) {
 		if (game == null) {
 			throw new IllegalArgumentException("game to add to watchlist should not be null.");
 		}
-
+		
+		boolean isSuccessfullyAdded = false;
 		User currentUser = this.userProperty().getValue();
 		if (currentUser != null) {
 			Watchlist userWatchlist = currentUser.getWatchlist();
-			userWatchlist.add(game);
+			isSuccessfullyAdded = userWatchlist.add(game);
 			this.watchlistProperty().setValue(FXCollections.observableArrayList(userWatchlist));
 		}
+		return isSuccessfullyAdded;
+		
 	}
 
 	@Override

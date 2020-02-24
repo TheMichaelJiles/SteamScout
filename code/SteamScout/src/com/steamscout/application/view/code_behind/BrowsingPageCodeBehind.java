@@ -50,6 +50,9 @@ public class BrowsingPageCodeBehind {
     private Label noResultsLabel;
     
     @FXML
+    private Label gameAlreadyAddedLabel;
+    
+    @FXML
     private BorderPane browsingPageBorderPane;
     
     @FXML
@@ -61,8 +64,12 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private void onAddButtonAction(ActionEvent event) {
-    	ViewModel.get().addSelectedGameToWatchlist(); 	
-    	PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
+    	boolean isSuccessfullyAdded = ViewModel.get().addSelectedGameToWatchlist();
+    	if (!isSuccessfullyAdded) {
+    		this.gameAlreadyAddedLabel.setVisible(true);
+    	} else {
+    		PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
+    	}
     }
 
     @FXML
