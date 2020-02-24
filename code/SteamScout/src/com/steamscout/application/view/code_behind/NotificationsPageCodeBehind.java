@@ -7,7 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
 
 /**
  * Notifications page code behind that connects to ViewModel
@@ -17,19 +19,14 @@ import javafx.stage.Stage;
 public class NotificationsPageCodeBehind {
 
     @FXML
-    private ListView<?> notificationsListView;
-
+    private ListView<Notification> notificationsListView;
+    
     @FXML
-    private Button watchlistPageButton;
-
-    @FXML
-    private Button browsePageButton;
-
-    @FXML
-    private Button logoutButton;
+    private BorderPane notificationsPageBorderPane;
     
     @FXML
     void initialize() {
+    	this.setUpNavigationBar();
     }
 
     @FXML
@@ -48,7 +45,17 @@ public class NotificationsPageCodeBehind {
     }
     
     private Stage getCurrentStage() {
-    	return ((Stage) this.browsePageButton.getScene().getWindow());
+    	return ((Stage) this.notificationsPageBorderPane.getScene().getWindow());
     }
+    
+	private void setUpNavigationBar() {
+    	this.notificationsPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
+    	this.removeCurrentPageButton();
+    }
+
+	private void removeCurrentPageButton() {
+		VBox vbox = (VBox) this.notificationsPageBorderPane.getChildren().get(1);
+    	vbox.getChildren().removeIf(button -> button.getId().equals(this.notificationsPageBorderPane.getId()));
+	}
 
 }

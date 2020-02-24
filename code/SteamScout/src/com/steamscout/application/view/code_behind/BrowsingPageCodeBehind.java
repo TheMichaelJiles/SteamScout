@@ -2,14 +2,27 @@ package com.steamscout.application.view.code_behind;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.steamscout.application.Main;
 import com.steamscout.application.model.game_data.Game;
+<<<<<<< HEAD
 import com.steamscout.application.util.PageConnectionUtility;
+=======
+>>>>>>> 731483d9099063e4808a8a58d4c042ed1aacee7d
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
 import com.steamscout.application.view.game_listcell.GameListCell;
@@ -34,18 +47,13 @@ public class BrowsingPageCodeBehind {
     private Button searchButton;
     
     @FXML
-    private Button watchlistPageButton;
-
-    @FXML
-    private Button notificationsPageButton;
-
-    @FXML
-    private Button logoutButton;
+    private BorderPane browsingPageBorderPane;
     
     @FXML
     private void initialize() {
     	this.gameResultsListView.setCellFactory(listView -> new GameListCell());
     	this.setUpBindings();
+    	this.setUpNavigationBar();
     }
 
     @FXML
@@ -56,21 +64,6 @@ public class BrowsingPageCodeBehind {
     @FXML
     private void onSearchButtonAction(ActionEvent event) {
     	ViewModel.get().performSearch();
-    }
-    
-    @FXML
-    private void onNotificationsPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
-    }
-    
-    @FXML
-    void onWatchlistPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
-    }
-    
-    @FXML
-    void onLogoutButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
     }
 
     private void setUpBindings() {
@@ -90,4 +83,14 @@ public class BrowsingPageCodeBehind {
     private Stage getCurrentStage() {
     	return ((Stage) this.searchButton.getScene().getWindow());
     }
+
+    private void setUpNavigationBar() {
+    	this.browsingPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
+    	removeCurrentPageButton();
+    }
+
+	private void removeCurrentPageButton() {
+		VBox vbox = (VBox) this.browsingPageBorderPane.getChildren().get(1);
+    	vbox.getChildren().removeIf(button -> button.getId().equals(this.browsingPageBorderPane.getId()));
+	}
 }

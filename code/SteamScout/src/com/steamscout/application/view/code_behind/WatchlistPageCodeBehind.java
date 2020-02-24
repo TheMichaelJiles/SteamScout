@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -27,16 +29,7 @@ public class WatchlistPageCodeBehind {
     private ListView<Game> watchlistListView;
 
     @FXML
-    private Button browsePageButton;
-
-    @FXML
     private Button removeButton;
-
-    @FXML
-    private Button notificationPageButton;
-
-    @FXML
-    private Button logoutPageButton;
 
     @FXML
     private Button modifyButton;
@@ -48,10 +41,15 @@ public class WatchlistPageCodeBehind {
     private Button clearSearchButton;
 
     @FXML
+    private BorderPane watchlistPageBorderPane;
+
+
+    @FXML
     private void initialize() {
     	this.watchlistListView.setCellFactory(listview -> new GameListCell());
     	this.setUpBindings();
     	this.setUpListeners();
+    	this.setUpNavigationBar();
     }
     
     @FXML
@@ -96,7 +94,6 @@ public class WatchlistPageCodeBehind {
     
     private void setUpListeners() {
     	this.watchlistListView.setOnMouseClicked(event -> {
-    		// TODO: Probably change this to context menu instead.
     		if (this.watchlistListView.getSelectionModel().getSelectedItem() != null && event.getClickCount() == 2) {
     			PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
     		}
@@ -116,4 +113,14 @@ public class WatchlistPageCodeBehind {
     	this.modifyButton.disableProperty().bind(this.watchlistListView.getSelectionModel().selectedItemProperty().isNull());
     	this.searchButton.disableProperty().bind(this.searchBarTextField.textProperty().isNull().or(this.searchBarTextField.textProperty().isEmpty()));
     }
+    
+    private void setUpNavigationBar() {
+    	this.watchlistPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
+    	removeCurrentPageButton();
+    }
+
+	private void removeCurrentPageButton() {
+		VBox vbox = (VBox) this.watchlistPageBorderPane.getChildren().get(1);
+    	vbox.getChildren().removeIf(button -> button.getId().equals(this.watchlistPageBorderPane.getId()));
+	}
 }

@@ -4,17 +4,19 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.WatchlistPageCodeBehind">
-   <children>
-      <TextField fx:id="searchBarTextField" layoutX="19.0" layoutY="65.0" prefHeight="27.0" prefWidth="230.0" promptText="search games..." />
-      <ListView fx:id="watchlistListView" layoutX="19.0" layoutY="104.0" prefHeight="246.0" prefWidth="371.0" />
-      <Button fx:id="browsePageButton" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBrowsePageButtonAction" text="Browse" />
-      <Button fx:id="removeButton" layoutX="136.0" layoutY="360.0" mnemonicParsing="false" onAction="#onRemoveButtonAction" text="Remove" />
-      <Button fx:id="notificationPageButton" layoutX="93.0" layoutY="19.0" mnemonicParsing="false" onAction="#onNotificationPageButtonAction" text="Notifications" />
-      <Button fx:id="logoutPageButton" layoutX="193.0" layoutY="19.0" mnemonicParsing="false" onAction="#onLogoutButtonAction" text="Logout" />
-      <Button fx:id="modifyButton" layoutX="226.0" layoutY="360.0" mnemonicParsing="false" onAction="#onModifyButtonAction" text="Modify" />
-      <Button fx:id="searchButton" layoutX="273.0" layoutY="65.0" mnemonicParsing="false" onAction="#onSearchButtonAction" text="Search" />
-      <Button fx:id="clearSearchButton" layoutX="347.0" layoutY="65.0" mnemonicParsing="false" onAction="#onClearSearchButtonAction" text="Clear Search" />
-   </children>
-</AnchorPane>
+<BorderPane id="Watchlist" fx:id="watchlistPageBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.WatchlistPageCodeBehind">
+   <right>
+      <AnchorPane prefHeight="400.0" prefWidth="435.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="searchBarTextField" layoutX="36.0" layoutY="42.0" prefHeight="27.0" prefWidth="230.0" promptText="search games..." />
+            <ListView fx:id="watchlistListView" layoutX="36.0" layoutY="77.0" prefHeight="246.0" prefWidth="371.0" />
+            <Button fx:id="removeButton" layoutX="231.0" layoutY="346.0" mnemonicParsing="false" onAction="#onRemoveButtonAction" text="Remove" />
+            <Button fx:id="modifyButton" layoutX="153.0" layoutY="346.0" mnemonicParsing="false" onAction="#onModifyButtonAction" text="Modify" />
+            <Button fx:id="searchButton" layoutX="284.0" layoutY="43.0" mnemonicParsing="false" onAction="#onSearchButtonAction" text="Search" />
+            <Button fx:id="clearSearchButton" layoutX="310.0" layoutY="43.0" mnemonicParsing="false" onAction="#onClearSearchButtonAction" text="Clear Search" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

@@ -33,7 +33,6 @@ public class Main extends Application {
 			
 			FXMLLoader loader = new FXMLLoader(landingPageUrl);
 			Pane landingPane = loader.load();
-			
 			Scene scene = new Scene(landingPane);
 			
 			primaryStage.setTitle(TITLE);
