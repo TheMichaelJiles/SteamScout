@@ -61,7 +61,8 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private void onAddButtonAction(ActionEvent event) {
-    	ViewModel.get().addSelectedGameToWatchlist();
+    	ViewModel.get().addSelectedGameToWatchlist(); 	
+    	PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
     }
 
     @FXML

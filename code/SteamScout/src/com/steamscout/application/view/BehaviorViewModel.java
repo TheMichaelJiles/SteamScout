@@ -8,8 +8,10 @@ import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
+import com.steamscout.application.util.PageConnectionUtility;
 
 import javafx.collections.FXCollections;
+import javafx.stage.Stage;
 
 /**
  * Contains the behavior of the view model as it interacts with the model.
@@ -96,7 +98,11 @@ public class BehaviorViewModel extends ViewModel {
 		criteria.shouldNotifyWhenBelowTargetPrice(belowThreshold);
 		criteria.setTargetPrice(targetPrice);
 		
-		watchlist.putNotificationCriteria(this.watchlistPageSelectedGameProperty().getValue(), criteria);
+		if (watchlistPageSelectedGameProperty().getValue() == null) {
+			watchlist.putNotificationCriteria(this.browsePageSelectedGameProperty().getValue(), criteria);
+		} else {
+			watchlist.putNotificationCriteria(this.watchlistPageSelectedGameProperty().getValue(), criteria);
+		}
 	}
 
 	@Override

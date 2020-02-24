@@ -92,7 +92,14 @@ public class NotificationCriteriaPageCodeBehind {
     }
     
     private void fillFields() {
-    	Game game = ViewModel.get().watchlistPageSelectedGameProperty().getValue();
+    	Game browsePageGame = ViewModel.get().browsePageSelectedGameProperty().getValue();
+    	Game watchlistPageGame = ViewModel.get().watchlistPageSelectedGameProperty().getValue();
+    	Game game;
+    	if (browsePageGame == null) {
+    		game = watchlistPageGame;
+    	} else {
+    		game = browsePageGame;
+    	}
     	this.gameTitleLabel.setText(game.getTitle());
     	this.gameIdLabel.setText(String.valueOf(game.getAppId()));
     	this.targetPriceTextField.textProperty().setValue(TARGET_PRICE_DEFAULT);
