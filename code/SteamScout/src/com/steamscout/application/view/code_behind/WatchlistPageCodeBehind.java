@@ -38,7 +38,11 @@ public class WatchlistPageCodeBehind {
     private Button searchButton;
     
     @FXML
+    private Button clearSearchButton;
+
+    @FXML
     private BorderPane watchlistPageBorderPane;
+
 
     @FXML
     private void initialize() {
@@ -46,6 +50,12 @@ public class WatchlistPageCodeBehind {
     	this.setUpBindings();
     	this.setUpListeners();
     	this.setUpNavigationBar();
+    }
+    
+    @FXML
+    private void onClearSearchButtonAction(ActionEvent event) {
+    	ViewModel.get().resetWatchlistProperty();
+    	this.searchBarTextField.textProperty().setValue(null);
     }
     
     @FXML
@@ -60,7 +70,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void onModifyButtonAction(ActionEvent event) {
-
+    	PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
     }
 
     @FXML
@@ -71,12 +81,11 @@ public class WatchlistPageCodeBehind {
     @FXML
     private void onRemoveButtonAction(ActionEvent event) {
     	ViewModel.get().removeSelectedGameFromWatchlist();
-
     }
 
     @FXML
     private void onSearchButtonAction(ActionEvent event) {
-
+    	ViewModel.get().performWatchlistSearch(this.searchBarTextField.textProperty().getValue());
     }
     
     private Stage getCurrentStage() {
@@ -85,7 +94,6 @@ public class WatchlistPageCodeBehind {
     
     private void setUpListeners() {
     	this.watchlistListView.setOnMouseClicked(event -> {
-    		// TODO: Probably change this to context menu instead.
     		if (this.watchlistListView.getSelectionModel().getSelectedItem() != null && event.getClickCount() == 2) {
     			PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
     		}
@@ -102,11 +110,13 @@ public class WatchlistPageCodeBehind {
     
     private void setUpDisableBindings() {
     	this.removeButton.disableProperty().bind(this.watchlistListView.getSelectionModel().selectedItemProperty().isNull());
+    	this.modifyButton.disableProperty().bind(this.watchlistListView.getSelectionModel().selectedItemProperty().isNull());
+    	this.searchButton.disableProperty().bind(this.searchBarTextField.textProperty().isNull().or(this.searchBarTextField.textProperty().isEmpty()));
     }
     
     private void setUpNavigationBar() {
     	this.watchlistPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
-    	removeCurrentPageButton();
+    	this.removeCurrentPageButton();
     }
 
 	private void removeCurrentPageButton() {

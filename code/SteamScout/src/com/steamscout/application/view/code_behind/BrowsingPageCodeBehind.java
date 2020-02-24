@@ -19,6 +19,9 @@ import java.nio.file.Paths;
 
 import com.steamscout.application.Main;
 import com.steamscout.application.model.game_data.Game;
+
+import com.steamscout.application.util.PageConnectionUtility;
+
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
 import com.steamscout.application.view.game_listcell.GameListCell;
@@ -76,6 +79,10 @@ public class BrowsingPageCodeBehind {
     	this.addButton.disableProperty().bind(this.gameResultsListView.getSelectionModel().selectedItemProperty().isNull());
     }
     
+    private Stage getCurrentStage() {
+    	return ((Stage) this.searchButton.getScene().getWindow());
+    }
+
     private void setUpNavigationBar() {
     	this.browsingPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
     	removeCurrentPageButton();

@@ -31,7 +31,7 @@ class TestConstructor {
 		aGame.setSteamLink("link");
 		Notification aNotification = new Notification(aGame);
 		
-		assertAll(() -> assertEquals(50.00, aNotification.getCurrentPrice()),
+		assertAll(() -> assertEquals(50.00, aNotification.getCurrentPrice(), 0.00001),
 				() -> assertEquals(60.00, aNotification.getInitialPrice()),
 				() -> assertEquals("Pizza Salesman", aNotification.getTitle()),
 				() -> assertEquals("link", aNotification.getSteamLink()),

@@ -19,7 +19,8 @@ import javafx.stage.Stage;
 
 /**
  * Code behind for dynamic persistent navigation bar.
- * @author themi
+ * 
+ * @author Michael Jiles
  *
  */
 public class NavigationBarCodeBehind {

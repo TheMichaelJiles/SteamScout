@@ -1,5 +1,6 @@
 package com.steamscout.application.view.code_behind;
 
+import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
 
@@ -19,7 +20,7 @@ import javafx.scene.layout.BorderPane;
 public class NotificationsPageCodeBehind {
 
     @FXML
-    private ListView<?> notificationsListView;
+    private ListView<Notification> notificationsListView;
     
     @FXML
     private BorderPane notificationsPageBorderPane;

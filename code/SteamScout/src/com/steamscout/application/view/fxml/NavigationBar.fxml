@@ -4,12 +4,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="149.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.NavigationBarCodeBehind">
+<VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="149.0" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.NavigationBarCodeBehind">
    <children>
-      <Button fx:id="watchlistPageButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onWatchlistPageButtonAction" prefWidth="85.0" text="Watchlist" />
-      <Button fx:id="notificationsButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onNotificationsButtonAction" prefWidth="85.0" text="Notifications" />
-      <Button fx:id="browseButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBrowseButtonAction" prefWidth="85.0" text="Browse" />
-      <Button fx:id="logoutButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLogoutButtonAction" prefWidth="85.0" text="Logout" />
+      <Button id="Watchlist" fx:id="watchlistPageButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onWatchlistPageButtonAction" prefWidth="85.0" text="Watchlist" />
+      <Button id="Notifications" fx:id="notificationsButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onNotificationsButtonAction" prefWidth="85.0" text="Notifications" />
+      <Button id="Browse" fx:id="browseButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBrowseButtonAction" prefWidth="85.0" text="Browse" />
+      <Button id="Logout" fx:id="logoutButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLogoutButtonAction" prefWidth="85.0" text="Logout" />
    </children>
    <padding>
       <Insets top="20.0" />

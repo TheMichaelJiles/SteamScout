@@ -1,9 +1,13 @@
 package com.steamscout.application;
-	
+
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.steamscout.application.view.UIFilePaths;
+import com.steamscout.application.view.ViewModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -23,17 +27,23 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Path landingPagePath = Paths.get(".", "view", "fxml", UIFilePaths.INITIALIZATION_PAGE_FILENAME);
+			Path landingPagePath = Paths.get(".", "view", "fxml", UIFilePaths.LOGIN_PAGE_FILENAME);
 			URL landingPageUrl = Main.class.getResource(landingPagePath.toString());
 			
 			FXMLLoader loader = new FXMLLoader(landingPageUrl);
 			Pane landingPane = loader.load();
-			
 			Scene scene = new Scene(landingPane);
 			
 			primaryStage.setTitle(TITLE);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			Map<String, Integer> fakeSteamData = new HashMap<String, Integer>();
+	    	fakeSteamData.put("Skyrim", 1);
+	    	fakeSteamData.put("Minecraft", 2);
+	    	fakeSteamData.put("Indiana Jones: Rise of the Old Man", 3);
+	    	
+			ViewModel.get().insertSteamData(fakeSteamData);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

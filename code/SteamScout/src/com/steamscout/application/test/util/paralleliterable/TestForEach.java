@@ -13,7 +13,9 @@ import com.steamscout.application.util.ParallelIterable;
 public class TestForEach {
 
 	private ParallelIterable<Integer> numbers;
-	private int sum;
+	private volatile int sum;
+	
+	private static final Object lock = new Object();
 	
 	@BeforeEach
 	public void setUp() {
@@ -33,7 +35,11 @@ public class TestForEach {
 
 	@Test
 	public void testIterates() throws InterruptedException {
-		this.numbers.forEach(number -> this.sum += number);
+		this.numbers.forEach(number -> {
+			synchronized (lock) {
+				this.sum += number;
+			}
+		});
 		assertEquals(6, this.sum);
 	}
 }

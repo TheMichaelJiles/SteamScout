@@ -67,6 +67,7 @@ public class PageConnectionUtility {
 			newStage.setScene(scene);
 			newStage.initModality(Modality.WINDOW_MODAL);
 			newStage.initOwner(stage);
+			newStage.setResizable(false);
 			newStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
