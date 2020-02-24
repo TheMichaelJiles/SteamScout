@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -46,6 +47,9 @@ public class BrowsingPageCodeBehind {
     private Button searchButton;
     
     @FXML
+    private Label noResultsLabel;
+    
+    @FXML
     private BorderPane browsingPageBorderPane;
     
     @FXML
@@ -63,7 +67,16 @@ public class BrowsingPageCodeBehind {
     @FXML
     private void onSearchButtonAction(ActionEvent event) {
     	ViewModel.get().performSearch();
+    	this.displayNoResultsLabelIfNecessary();
     }
+
+	private void displayNoResultsLabelIfNecessary() {
+		if (this.gameResultsListView.getItems().isEmpty()) {
+    		this.noResultsLabel.setVisible(true);
+    	} else {
+    		this.noResultsLabel.setVisible(false);
+    	}
+	}
 
     private void setUpBindings() {
     	this.setUpDisableBindings();

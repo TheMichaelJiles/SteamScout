@@ -9,6 +9,7 @@ import com.steamscout.application.view.game_listcell.GameListCell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -42,6 +43,9 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private BorderPane watchlistPageBorderPane;
+    
+    @FXML
+    private Label noResultsLabel;
 
 
     @FXML
@@ -56,6 +60,7 @@ public class WatchlistPageCodeBehind {
     private void onClearSearchButtonAction(ActionEvent event) {
     	ViewModel.get().resetWatchlistProperty();
     	this.searchBarTextField.textProperty().setValue(null);
+    	this.hideNoResultsLabel();
     }
     
     @FXML
@@ -86,10 +91,24 @@ public class WatchlistPageCodeBehind {
     @FXML
     private void onSearchButtonAction(ActionEvent event) {
     	ViewModel.get().performWatchlistSearch(this.searchBarTextField.textProperty().getValue());
+    	this.displayNoResultsLabelIfNecessary();
+    	
     }
     
     private Stage getCurrentStage() {
     	return ((Stage) this.searchButton.getScene().getWindow());
+    }
+    
+    private void displayNoResultsLabelIfNecessary() {
+		if (this.watchlistListView.getItems().isEmpty()) {
+    		this.noResultsLabel.setVisible(true);
+    	} else {
+    		this.hideNoResultsLabel();
+    	}
+	}
+    
+    private void hideNoResultsLabel() {
+    	this.noResultsLabel.setVisible(false);
     }
     
     private void setUpListeners() {
