@@ -13,5 +13,6 @@ Installation Instructions: (Development Environment)
 	
 	Dependencies:
 		1. JavaFX 11 or greater.
+			- Change classpath to your javafx/lib jars.
 		2. JUnit 5 to run unit tests.
 		3. Maven for utilization of the pom.xml file.
