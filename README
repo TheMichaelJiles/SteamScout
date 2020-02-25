@@ -1,4 +1,17 @@
-This document should contain:
- * Title of the project on first line
- * Brief description of the project (statement of purpose)
- * Installation instructions (how to setup a development environment)
+Title: SteamScout
+
+Description: The purpose of SteamScout is to give users the capability to track the price
+or sale status of steam games. By using SteamScout, users can receive notifications
+when games meet criteria that they set. In the end, SteamScout saves users money
+by providing them with a better chance to purchase the games they want at the 
+price they want.
+
+Installation Instructions: (Development Environment)
+	1. Clone the project.
+	2. Set the code/SteamScout directory as the root directory in your IDE/editor.
+	3. Setup Dependencies.
+	
+	Dependencies:
+		1. JavaFX 11 or greater.
+		2. JUnit 5 to run unit tests.
+		3. Maven for utilization of the pom.xml file.
