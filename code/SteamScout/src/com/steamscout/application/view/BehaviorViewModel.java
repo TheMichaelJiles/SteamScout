@@ -8,10 +8,8 @@ import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
-import com.steamscout.application.util.PageConnectionUtility;
 
 import javafx.collections.FXCollections;
-import javafx.stage.Stage;
 
 /**
  * Contains the behavior of the view model as it interacts with the model.
@@ -81,7 +79,6 @@ public class BehaviorViewModel extends ViewModel {
 			Collection<Game> searchResults = this.getSteamGames().getMatchingGames(this.browsePageSearchTermProperty().getValue());
 			this.searchResultsProperty().setValue(FXCollections.observableArrayList(searchResults));
 		} catch (InterruptedException e) {
-			// TODO: handle failed search. NOTE: This is very unlikely to occur.
 		}
 	}
 

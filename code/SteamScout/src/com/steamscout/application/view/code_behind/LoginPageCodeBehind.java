@@ -31,13 +31,11 @@ public class LoginPageCodeBehind {
 	private Button loginButton;
 
 	@FXML
-	void initialize() {
-		
+	private void initialize() {
 	}
 
 	@FXML
 	private void onCreateAccountPageButtonAction(ActionEvent event) {
-
 	}
 
 	@FXML

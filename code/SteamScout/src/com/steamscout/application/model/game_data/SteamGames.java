@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.steamscout.application.util.IterationSpeed;
 import com.steamscout.application.util.ParallelIterable;
 
 /**
@@ -131,7 +132,7 @@ public class SteamGames {
 		}
 		
 		List<String> matches = Collections.synchronizedList(new ArrayList<String>());
-		ParallelIterable<String> titles = new ParallelIterable<String>(this.games.keySet());
+		ParallelIterable<String> titles = new ParallelIterable<String>(this.games.keySet(), IterationSpeed.HIGH);
 		titles.forEach(title -> {
 			if (title.toLowerCase().contains(term.toLowerCase())) {
 				matches.add(title);

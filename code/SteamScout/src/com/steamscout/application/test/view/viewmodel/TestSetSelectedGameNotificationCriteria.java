@@ -28,10 +28,11 @@ public class TestSetSelectedGameNotificationCriteria {
 		ViewModel.get().userProperty().setValue(null);
 		ViewModel.get().watchlistProperty().getValue().clear();
 		ViewModel.get().watchlistPageSelectedGameProperty().setValue(null);
+		ViewModel.get().browsePageSelectedGameProperty().setValue(null);
 	}
 	
 	@Test
-	public void testSuccessfullyAddsCriteria() {
+	public void testSuccessfullyAddsWatchlistPageSelectedGameCriteria() {
 		ViewModel.get().setSelectedGameNotificationCriteria(true, true, 10.50);
 		
 		NotificationCriteria criteria = ViewModel.get().userProperty().getValue().getWatchlist().getNotificationCriteria(new Game(0, "test0"));
@@ -40,4 +41,15 @@ public class TestSetSelectedGameNotificationCriteria {
 				() -> assertEquals(10.50, criteria.getTargetPrice(), 0.0000001));
 	}
 
+	@Test
+	public void testSuccessfullyAddsBrowsePageSelectedGameCriteria() {
+		ViewModel.get().watchlistPageSelectedGameProperty().setValue(null);
+		ViewModel.get().browsePageSelectedGameProperty().setValue(new Game(1, "test1"));
+		ViewModel.get().setSelectedGameNotificationCriteria(true, true, 10.50);
+		
+		NotificationCriteria criteria = ViewModel.get().userProperty().getValue().getWatchlist().getNotificationCriteria(new Game(1, "test1"));
+		assertAll(() -> assertEquals(true, criteria.shouldNotifyOnSale()),
+				() -> assertEquals(true, criteria.shouldNotifyWhenBelowTargetPrice()),
+				() -> assertEquals(10.50, criteria.getTargetPrice(), 0.0000001));
+	}
 }

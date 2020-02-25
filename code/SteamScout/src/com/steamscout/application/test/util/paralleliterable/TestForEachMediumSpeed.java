@@ -8,9 +8,10 @@ import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.steamscout.application.util.IterationSpeed;
 import com.steamscout.application.util.ParallelIterable;
 
-public class TestForEach {
+public class TestForEachMediumSpeed {
 
 	private ParallelIterable<Integer> numbers;
 	private volatile int sum;
@@ -24,7 +25,7 @@ public class TestForEach {
 		theNums.add(1);
 		theNums.add(2);
 		theNums.add(3);
-		this.numbers = new ParallelIterable<Integer>(theNums);
+		this.numbers = new ParallelIterable<Integer>(theNums, IterationSpeed.MEDIUM);
 		this.sum = 0;
 	}
 	
@@ -42,4 +43,5 @@ public class TestForEach {
 		});
 		assertEquals(6, this.sum);
 	}
+
 }

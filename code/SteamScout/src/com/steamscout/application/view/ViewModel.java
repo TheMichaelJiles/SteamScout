@@ -295,6 +295,18 @@ public abstract class ViewModel {
 	public SteamGames getSteamGames() {
 		return this.steamGames;
 	}
+	
+	/**
+	 * Sets the steam games manager.
+	 * 
+	 * @precondition none
+	 * @postcondition getSteamGames().equals(steamGames)
+	 * 
+	 * @param steamGames the steam games manager.
+	 */
+	public void setSteamGames(SteamGames steamGames) {
+		this.steamGames = steamGames;
+	}
 
 	private void initializeProperties() {
 		this.userProperty = new SimpleObjectProperty<User>();

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 /**
  * Utility class for changing the scene between pages.
  * 
- * @author Michael Jiles
+ * @author Michael Jiles, Thomas Whaley
  *
  */
 public class PageConnectionUtility {

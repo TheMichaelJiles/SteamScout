@@ -12,12 +12,6 @@ import com.steamscout.application.model.notification.Notification;
 class TestConstructor {
 
 	@Test
-	void testCreatingValidNotifcation() {
-		Game aGame = new Game(00000, "The Game");
-		Notification aNotification = new Notification(aGame);
-	}
-	
-	@Test
 	void testCreatingInValidNotifcation() {
 		Game aGame = null;
 		assertThrows(IllegalArgumentException.class, () -> new Notification(aGame));

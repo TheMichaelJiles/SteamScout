@@ -9,9 +9,28 @@ import org.junit.jupiter.api.Test;
 
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
+import com.steamscout.application.model.notification.NotificationCriteria;
 
 public class TestRemove {
 
+	@Test
+	public void testAlsoRemovesNotificationCriteria() {
+		Game test = new Game(1, "test");
+		
+		NotificationCriteria criteria = new NotificationCriteria();
+		criteria.setTargetPrice(5.99);
+		criteria.shouldNotifyOnSale(true);
+		criteria.shouldNotifyWhenBelowTargetPrice(true);
+		
+		Watchlist list = new Watchlist();
+		list.add(test);
+		list.putNotificationCriteria(test, criteria);
+		
+		list.remove(test);
+		
+		assertEquals(null, list.getNotificationCriteria(test));
+	}
+	
 	@Test
 	public void testSuccessulRemoval() {
 		Game test = new Game(4, "test");

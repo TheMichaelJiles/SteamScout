@@ -160,6 +160,7 @@ public class Watchlist implements Collection<Game> {
 
 	@Override
 	public boolean remove(Object game) {
+		this.criteria.remove(game);
 		return this.games.remove(game);
 	}
 

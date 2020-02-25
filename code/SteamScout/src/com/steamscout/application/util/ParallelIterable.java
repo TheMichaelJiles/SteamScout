@@ -10,7 +10,9 @@ import java.util.function.Consumer;
  * a given collection by parallelizing the process. 
  * At most, the iteration will utilize up to 8 threads.
  * This class is recommended when a user needs to perform
- * an operation on a large set of data.
+ * an operation on a large set of data. It is up to the user
+ * to ensure proper synchronization of critical sections within
+ * the forEach consumer.
  * 
  * @author Thomas Whaley
  *
@@ -23,17 +25,20 @@ public class ParallelIterable<T> {
 	/**
 	 * Creates a new ParallelIterable object using the specified collection.
 	 * 
-	 * @precondition collection != null
+	 * @precondition collection != null && speed != null
 	 * @postcondition none
 	 * 
-	 * @param collection the collection in which this parallelizediterable gets its data.
+	 * @param collection the collection in which this parallelized iterable gets its data.
 	 */
-	public ParallelIterable(Collection<T> collection) {
+	public ParallelIterable(Collection<T> collection, IterationSpeed speed) {
 		if (collection == null) {
 			throw new IllegalArgumentException("collection should not be null.");
 		}
+		if (speed == null) {
+			throw new IllegalArgumentException("speed should not be null.");
+		}
 		
-		this.divisions = ListUtil.split(new ArrayList<T>(collection), 3);
+		this.divisions = ListUtil.split(new ArrayList<T>(collection), this.convertIterationSpeedToInt(speed));
 	}
 	
 	/**
@@ -68,4 +73,16 @@ public class ParallelIterable<T> {
 		}
 	}
 	
+	private int convertIterationSpeedToInt(IterationSpeed speed) {
+		switch (speed) {
+			case LOW:
+				return 1;
+			case MEDIUM:
+				return 2;
+			case HIGH:
+				return 3;
+			default:
+				return 0;
+		}
+	}
 }

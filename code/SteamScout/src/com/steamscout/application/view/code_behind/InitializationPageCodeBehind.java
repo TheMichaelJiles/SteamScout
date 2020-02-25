@@ -54,6 +54,7 @@ public class InitializationPageCodeBehind {
     }
     
     private void startLoading() {
+    	this.transitionToApplication();
     }
     
     private void setupAnimation() {
