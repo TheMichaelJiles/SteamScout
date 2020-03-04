@@ -41,14 +41,14 @@ class Server(object):
         # json_message = self.socket.recv_string()
         
         # The following line is for testing purposes.
-        json_message = '{"type": "authenticate", "data": {"user": {"username": "diamondminer74", "password": "ilovemining"}}}'
+        json_message = '{"type": "check_notifications", "data": {"user": {"username": "diamondminer74"}}}'
         message = json.loads(json_message)
         print('Received Message')
         
         # Handle the request.
         process_handler = handler.ClientHandler(message)
         response = process_handler.process_request(test_mode)
-        watchlist = response['watchlist']
+        watchlist = response['notifications']
         for item in watchlist:
             print(item['title'])
         

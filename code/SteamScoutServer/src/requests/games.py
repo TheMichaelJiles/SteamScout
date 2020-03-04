@@ -4,6 +4,8 @@ Created on Mar 1, 2020
 @author: Luke Whaley, Nathan Lightholder, Michael Jiles
 '''
 
+import json
+
 class GameFetcher(object):
     '''
     Provides a service that retrieve's all games in the system.
@@ -15,11 +17,13 @@ class GameFetcher(object):
         json response object that should be sent back to the client.
         It contains the information that the client is requesting.
         
-        @postcondition: process_service()["games"] == {["steamid": integer,
+        @postcondition: process_service()["games"] == [{"steamid": integer,
                                                         "title": string,
-                                                        "initialprice": double],
-                                                        [..],
-                                                        [..]}
+                                                        "initialprice": double},
+                                                        
+                                                        {..},
+                                                        
+                                                        {..}]
                
         @param test_mode: boolean - Whether or not to run this service in test mode.
                             
@@ -42,7 +46,11 @@ class _FakeGameFetchingService(object):
         
         @return: The json response object.
         '''
-        return None
+        with open('./test_data/game_table.json', 'r') as jsonfile:
+            games = json.load(jsonfile)
+        
+            json_response = {"games": games}
+            return json_response
         
 class _GameFetchingService(object):
     '''

@@ -6,6 +6,7 @@ Created on Mar 1, 2020
 from requests.account import AccountCreator
 from requests.validation import UserLogin
 from requests.games import GameFetcher
+from requests.manual_notification import Notification
 
 class ServiceFactory(object):
     '''
@@ -30,5 +31,7 @@ class ServiceFactory(object):
             return UserLogin(client_json['data']['user']['username'], client_json['data']['user']['password']) 
         if service_type == 'fetch_games':
             return GameFetcher()
+        if service_type == 'check_notifications':
+            return Notification(client_json['data']['user']['username'])
         else:
             raise TypeError(f'Invalid Service Type: {service_type}')

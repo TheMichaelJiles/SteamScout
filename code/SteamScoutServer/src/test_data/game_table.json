@@ -2,31 +2,43 @@
 	{
 		"steamid": 1,
 		"title": "Darklands",
-		"initialprice": 0.0
+		"initialprice": 0.0,
+		"actualprice": 0.0,
+		"onsale": true
 	},
 	{
 		"steamid": 2,
 		"title": "X4: Foundations",
-		"initialprice": 0.0
+		"initialprice": 0.0,
+		"actualprice": 0.0,
+		"onsale": true
 	},
 	{
 		"steamid": 3,
 		"title": "Streets of Rogue",
-		"initialprice": 0.0
+		"initialprice": 0.0,
+		"actualprice": 0.0,
+		"onsale": false
 	},
 	{
 		"steamid": 4,
 		"title": "Holdfast: Nations At War",
-		"initialprice": 0.0
+		"initialprice": 0.0,
+		"actualprice": 0.0,
+		"onsale": false
 	},
 	{
 		"steamid": 5,
 		"title": "GreedFall",
-		"initialprice": 0.0
+		"initialprice": 0.0,
+		"actualprice": 0.0,
+		"onsale": false
 	},
 	{
 		"steamid": 6,
 		"title": "Remnant: From the Ashes",
-		"initialprice": 0.0
+		"initialprice": 0.0,
+		"actualprice": 0.0,
+		"onsale": false
 	}
 ]

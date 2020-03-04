@@ -3,48 +3,48 @@
 		"id": 1,
 		"steamid": 1,
 		"username": "diamondminer74",
-		"targetprice": 0.0,
-		"onsale": true,
-		"belowtarget": false
+		"targetprice_criteria": 0.0,
+		"onsale_selected": true,
+		"targetprice_selected": false
 	},
 	{
 		"id": 2,
 		"steamid": 2,
 		"username": "diamondminer74",
-		"targetprice": 0.0,
-		"onsale": true,
-		"belowtarget": false
+		"targetprice_criteria": 0.0,
+		"onsale_selected": true,
+		"targetprice_selected": false
 	},
 	{
 		"id": 3,
 		"steamid": 3,
 		"username": "xxx_elitegamer_xxx",
-		"targetprice": 0.0,
-		"onsale": true,
-		"belowtarget": false
+		"targetprice_criteria": 0.0,
+		"onsale_selected": true,
+		"targetprice_selected": true
 	},
 	{
 		"id": 4,
 		"steamid": 4,
 		"username": "xxx_elitegamer_xxx",
-		"targetprice": 0.0,
-		"onsale": true,
-		"belowtarget": false
+		"targetprice_criteria": 0.0,
+		"onsale_selected": true,
+		"targetprice_selected": true
 	},
 	{
 		"id": 5,
 		"steamid": 5,
 		"username": "X_CorleyStud_X",
-		"targetprice": 0.0,
-		"onsale": true,
-		"belowtarget": false
+		"targetprice_criteria": 0.0,
+		"onsale_selected": true,
+		"targetprice_selected": true
 	},
 	{
 		"id": 6,
 		"steamid": 6,
 		"username": "X_CorleyStud_X",
-		"targetprice": 0.0,
-		"onsale": true,
-		"belowtarget": false
+		"targetprice_criteria": 0.0,
+		"onsale_selected": true,
+		"targetprice_selected": true
 	}
 ]
