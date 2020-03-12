@@ -70,8 +70,8 @@ class _WishlistRequestService(object):
         @return: The list of game dictionaries that contain information about the games on the user's steam wishlist.
         '''
         # Perform the following wrapped in the limiting queue.
-        result = requests.get(url)
-        wishlist_json = result.json()
+        #result = requests.get(url)
+        #wishlist_json = result.json()
         
         # Parse the json and return the results the same way the fake does.
         return None

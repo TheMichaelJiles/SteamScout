@@ -7,6 +7,7 @@ from requests.account import AccountCreator
 from requests.validation import UserLogin
 from requests.games import GameFetcher
 from requests.manual_notification import Notification
+from requests.steam_link import SteamWishlistLink
 
 class ServiceFactory(object):
     '''
@@ -33,5 +34,7 @@ class ServiceFactory(object):
             return GameFetcher()
         if service_type == 'check_notifications':
             return Notification(client_json['data']['user']['username'])
+        if service_type == 'link_steam':
+            return SteamWishlistLink(client_json['data']['user']['username'], client_json['data']['user']['steamid'], client_json['data']['user']['already_saved'], client_json['data']['user']['should_save'])
         else:
             raise TypeError(f'Invalid Service Type: {service_type}')
