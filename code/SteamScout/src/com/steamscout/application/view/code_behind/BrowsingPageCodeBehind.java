@@ -97,11 +97,15 @@ public class BrowsingPageCodeBehind {
 
     private void setUpNavigationBar() {
     	this.browsingPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
-    	removeCurrentPageButton();
-    }
+    	this.disableCurrentPageButton();    }
 
-	private void removeCurrentPageButton() {
+    private void disableCurrentPageButton() {
 		VBox vbox = (VBox) this.browsingPageBorderPane.getChildren().get(1);
-    	vbox.getChildren().removeIf(button -> button.getId().equals(this.browsingPageBorderPane.getId()));
+		for (var button : vbox.getChildren()) {
+			if (button.getId().equals(this.browsingPageBorderPane.getId())) {
+				button.setDisable(true);
+				break;
+			}
+		}
 	}
 }

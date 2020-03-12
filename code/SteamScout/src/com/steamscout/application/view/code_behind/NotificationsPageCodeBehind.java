@@ -50,12 +50,17 @@ public class NotificationsPageCodeBehind {
     
 	private void setUpNavigationBar() {
     	this.notificationsPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
-    	this.removeCurrentPageButton();
+    	this.disableCurrentPageButton();
     }
 
-	private void removeCurrentPageButton() {
+	private void disableCurrentPageButton() {
 		VBox vbox = (VBox) this.notificationsPageBorderPane.getChildren().get(1);
-    	vbox.getChildren().removeIf(button -> button.getId().equals(this.notificationsPageBorderPane.getId()));
+		for (var button : vbox.getChildren()) {
+			if (button.getId().equals(this.notificationsPageBorderPane.getId())) {
+				button.setDisable(true);
+				break;
+			}
+		}
 	}
 
 }

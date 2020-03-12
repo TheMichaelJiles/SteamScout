@@ -135,11 +135,16 @@ public class WatchlistPageCodeBehind {
     
     private void setUpNavigationBar() {
     	this.watchlistPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
-    	this.removeCurrentPageButton();
+    	this.disableCurrentPageButton();
     }
 
-	private void removeCurrentPageButton() {
+	private void disableCurrentPageButton() {
 		VBox vbox = (VBox) this.watchlistPageBorderPane.getChildren().get(1);
-    	vbox.getChildren().removeIf(button -> button.getId().equals(this.watchlistPageBorderPane.getId()));
+		for (var button : vbox.getChildren()) {
+			if (button.getId().equals(this.watchlistPageBorderPane.getId())) {
+				button.setDisable(true);
+				break;
+			}
+		}
 	}
 }
