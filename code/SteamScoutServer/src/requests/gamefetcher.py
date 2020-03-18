@@ -5,6 +5,7 @@ Created on Mar 1, 2020
 '''
 
 import json
+import os
 
 class GameFetcher(object):
     '''
@@ -46,7 +47,7 @@ class _FakeGameFetchingService(object):
         
         @return: The json response object.
         '''
-        with open('./test_data/game_table.json', 'r') as jsonfile:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
             games = json.load(jsonfile)
         
             json_response = {"games": games}

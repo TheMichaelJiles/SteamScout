@@ -2,16 +2,16 @@
 	{
 		"steamid": 1,
 		"title": "Darklands",
-		"initialprice": 0.0,
-		"actualprice": 0.0,
+		"initialprice": 60.0,
+		"actualprice": 25.0,
 		"onsale": true
 	},
 	{
 		"steamid": 2,
 		"title": "X4: Foundations",
-		"initialprice": 0.0,
-		"actualprice": 0.0,
-		"onsale": true
+		"initialprice": 15.0,
+		"actualprice": 15.0,
+		"onsale": false
 	},
 	{
 		"steamid": 3,

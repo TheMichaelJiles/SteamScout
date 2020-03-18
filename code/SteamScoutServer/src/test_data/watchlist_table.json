@@ -11,9 +11,9 @@
 		"id": 2,
 		"steamid": 2,
 		"username": "diamondminer74",
-		"targetprice_criteria": 0.0,
-		"onsale_selected": true,
-		"targetprice_selected": false
+		"targetprice_criteria": 20.0,
+		"onsale_selected": false,
+		"targetprice_selected": true
 	},
 	{
 		"id": 3,
@@ -21,7 +21,7 @@
 		"username": "xxx_elitegamer_xxx",
 		"targetprice_criteria": 0.0,
 		"onsale_selected": true,
-		"targetprice_selected": true
+		"targetprice_selected": false
 	},
 	{
 		"id": 4,
@@ -29,7 +29,7 @@
 		"username": "xxx_elitegamer_xxx",
 		"targetprice_criteria": 0.0,
 		"onsale_selected": true,
-		"targetprice_selected": true
+		"targetprice_selected": false
 	},
 	{
 		"id": 5,

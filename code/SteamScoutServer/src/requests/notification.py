@@ -5,6 +5,7 @@ Created on Mar 3, 2020
 '''
 
 import json
+import os
 
 class Notification(object):
     '''
@@ -55,7 +56,7 @@ class _FakeNotificationService(object):
         @return: The json string to send back to the user.
         '''
         game_info = []
-        with open('./test_data/watchlist_table.json', 'r') as watchlist_file:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as watchlist_file:
             watchlist_data = json.load(watchlist_file)
             for item in watchlist_data:
                 if item['username'] == user_name:
@@ -67,7 +68,7 @@ class _FakeNotificationService(object):
                     game_info.append(info)
                     
         game_notifications = []
-        with open('./test_data/game_table.json', 'r') as game_file:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as game_file:
             game_data = json.load(game_file)
             for game_information in game_info:
                 for game in game_data:
