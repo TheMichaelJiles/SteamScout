@@ -5,6 +5,7 @@ Created on Mar 1, 2020
 '''
 
 import json
+import os
 
 class UserLogin(object):
     '''
@@ -68,7 +69,7 @@ class _FakeUserLoginService(object):
         @return: The json response object.
         '''
         is_valid = False
-        with open('./test_data/user_table.json', 'r') as user_json:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'r') as user_json:
             test_data = json.load(user_json)
             for element in test_data:
                 if element['username'] == user_name and element['password'] == password:
@@ -77,17 +78,16 @@ class _FakeUserLoginService(object):
                     
         watchlist = []
         if is_valid:
-            with open('./test_data/watchlist_table.json', 'r') as watchlist_json:
-                with open('./test_data/game_table.json', 'r') as game_json:
+            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as watchlist_json:
+                with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as game_json:
                     watchlist_data = json.load(watchlist_json)
                     game_data = json.load(game_json)
                     for item in watchlist_data:
                         if item['username'] == user_name:
                             current_game = {}
                             current_game["steamid"] = item["steamid"]
-                            current_game["targetprice"] = item["targetprice"]
-                            current_game["onsale"] = item["onsale"]
-                            current_game["belowtarget"] = item["belowtarget"]
+                            current_game["targetprice_criteria"] = item["targetprice_criteria"]
+                            current_game["onsale_selected"] = item["onsale_selected"]
                             for game in game_data:
                                 if game["steamid"] == current_game["steamid"]:
                                     current_game["title"] = game["title"]

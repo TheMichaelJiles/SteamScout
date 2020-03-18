@@ -7,6 +7,7 @@ Created on Mar 3, 2020
 from api.steam_user_wishlist import WishlistRequestAPI
 
 import json
+import os
 
 class SteamWishlistLink(object):
     '''
@@ -57,8 +58,11 @@ class _FakeWishlistLinkingService(object):
     def link_wishlist(self, user_name, user_steam_id, id_already_saved, id_should_save):
         '''
         Links the wishlist of the specified user with the user's watchlist. Performs the wishlist api call
-        through the use of the steam_user_wishlist._FakeWishlistRequestService. Reads/Writes all data from/to the
-        json files within the test_data directory.
+        through the use of the steam_user_wishlist._FakeWishlistRequestService. Reads all data from/to the
+        json files within the test_data directory. Since this is used for testing purposes. No writing to the test
+        files will occur. We can't write to the test files then repeated calls to the same tests will start to fail.
+        The test expects certain information to be in the test files and certain information to not be in there. Adding
+        to the test files when running the unit tests will break these expectations for subsequent runs of the unit tests.
         
         @param user_name : string - the user's username.
         @param user_steam_id : integer - the user's steam id for their steam account.
@@ -66,34 +70,13 @@ class _FakeWishlistLinkingService(object):
         @param id_should_save : boolean - whether or not to save the user's steam id in the database.
         
         @return: The json string to send back to the client.
-        '''
-        
-        # Should extrawct this into its own service. It could be called post_user_steamid.
-        # That way we can handle this somewhere else.
-        proper_user_steam_id = user_steam_id
-        if id_already_saved:
-            # Disregard passed in user_steam_id
-            with open('./test_data/user_table.json', 'r') as user_file:
-                user_data = json.load(user_file)
-                for user in user_data:
-                    if user['username'] == user_name:
-                        proper_user_steam_id = user['steamid']
-                        break        
-        elif id_should_save:
-            with open('./test_data/user_table.json', 'r') as user_file:
-                user_data = json.load(user_file)
-                for user in user_data:
-                    if user['username'] == user_name:
-                        user['steamid'] = proper_user_steam_id
-            with open('./test_data/user_table.json', 'w') as user_file:
-                json.dump(user_data, user_file)
-        
+        '''      
         
         # This starts the main steam linking process.
-        wishlist_service = WishlistRequestAPI(proper_user_steam_id)
+        wishlist_service = WishlistRequestAPI(user_steam_id)
         wishlist_games = wishlist_service.fetch_wishlist(test_mode = True)
           
-        with open('./test_data/watchlist_table.json', 'r') as watchlist_file:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as watchlist_file:
             watchlist_data = json.load(watchlist_file)
             for game in wishlist_games:
                 can_add = True
@@ -107,30 +90,22 @@ class _FakeWishlistLinkingService(object):
                                            "targetprice_criteria": 0.0,
                                            "onsale_selected": False,
                                            "targetprice_selected": False})
-        
-        with open('./test_data/watchlist_table.json', 'w') as watchlist_file:
-            json.dump(watchlist_data, watchlist_file)
-            
-            
-        # Need to convert this into a fetch_watchlist service. This same code is also used in the 
-        # validation.UserLogin service.
-        watchlist = []
-        with open('./test_data/watchlist_table.json', 'r') as watchlist_json:
-            with open('./test_data/game_table.json', 'r') as game_json:
-                watchlist_data = json.load(watchlist_json)
-                game_data = json.load(game_json)
-                for item in watchlist_data:
-                    if item['username'] == user_name:
-                        current_game = {}
-                        current_game["steamid"] = item["steamid"]
-                        current_game["targetprice"] = item["targetprice"]
-                        current_game["onsale"] = item["onsale"]
-                        current_game["belowtarget"] = item["belowtarget"]
-                        for game in game_data:
-                            if game["steamid"] == current_game["steamid"]:
-                                current_game["title"] = game["title"]
-                                current_game["initialprice"] = game["initialprice"]
-                        watchlist.append(current_game)
+        watchlist = []   
+        for item in watchlist_data:
+            if item['username'] == user_name:
+                steamid = item['steamid']
+                with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as game_file:
+                    game_data = json.load(game_file)
+                    for game in game_data:
+                        if game['steamid'] == steamid:
+                            watchlist.append({'steamid': steamid,
+                                              'title': game['title'],
+                                              'initialprice': game['initialprice'],
+                                              'actualprice': game['actualprice'],
+                                              'onsale': game['onsale'],
+                                              'targetprice_criteria': item['targetprice_criteria'],
+                                              'onsale_selected': item['onsale_selected'],
+                                              'targetprice_selected': item['targetprice_selected']})
                        
         return {"result": True, "watchlist": watchlist}
         

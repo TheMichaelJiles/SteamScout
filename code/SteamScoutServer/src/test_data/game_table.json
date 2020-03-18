@@ -40,5 +40,26 @@
 		"initialprice": 0.0,
 		"actualprice": 0.0,
 		"onsale": false
+	},
+	{
+	    "steamid": 23942,
+	    "title": "Jurassic Park",
+	    "initialprice": 0.0,
+	    "actualprice": 0.0,
+	    "onsale": false
+	},
+	{
+	    "steamid": 19510,
+	    "title": "Home Alone: Revenge",
+	    "initialprice": 0.0,
+	    "actualprice": 0.0,
+	    "onsale": false
+	},
+	{
+	    "steamid": 15498,
+	    "title": "Mr. Burger: Taste the Grease",
+	    "initialprice": 0.0,
+	    "actualprice": 0.0,
+	    "onsale": false
 	}
 ]
