@@ -47,7 +47,7 @@ class _FakeGameFetchingService(object):
         
         @return: The json response object.
         '''
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json'), 'r') as jsonfile:
             games = json.load(jsonfile)
         
             json_response = {"games": games}
@@ -66,5 +66,9 @@ class _GameFetchingService(object):
         
         @return: The json response object.
         '''
-        return None
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
+            games = json.load(jsonfile)
+        
+            json_response = {"games": games}
+            return json_response
 

@@ -56,7 +56,7 @@ class _FakeNotificationService(object):
         @return: The json string to send back to the user.
         '''
         game_info = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as watchlist_file:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table_test.json'), 'r') as watchlist_file:
             watchlist_data = json.load(watchlist_file)
             for item in watchlist_data:
                 if item['username'] == user_name:
@@ -68,7 +68,7 @@ class _FakeNotificationService(object):
                     game_info.append(info)
                     
         game_notifications = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as game_file:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json'), 'r') as game_file:
             game_data = json.load(game_file)
             for game_information in game_info:
                 for game in game_data:
@@ -95,6 +95,29 @@ class _NotificationService(object):
         
         @return: The json string to send back to the user.
         '''
-        return None
+        game_info = []
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as watchlist_file:
+            watchlist_data = json.load(watchlist_file)
+            for item in watchlist_data:
+                if item['username'] == user_name:
+                    info = {}
+                    info['steamid'] = item['steamid']
+                    info['onsale_selected'] = item['onsale_selected']
+                    info['targetprice_selected'] = item['targetprice_selected']
+                    info['targetprice_criteria'] = item['targetprice_criteria']
+                    game_info.append(info)
+                    
+        game_notifications = []
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as game_file:
+            game_data = json.load(game_file)
+            for game_information in game_info:
+                for game in game_data:
+                    if game['steamid'] == game_information['steamid']:
+                        if game_information['onsale_selected'] and game['onsale']:
+                            game_notifications.append(game)
+                        elif game_information['targetprice_selected'] and game['actualprice'] <= game_information['targetprice_criteria']:
+                            game_notifications.append(game)
+        
+        return {'notifications': game_notifications}
 
     

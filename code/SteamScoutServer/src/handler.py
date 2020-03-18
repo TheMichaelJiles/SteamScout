@@ -27,7 +27,6 @@ class ClientHandler(object):
         Processes the client's request and returns the resulting
         json message to send back to the client.
         
-        @param test_mode : boolean - Whether or not to respond to the client in test mode.
         @return: The response to send back to the client.
         '''
         service = ServiceFactory.create_service(self.client_json)

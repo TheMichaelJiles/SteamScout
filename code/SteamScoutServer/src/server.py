@@ -38,12 +38,11 @@ class Server(object):
         print('Listening for connections..') 
         
         # Wait for client connections.
-        # json_message = self.socket.recv_string()
+        json_message = self.socket.recv_string()
         
         # The following line is for testing purposes.
-        json_message = '{"type": "check_notifications", "data": {"user": {"username": "diamondminer74"}}}'
         message = json.loads(json_message)
-        print('Received Message')
+        print(f'Received Message: {json_message}')
         
         # Handle the request.
         process_handler = handler.ClientHandler(message)
@@ -53,13 +52,13 @@ class Server(object):
             print(item['title'])
         
         # Send the Response back to the client.
-        # json_response = json.dumps(response)
-        # self.socket.send_string(json_response)
+        json_response = json.dumps(response)
+        self.socket.send_string(json_response)
 
 if __name__ == '__main__':
     '''
     Initializes the Server object and starts the server.
     '''
     steamscout_server = Server()
-    steamscout_server.start(test_mode = True)
+    steamscout_server.start()
     

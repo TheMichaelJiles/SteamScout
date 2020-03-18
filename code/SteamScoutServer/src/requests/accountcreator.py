@@ -67,7 +67,7 @@ class _FakeAccountCreatorService(object):
         @return: The json response object.
         '''
         can_create = True
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'r') as jsonfile:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table_test.json'), 'r') as jsonfile:
             test_data = json.load(jsonfile)
             for element in test_data:
                 if element["username"] == user_name:
@@ -95,5 +95,20 @@ class _AccountCreatorService(object):
         
         @return: The json response object.
         '''
-        return None
+        can_create = True
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'r') as jsonfile:
+            test_data = json.load(jsonfile)
+            for element in test_data:
+                if element["username"] == user_name:
+                    can_create = False
+                    break
+                
+        if can_create:
+            test_data.append({'username': user_name, 'password': password, 'email': email})
+            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'w') as jsonfile:
+                json.dump(test_data, jsonfile)
+                
+        details = 'Creation Successful.' if can_create else 'Creation Unsuccessful: Username Already Taken.'
+        json_response = {"result": can_create, "details": details}
+        return json_response
             
