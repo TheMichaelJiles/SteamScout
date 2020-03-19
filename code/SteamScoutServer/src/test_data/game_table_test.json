@@ -25,14 +25,14 @@
 	},
 	"5": {
 		"title": "GreedFall",
-		"initialprice": 0.0,
-		"actualprice": 0.0,
-		"onsale": false
+		"initialprice": 20.0,
+		"actualprice": 18.0,
+		"onsale": true
 	},
 	"6": {
 		"title": "Remnant: From the Ashes",
-		"initialprice": 0.0,
-		"actualprice": 0.0,
+		"initialprice": 10.0,
+		"actualprice": 10.0,
 		"onsale": false
 	},
 	"23942": {
