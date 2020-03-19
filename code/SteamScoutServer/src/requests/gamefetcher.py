@@ -49,9 +49,13 @@ class _FakeGameFetchingService(object):
         '''
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json'), 'r') as jsonfile:
             games = json.load(jsonfile)
-        
-            json_response = {"games": games}
-            return json_response
+            list_of_game_dicts = []
+            for steamid in games:
+                game = {}
+                game['steamid'] = int(steamid)
+                game.update(games[steamid])
+                list_of_game_dicts.append(game)
+            return {"games": list_of_game_dicts}
         
 class _GameFetchingService(object):
     '''
@@ -68,7 +72,11 @@ class _GameFetchingService(object):
         '''
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
             games = json.load(jsonfile)
-        
-            json_response = {"games": games}
-            return json_response
+            list_of_game_dicts = []
+            for steamid in games:
+                game = {}
+                game['steamid'] = int(steamid)
+                game.update(games[steamid])
+                list_of_game_dicts.append(game)
+            return {"games": list_of_game_dicts}
 
