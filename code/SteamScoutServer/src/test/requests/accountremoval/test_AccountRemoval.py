@@ -9,7 +9,6 @@ from requests.accountcreator import AccountCreator
 
 class TestAccountRemoval(unittest.TestCase):
 
-
     def test_successfully_removes_account(self):
         removal_service = AccountRemoval('diamondminer74', 'ilovemining')
         results = removal_service.process_service(test_mode=True)

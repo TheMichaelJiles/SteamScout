@@ -16,7 +16,7 @@ class ServiceFactory(object):
     '''
 
     @classmethod
-    def create_service(cls, client_json):
+    def create_service(cls, client_json, api_handler):
         '''
         Depending on the type, it will create a 
         createaccount service, authentication service,
@@ -35,6 +35,8 @@ class ServiceFactory(object):
         if service_type == 'check_notifications':
             return Notification(client_json['data']['user']['username'])
         if service_type == 'link_steam':
-            return SteamWishlistLink(client_json['data']['user']['username'], client_json['data']['user']['steamid'], client_json['data']['user']['already_saved'], client_json['data']['user']['should_save'])
+            return SteamWishlistLink(client_json['data']['user']['username'], client_json['data']['user']['steamid'], client_json['data']['user']['already_saved'], client_json['data']['user']['should_save'], api=api_handler)
         else:
             raise TypeError(f'Invalid Service Type: {service_type}')
+        
+        

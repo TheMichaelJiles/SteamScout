@@ -4,21 +4,20 @@ Created on Mar 3, 2020
 @author: Luke Whaley, Nathan Lightholder, Michael Jiles
 '''
 
-import requests
-
 class WishlistRequestAPI(object):
     '''
     This api request contacts the steam api for a specified user's account steam id.
     It can return a list of dictionaries for each game that is in the user's steam wishlist.
     '''
 
-    def __init__(self, user_steam_id):
+    def __init__(self, user_steam_id, api=None):
         '''
         Initializes the data needed to perform the wishlist request.
         
         @param user_steam_id : integer - the user's steam account id.
         '''
         self.url = f'https://store.steampowered.com/wishlist/profiles/{user_steam_id}/wishlistdata/?p=0'
+        self.api = api
         
     def fetch_wishlist(self, test_mode = False):
         '''
@@ -31,7 +30,7 @@ class WishlistRequestAPI(object):
         
         @return: The list of game dictionaries that contain data about the user's steam wishlist.
         '''
-        service = _FakeWishlistRequestService() if test_mode else _WishlistRequestService()
+        service = _FakeWishlistRequestService() if test_mode else _WishlistRequestService(self.api)
         return service.make_request(self.url)
     
 class _FakeWishlistRequestService(object):
@@ -59,6 +58,9 @@ class _WishlistRequestService(object):
     are made within this class. The api calls are throttled to avoid call limits.
     '''
     
+    def __init__(self, api):
+        self.api = api
+    
     def make_request(self, url):
         '''
         Production implementation for the wishlist request service. It fetches a json
@@ -67,12 +69,7 @@ class _WishlistRequestService(object):
         
         @param url : string - the api url.
         
-        @return: The list of game dictionaries that contain information about the games on the user's steam wishlist.
+        @return: The results of the api call
         '''
-        # Perform the following wrapped in the limiting queue.
-        #result = requests.get(url)
-        #wishlist_json = result.json()
-        
-        # Parse the json and return the results the same way the fake does.
-        return None
+        return self.api.make_request(url)
     

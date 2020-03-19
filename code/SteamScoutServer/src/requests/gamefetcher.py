@@ -66,7 +66,7 @@ class _GameFetchingService(object):
     def attempt_fetch_games(self):
         '''
         Fetches all games in the system. The data is pulled
-        from the database.
+        from the json files that do not end in _test.json in the test_data directory.
         
         @return: The json response object.
         '''

@@ -7,6 +7,7 @@ Created on Mar 1, 2020
 import zmq
 import json
 import handler
+from api.apihandler import APIHandler
 
 class Server(object):
     '''
@@ -37,23 +38,20 @@ class Server(object):
         print('SteamScoutServer is started.')
         print('Listening for connections..') 
         
-        # Wait for client connections.
-        json_message = self.socket.recv_string()
+        api = APIHandler(timer_reset_seconds=300, limit=175)
+        while True:
+            # Wait for client connections.
+            json_message = self.socket.recv_string()
+            message = json.loads(json_message)
+            print(f'Received Message: {json_message}')
         
-        # The following line is for testing purposes.
-        message = json.loads(json_message)
-        print(f'Received Message: {json_message}')
+            # Handle the request.
+            process_handler = handler.ClientHandler(message)
+            response = process_handler.process_request(api_handler=api, test_mode)
         
-        # Handle the request.
-        process_handler = handler.ClientHandler(message)
-        response = process_handler.process_request(test_mode)
-        watchlist = response['notifications']
-        for item in watchlist:
-            print(item['title'])
-        
-        # Send the Response back to the client.
-        json_response = json.dumps(response)
-        self.socket.send_string(json_response)
+            # Send the Response back to the client.
+            json_response = json.dumps(response)
+            self.socket.send_string(json_response)
 
 if __name__ == '__main__':
     '''

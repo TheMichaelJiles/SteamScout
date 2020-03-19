@@ -6,7 +6,6 @@ Created on Mar 19, 2020
 import json
 import os
 from requests.watchlistgamefetcher import WatchlistGameFetcher
-from builtins import True
 
 class WatchlistModification(object):
     '''
@@ -39,7 +38,8 @@ class WatchlistModification(object):
         '''
         
         '''
-        service = _FakeWatchlistModificationService() if test_mode
+        service = _FakeWatchlistModificationService() if test_mode else _WatchlistModificationService()
+        return service.make_watchlist_modification(self.user_name, self.steam_id, self.on_sale_selected, self.price_threshold, self.target_price_selected)
     
 class _FakeWatchlistModificationService(object):
     '''

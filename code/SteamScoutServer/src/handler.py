@@ -22,12 +22,12 @@ class ClientHandler(object):
         '''
         self.client_json = client_json
         
-    def process_request(self, test_mode = False):
+    def process_request(self, api_handler, test_mode = False):
         '''
         Processes the client's request and returns the resulting
         json message to send back to the client.
         
         @return: The response to send back to the client.
         '''
-        service = ServiceFactory.create_service(self.client_json)
+        service = ServiceFactory.create_service(self.client_json, api_handler)
         return service.process_service(test_mode)

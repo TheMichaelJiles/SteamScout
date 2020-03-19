@@ -12,8 +12,9 @@ class TestNotification(unittest.TestCase):
     def test_getsnotifications_corleystud(self):
         service = Notification('X_CorleyStud_X')
         results = service.process_service(test_mode = True)
-        self.assertEqual('GreedFall', results['notifications'][0]['title'])
-        self.assertEqual('Remnant: From the Ashes', results['notifications'][1]['title'])
+        notification_ids = map(lambda notification: notification['steamid'], results['notifications'])
+        self.assertTrue(5 in notification_ids)
+        self.assertTrue(6 in notification_ids)
     
     
     def test_getsnotifications_elitegamer(self):
