@@ -66,16 +66,19 @@ class _FakeAccountCreatorService(object):
         
         @return: The json response object.
         '''
-        can_create = True
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table_test.json'), 'r') as jsonfile:
-            test_data = json.load(jsonfile)
-            for element in test_data:
-                if element["username"] == user_name:
-                    can_create = False
-                    break
+            user_data = json.load(jsonfile)
+            username_already_exists = user_name in user_data
+            username_doesnt_already_exist = not username_already_exists
+        if username_doesnt_already_exist:
+            user_data[user_name] = {'password': password,
+                                    'email': email,
+                                    'steamid': 0}
+            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table_test.json'), 'w') as jsonfile:
+                json.dump(user_data, jsonfile)
         
-        details = 'Creation Successful.' if can_create else 'Creation Unsuccessful: Username Already Taken.'
-        json_response = {"result": can_create, "details": details}
+        details = 'Creation Successful.' if username_doesnt_already_exist else 'Creation Unsuccessful: Username Already Taken.'
+        json_response = {"result": username_doesnt_already_exist, "details": details}
         return json_response
         
 class _AccountCreatorService(object):
@@ -95,20 +98,18 @@ class _AccountCreatorService(object):
         
         @return: The json response object.
         '''
-        can_create = True
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'r') as jsonfile:
-            test_data = json.load(jsonfile)
-            for element in test_data:
-                if element["username"] == user_name:
-                    can_create = False
-                    break
-                
-        if can_create:
-            test_data.append({'username': user_name, 'password': password, 'email': email})
+            user_data = json.load(jsonfile)
+            username_already_exists = user_name in user_data
+            username_doesnt_already_exist = not username_already_exists
+        if username_doesnt_already_exist:
+            user_data[user_name] = {'password': password,
+                                    'email': email,
+                                    'steamid': 0}
             with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'w') as jsonfile:
-                json.dump(test_data, jsonfile)
-                
-        details = 'Creation Successful.' if can_create else 'Creation Unsuccessful: Username Already Taken.'
-        json_response = {"result": can_create, "details": details}
+                json.dump(user_data, jsonfile)
+        
+        details = 'Creation Successful.' if username_doesnt_already_exist else 'Creation Unsuccessful: Username Already Taken.'
+        json_response = {"result": username_doesnt_already_exist, "details": details}
         return json_response
             

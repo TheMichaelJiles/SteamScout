@@ -5,6 +5,7 @@ Created on Mar 18, 2020
 '''
 import unittest
 from requests.accountcreator import AccountCreator
+from requests.accountremoval import AccountRemoval
 
 class TestAccountCreator(unittest.TestCase):
 
@@ -14,6 +15,10 @@ class TestAccountCreator(unittest.TestCase):
         results = service.process_service(test_mode = True)
         self.assertTrue(results['result'])
         self.assertEqual('Creation Successful.', results['details'])
+        
+        removal_service = AccountRemoval('mrbimbo', 'password')
+        results = removal_service.process_service(test_mode=True)
+        self.assertTrue(results['result'])
         
     def test_unsuccessfully_createaccount(self):
         service = AccountCreator('diamondminer74', 'password', 'email@example.com')

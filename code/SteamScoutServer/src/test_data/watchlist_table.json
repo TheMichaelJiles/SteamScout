@@ -1,50 +1,44 @@
-[
-	{
-		"id": 1,
+{
+	"1": {
 		"steamid": 1,
 		"username": "diamondminer74",
 		"targetprice_criteria": 0.0,
 		"onsale_selected": true,
 		"targetprice_selected": false
 	},
-	{
-		"id": 2,
+	"2": {
 		"steamid": 2,
 		"username": "diamondminer74",
 		"targetprice_criteria": 20.0,
 		"onsale_selected": false,
 		"targetprice_selected": true
 	},
-	{
-		"id": 3,
+	"3": {
 		"steamid": 3,
 		"username": "xxx_elitegamer_xxx",
 		"targetprice_criteria": 0.0,
 		"onsale_selected": true,
 		"targetprice_selected": false
 	},
-	{
-		"id": 4,
+	"4": {
 		"steamid": 4,
 		"username": "xxx_elitegamer_xxx",
 		"targetprice_criteria": 0.0,
 		"onsale_selected": true,
 		"targetprice_selected": false
 	},
-	{
-		"id": 5,
+	"5": {
 		"steamid": 5,
 		"username": "X_CorleyStud_X",
 		"targetprice_criteria": 0.0,
 		"onsale_selected": true,
 		"targetprice_selected": true
 	},
-	{
-		"id": 6,
+	"6": {
 		"steamid": 6,
 		"username": "X_CorleyStud_X",
 		"targetprice_criteria": 0.0,
 		"onsale_selected": true,
 		"targetprice_selected": true
 	}
-]
+}
