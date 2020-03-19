@@ -6,6 +6,7 @@ Created on Mar 1, 2020
 
 import json
 import os
+from requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class UserLogin(object):
     '''
@@ -70,32 +71,14 @@ class _FakeUserLoginService(object):
         '''
         is_valid = False
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table_test.json'), 'r') as user_json:
-            test_data = json.load(user_json)
-            for element in test_data:
-                if element['username'] == user_name and element['password'] == password:
-                    is_valid = True
-                    break
+            user_data = json.load(user_json)
+            if user_name in user_data and user_data[user_name]['password'] == password:
+                is_valid = True
                     
-        watchlist = []
-        if is_valid:
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table_test.json'), 'r') as watchlist_json:
-                with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json'), 'r') as game_json:
-                    watchlist_data = json.load(watchlist_json)
-                    game_data = json.load(game_json)
-                    for item in watchlist_data:
-                        if item['username'] == user_name:
-                            current_game = {}
-                            current_game["steamid"] = item["steamid"]
-                            current_game["targetprice_criteria"] = item["targetprice_criteria"]
-                            current_game["onsale_selected"] = item["onsale_selected"]
-                            for game in game_data:
-                                if game["steamid"] == current_game["steamid"]:
-                                    current_game["title"] = game["title"]
-                                    current_game["initialprice"] = game["initialprice"]
-                            watchlist.append(current_game)
+        watchlist_game_fetch = WatchlistGameFetcher(user_name)
+        results = watchlist_game_fetch.process_service(test_mode=True)
             
-        json_response = {"result": is_valid, "watchlist": watchlist}
-        return json_response
+        return {"result": is_valid, "watchlist": results['games_on_watchlist'] if is_valid else []}
     
 class _UserLoginService(object):
     '''
@@ -115,29 +98,11 @@ class _UserLoginService(object):
         '''
         is_valid = False
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'r') as user_json:
-            test_data = json.load(user_json)
-            for element in test_data:
-                if element['username'] == user_name and element['password'] == password:
-                    is_valid = True
-                    break
+            user_data = json.load(user_json)
+            if user_name in user_data and user_data[user_name]['password'] == password:
+                is_valid = True
                     
-        watchlist = []
-        if is_valid:
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as watchlist_json:
-                with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as game_json:
-                    watchlist_data = json.load(watchlist_json)
-                    game_data = json.load(game_json)
-                    for item in watchlist_data:
-                        if item['username'] == user_name:
-                            current_game = {}
-                            current_game["steamid"] = item["steamid"]
-                            current_game["targetprice_criteria"] = item["targetprice_criteria"]
-                            current_game["onsale_selected"] = item["onsale_selected"]
-                            for game in game_data:
-                                if game["steamid"] == current_game["steamid"]:
-                                    current_game["title"] = game["title"]
-                                    current_game["initialprice"] = game["initialprice"]
-                            watchlist.append(current_game)
+        watchlist_game_fetch = WatchlistGameFetcher(user_name)
+        results = watchlist_game_fetch.process_service(test_mode=True)
             
-        json_response = {"result": is_valid, "watchlist": watchlist}
-        return json_response
+        return {"result": is_valid, "watchlist": results['games_on_watchlist'] if is_valid else []}

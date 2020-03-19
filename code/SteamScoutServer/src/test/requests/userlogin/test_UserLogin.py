@@ -15,10 +15,7 @@ class TestUserLogin(unittest.TestCase):
         self.assertTrue(was_successful)
         
         watchlist = result['watchlist']
-        first_watchlist_steamid = watchlist[0]['steamid']
-        second_watchlist_steamid = watchlist[1]['steamid']
-        self.assertEqual(first_watchlist_steamid, 1)
-        self.assertEqual(second_watchlist_steamid, 2)
+        self.assertEqual(2, len(watchlist))
         
     
     def test_login_xxx_elitegamer_xxx(self):
@@ -28,10 +25,7 @@ class TestUserLogin(unittest.TestCase):
         self.assertTrue(was_successful)
         
         watchlist = result['watchlist']
-        first_watchlist_steamid = watchlist[0]['steamid']
-        second_watchlist_steamid = watchlist[1]['steamid']
-        self.assertEqual(first_watchlist_steamid, 3)
-        self.assertEqual(second_watchlist_steamid, 4)
+        self.assertEqual(2, len(watchlist))
     
     def test_login_X_CorleyStud_X(self):
         service = UserLogin('X_CorleyStud_X', 'betterthanyoder')
@@ -40,10 +34,7 @@ class TestUserLogin(unittest.TestCase):
         self.assertTrue(was_successful)
         
         watchlist = result['watchlist']
-        first_watchlist_steamid = watchlist[0]['steamid']
-        second_watchlist_steamid = watchlist[1]['steamid']
-        self.assertEqual(first_watchlist_steamid, 5)
-        self.assertEqual(second_watchlist_steamid, 6)
+        self.assertEqual(2, len(watchlist))
         
     def test_login_unknownuser(self):
         service = UserLogin('bearfoot', 'dolphin')

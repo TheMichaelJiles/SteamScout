@@ -14,19 +14,6 @@ class TestWatchlistGameFetcher(unittest.TestCase):
         games = results['games_on_watchlist']
         self.assertEqual(2, len(games))
         
-        darklands = games[0]
-        self.assertEqual(1, darklands['steamid'])
-        self.assertEqual('Darklands', darklands['title'])
-        self.assertEqual(60.0, darklands['initialprice'])
-        self.assertEqual(25.0, darklands['actualprice'])
-        self.assertEqual(True, darklands['onsale'])
-        
-        foundations = games[1]
-        self.assertEqual(2, foundations['steamid'])
-        self.assertEqual('X4: Foundations', foundations['title'])
-        self.assertEqual(15.0, foundations['initialprice'])
-        self.assertEqual(15.0, foundations['actualprice'])
-        self.assertEqual(False, foundations['onsale'])
         
     def test_gets_games_for_unknownuser(self):
         service = WatchlistGameFetcher('lwskjfgoiwej')

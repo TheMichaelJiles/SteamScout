@@ -8,6 +8,8 @@ from api.steam_user_wishlist import WishlistRequestAPI
 
 import json
 import os
+from requests.watchlistaddition import WatchlistAddition
+from requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class SteamWishlistLink(object):
     '''
@@ -76,39 +78,14 @@ class _FakeWishlistLinkingService(object):
         wishlist_service = WishlistRequestAPI(user_steam_id)
         wishlist_games = wishlist_service.fetch_wishlist(test_mode = True)
           
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table_test.json'), 'r') as watchlist_file:
-            watchlist_data = json.load(watchlist_file)
-            for game in wishlist_games:
-                can_add = True
-                for item in watchlist_data:
-                    if item['username'] == user_name and item['steamid'] == game['steamid']:
-                        can_add = False
-                if can_add:
-                    watchlist_data.append({"id": len(watchlist_data) + 1, 
-                                           "steamid": game['steamid'],
-                                           "username": user_name,
-                                           "targetprice_criteria": 0.0,
-                                           "onsale_selected": False,
-                                           "targetprice_selected": False})
+        for game in wishlist_games:
+            addition_service = WatchlistAddition(user_name, game['steamid'])
+            addition_service.process_service(test_mode=True)
             
-        watchlist = []   
-        for item in watchlist_data:
-            if item['username'] == user_name:
-                steamid = item['steamid']
-                with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json'), 'r') as game_file:
-                    game_data = json.load(game_file)
-                    for game in game_data:
-                        if game['steamid'] == steamid:
-                            watchlist.append({'steamid': steamid,
-                                              'title': game['title'],
-                                              'initialprice': game['initialprice'],
-                                              'actualprice': game['actualprice'],
-                                              'onsale': game['onsale'],
-                                              'targetprice_criteria': item['targetprice_criteria'],
-                                              'onsale_selected': item['onsale_selected'],
-                                              'targetprice_selected': item['targetprice_selected']})
+        watchlist_game_fetch = WatchlistGameFetcher(user_name)
+        results = watchlist_game_fetch.process_service(test_mode=True)
                        
-        return {"result": True, "watchlist": watchlist}
+        return {"result": True, "watchlist": results['games_on_watchlist']}
         
         
 class _WishlistLinkingService(object):
@@ -130,42 +107,5 @@ class _WishlistLinkingService(object):
         
         @return: The json string to send back to the client.
         '''
-        wishlist_service = WishlistRequestAPI(user_steam_id)
-        wishlist_games = wishlist_service.fetch_wishlist(test_mode = True)
-          
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as watchlist_file:
-            watchlist_data = json.load(watchlist_file)
-            for game in wishlist_games:
-                can_add = True
-                for item in watchlist_data:
-                    if item['username'] == user_name and item['steamid'] == game['steamid']:
-                        can_add = False
-                if can_add:
-                    watchlist_data.append({"id": len(watchlist_data) + 1, 
-                                           "steamid": game['steamid'],
-                                           "username": user_name,
-                                           "targetprice_criteria": 0.0,
-                                           "onsale_selected": False,
-                                           "targetprice_selected": False})
-        watchlist = []   
-        for item in watchlist_data:
-            if item['username'] == user_name:
-                steamid = item['steamid']
-                with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as game_file:
-                    game_data = json.load(game_file)
-                    for game in game_data:
-                        if game['steamid'] == steamid:
-                            watchlist.append({'steamid': steamid,
-                                              'title': game['title'],
-                                              'initialprice': game['initialprice'],
-                                              'actualprice': game['actualprice'],
-                                              'onsale': game['onsale'],
-                                              'targetprice_criteria': item['targetprice_criteria'],
-                                              'onsale_selected': item['onsale_selected'],
-                                              'targetprice_selected': item['targetprice_selected']})
-                            
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'w') as watchlist_file:
-            json.dump(watchlist_data, watchlist_file)
-            
-        return {"result": True, "watchlist": watchlist}
+        return None
     
