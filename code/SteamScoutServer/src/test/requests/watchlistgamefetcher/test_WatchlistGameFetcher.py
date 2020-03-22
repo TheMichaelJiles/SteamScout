@@ -4,7 +4,7 @@ Created on Mar 18, 2020
 @author: luke
 '''
 import unittest
-from requests.watchlistgamefetcher import WatchlistGameFetcher
+from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class TestWatchlistGameFetcher(unittest.TestCase):
 

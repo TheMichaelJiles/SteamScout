@@ -4,7 +4,7 @@ Created on Mar 18, 2020
 @author: luke
 '''
 import unittest
-from requests.notification import Notification
+from server_requests.notification import Notification
 
 class TestNotification(unittest.TestCase):
 

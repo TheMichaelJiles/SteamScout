@@ -4,8 +4,8 @@ Created on Mar 18, 2020
 @author: luke
 '''
 import unittest
-from requests.accountcreator import AccountCreator
-from requests.accountremoval import AccountRemoval
+from server_requests.accountcreator import AccountCreator
+from server_requests.accountremoval import AccountRemoval
 
 class TestAccountCreator(unittest.TestCase):
 

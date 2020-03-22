@@ -4,8 +4,8 @@ Created on Mar 18, 2020
 @author: luke
 '''
 import unittest
-from requests.watchlistaddition import WatchlistAddition
-from requests.watchlistremoval import WatchlistRemoval
+from server_requests.watchlistaddition import WatchlistAddition
+from server_requests.watchlistremoval import WatchlistRemoval
 
 class TestWatchlistAddition(unittest.TestCase):
 

@@ -4,7 +4,7 @@ Created on Mar 18, 2020
 @author: luke
 '''
 import unittest
-from requests.gamefetcher import GameFetcher
+from server_requests.gamefetcher import GameFetcher
 
 class TestGameFetcher(unittest.TestCase):
 

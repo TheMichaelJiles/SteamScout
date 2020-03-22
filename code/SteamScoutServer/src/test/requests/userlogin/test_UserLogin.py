@@ -4,7 +4,7 @@ Created on Mar 18, 2020
 @author: Luke Whaley, Nathan Lightholder, Michael Jiles
 '''
 import unittest
-from requests.userlogin import UserLogin
+from server_requests.userlogin import UserLogin
 
 class TestUserLogin(unittest.TestCase):
 

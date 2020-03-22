@@ -4,8 +4,8 @@ Created on Mar 18, 2020
 @author: luke
 '''
 import unittest
-from requests.steamwishlistlink import SteamWishlistLink
-from requests.watchlistremoval import WatchlistRemoval
+from server_requests.steamwishlistlink import SteamWishlistLink
+from server_requests.watchlistremoval import WatchlistRemoval
 from api.steam_user_wishlist import WishlistRequestAPI
 
 class TestSteamWishlistLink(unittest.TestCase):

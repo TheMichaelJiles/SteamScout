@@ -5,7 +5,7 @@ Created on Mar 19, 2020
 '''
 
 import threading
-import requests
+from requests import get
 
 class APIHandler(object):
     '''
@@ -43,7 +43,7 @@ class APIHandler(object):
         if self.api_calls_made >= self.limit:
             return {'was_successful': False}
         self.api_calls_made += 1
-        return {'was_successful': True, 'json': requests.get(url).json()}
+        return {'was_successful': True, 'json': get(url).json()}
         
     def stop_timer(self):
         self.timer.cancel()
