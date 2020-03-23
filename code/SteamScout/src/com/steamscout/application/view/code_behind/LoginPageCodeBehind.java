@@ -33,6 +33,8 @@ public class LoginPageCodeBehind {
 
 	@FXML
 	private void initialize() {
+		ViewModel.get().loginPageUsernameProperty().bind(this.usernameTextField.textProperty());
+		ViewModel.get().loginPagePasswordProperty().bind(this.passwordTextField.textProperty());
 	}
 
 	@FXML
