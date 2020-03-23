@@ -92,7 +92,7 @@ public class BehaviorViewModel extends ViewModel {
 			this.userProperty().setValue(loggedInUser);
 			this.watchlistProperty().setValue(FXCollections.observableArrayList(loggedInUser.getWatchlist()));
 		} catch (InvalidCredentialsException e) {
-			// TODO: Set error label here letting the user know that the credentials are invalid.
+			this.loginPageErrorProperty().setValue("Invalid Credentials");
 		}
 	}
 

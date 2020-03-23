@@ -18,7 +18,10 @@ public class TestConstructor {
 				() -> assertEquals(0, vm.searchResultsProperty().getValue().size()),
 				() -> assertEquals("", vm.browsePageSearchTermProperty().getValue()),
 				() -> assertEquals(null, vm.browsePageSelectedGameProperty().getValue()),
-				() -> assertNotEquals(null, vm.getSteamGames()));
+				() -> assertNotEquals(null, vm.getSteamGames()),
+				() -> assertEquals("", vm.loginPageUsernameProperty().getValue()),
+				() -> assertEquals("", vm.loginPagePasswordProperty().getValue()),
+				() -> assertEquals(null, vm.loginPageErrorProperty().getValue()));
 	}
 
 }

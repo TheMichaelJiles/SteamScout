@@ -36,6 +36,7 @@ public abstract class ViewModel {
 	
 	private StringProperty loginPageUsernameProperty;
 	private StringProperty loginPagePasswordProperty;
+	private StringProperty loginPageErrorProperty;
 
 	private SteamGames steamGames;
 
@@ -296,6 +297,20 @@ public abstract class ViewModel {
 	public StringProperty loginPagePasswordProperty() {
 		return this.loginPagePasswordProperty;
 	}
+	
+	/**
+	 * Gets the login page's error property. This is the property that is set
+	 * when the user tries to log in with invalid credentials. This should 
+	 * be displayed to the user upon invalid login.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the login page's error property.
+	 */
+	public StringProperty loginPageErrorProperty() {
+		return this.loginPageErrorProperty;
+	}
 
 	/**
 	 * Gets the selected game property for the currently selected game on the browse
@@ -343,7 +358,8 @@ public abstract class ViewModel {
 		this.browsePageSearchTermProperty = new SimpleStringProperty("");
 		this.browsePageSelectedGameProperty = new SimpleObjectProperty<Game>();
 		this.watchlistPageSelectedGameProperty = new SimpleObjectProperty<Game>();
-		this.loginPageUsernameProperty = new SimpleStringProperty();
-		this.loginPagePasswordProperty = new SimpleStringProperty();
+		this.loginPageUsernameProperty = new SimpleStringProperty("");
+		this.loginPagePasswordProperty = new SimpleStringProperty("");
+		this.loginPageErrorProperty = new SimpleStringProperty();
 	}
 }
