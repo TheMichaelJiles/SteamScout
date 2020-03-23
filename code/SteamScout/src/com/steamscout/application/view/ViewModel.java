@@ -1,5 +1,6 @@
 package com.steamscout.application.view;
 
+import com.steamscout.application.model.user.LoginService;
 import com.steamscout.application.model.user.User;
 
 import java.util.Map;
@@ -32,6 +33,9 @@ public abstract class ViewModel {
 
 	private StringProperty browsePageSearchTermProperty;
 	private ObjectProperty<Game> browsePageSelectedGameProperty;
+	
+	private StringProperty loginPageUsernameProperty;
+	private StringProperty loginPagePasswordProperty;
 
 	private SteamGames steamGames;
 
@@ -185,12 +189,9 @@ public abstract class ViewModel {
 	 *                watchlistProperty().getValue().size() ==
 	 *                userProperty().getValue().getWatchlist().size()
 	 * 
-	 *                NOTE: FOR NOW THERE IS NO USER CREATION OR ACTUAL LOGIN, WE
-	 *                CAN SIMPLY BYPASS THIS STAGE FOR NOW. EACH TIME THE APP IS
-	 *                STARTED WHEN THEY HIT LOGIN WE CAN CALL THIS METHOD TO
-	 *                INITIALIZE THE SYSTEM.
+	 * @param loginsystem the system used to login the user.
 	 */
-	public abstract void loginUser();
+	public abstract void loginUser(LoginService loginsystem);
 
 	/**
 	 * Gets the userProperty for the current user of the system.
@@ -269,6 +270,32 @@ public abstract class ViewModel {
 	public StringProperty browsePageSearchTermProperty() {
 		return this.browsePageSearchTermProperty;
 	}
+	
+	/**
+	 * Gets the login page's username property. This is the value that the user
+	 * enters into the username text field on the login page.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the login page's username property.
+	 */
+	public StringProperty loginPageUsernameProperty() {
+		return this.loginPageUsernameProperty;
+	}
+	
+	/**
+	 * Gets the login page's password property. This is the value that the user
+	 * enters into the password text field on the login page.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the login page's password property.
+	 */
+	public StringProperty loginPagePasswordProperty() {
+		return this.loginPagePasswordProperty;
+	}
 
 	/**
 	 * Gets the selected game property for the currently selected game on the browse
@@ -316,5 +343,7 @@ public abstract class ViewModel {
 		this.browsePageSearchTermProperty = new SimpleStringProperty("");
 		this.browsePageSelectedGameProperty = new SimpleObjectProperty<Game>();
 		this.watchlistPageSelectedGameProperty = new SimpleObjectProperty<Game>();
+		this.loginPageUsernameProperty = new SimpleStringProperty();
+		this.loginPagePasswordProperty = new SimpleStringProperty();
 	}
 }

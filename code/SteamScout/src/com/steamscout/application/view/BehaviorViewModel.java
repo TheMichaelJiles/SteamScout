@@ -7,6 +7,8 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
+import com.steamscout.application.model.user.InvalidCredentialsException;
+import com.steamscout.application.model.user.LoginService;
 import com.steamscout.application.model.user.User;
 
 import javafx.collections.FXCollections;
@@ -83,10 +85,15 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void loginUser() {
-		User newUser = new User(new Credentials("TestUser", "1234"));
-		this.userProperty().setValue(newUser);
-		this.watchlistProperty().setValue(FXCollections.observableArrayList(newUser.getWatchlist()));
+	public void loginUser(LoginService loginsystem) {
+		Credentials loginCredentials = new Credentials(this.loginPageUsernameProperty().getValue(), this.loginPagePasswordProperty().getValue());
+		try {
+			User loggedInUser = loginsystem.login(loginCredentials);
+			this.userProperty().setValue(loggedInUser);
+			this.watchlistProperty().setValue(FXCollections.observableArrayList(loggedInUser.getWatchlist()));
+		} catch (InvalidCredentialsException e) {
+			// TODO: Set error label here letting the user know that the credentials are invalid.
+		}
 	}
 
 	@Override
