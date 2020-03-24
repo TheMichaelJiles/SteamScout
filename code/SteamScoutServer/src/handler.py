@@ -3,7 +3,7 @@ Created on Mar 1, 2020
 
 @author: Luke Whaley, Nathan Lightholder, Michael Jiles
 '''
-from requests.servicefactory import ServiceFactory
+from server_requests.servicefactory import ServiceFactory
 
 class ClientHandler(object):
     '''

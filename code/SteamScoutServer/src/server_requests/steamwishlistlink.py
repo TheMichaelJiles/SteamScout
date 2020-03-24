@@ -5,8 +5,8 @@ Created on Mar 3, 2020
 '''
 
 from api.steam_user_wishlist import WishlistRequestAPI
-from requests.watchlistaddition import WatchlistAddition
-from requests.watchlistgamefetcher import WatchlistGameFetcher
+from server_requests.watchlistaddition import WatchlistAddition
+from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class SteamWishlistLink(object):
     '''

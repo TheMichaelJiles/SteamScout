@@ -3,11 +3,11 @@ Created on Mar 1, 2020
 
 @author: Luke Whaley, Nathan Lightholder, Michael Jiles
 '''
-from requests.accountcreator import AccountCreator
-from requests.userlogin import UserLogin
-from requests.gamefetcher import GameFetcher
-from requests.notification import Notification
-from requests.steamwishlistlink import SteamWishlistLink
+from server_requests.accountcreator import AccountCreator
+from server_requests.userlogin import UserLogin
+from server_requests.gamefetcher import GameFetcher
+from server_requests.notification import Notification
+from server_requests.steamwishlistlink import SteamWishlistLink
 
 class ServiceFactory(object):
     '''

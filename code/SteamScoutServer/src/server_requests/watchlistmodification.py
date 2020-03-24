@@ -5,11 +5,11 @@ Created on Mar 19, 2020
 '''
 import json
 import os
-from requests.watchlistgamefetcher import WatchlistGameFetcher
+from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class WatchlistModification(object):
     '''
-    classdocs
+    Leaving for Michael to finish this class and write the unit tests for it.
     '''
     
 

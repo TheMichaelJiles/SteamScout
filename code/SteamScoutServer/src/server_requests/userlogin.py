@@ -6,7 +6,7 @@ Created on Mar 1, 2020
 
 import json
 import os
-from requests.watchlistgamefetcher import WatchlistGameFetcher
+from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class UserLogin(object):
     '''

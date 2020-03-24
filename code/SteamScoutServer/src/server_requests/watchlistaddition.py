@@ -6,32 +6,57 @@ Created on Mar 18, 2020
 
 import json
 import os
-from requests.watchlistgamefetcher import WatchlistGameFetcher
+from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class WatchlistAddition(object):
     '''
-    
+    This is the watchlist addition service. It adds a game to a
+    user's watchlist.
     '''
 
     def __init__(self, username, game_steamid):
         '''
+        Constructs the watchlist addition service for the account with the 
+        specified username and for the game with the specified id.
         
+        @param username : the username of the account to perform the watchlist addition.
+        @param game_steamid : the id of the game to add.
         '''
         self.username = username
         self.game_steamid = game_steamid
         
     def process_service(self, test_mode = False):
         '''
+        Performs the addition service. Returns the new watchlist for the specified account
+        after the addition has been processed. If the value of test_mode is True, then the
+        addition is performed to the json files that end in _test.json. If the value of test_mode
+        is False, then the addition is performed to the json files that do not end in _test.json.
+        
+        @param test_mode : whether or not to run the service in test mode.
+        @return: the newly modified watchlist after the addition has been processed.
         '''
         service = _FakeWatchlistAdditionService() if test_mode else _WatchlistAdditionService()
         return service.attempt_addition(self.username, self.game_steamid)
         
 class _FakeWatchlistAdditionService(object):
     '''
+    This is the fake addition service used for testing. It performs operations on the test data 
+    files that end in _test.json.
     '''
     
     def attempt_addition(self, username, game_steamid):
         '''
+        Attempts to make the addition for the game with the spcified steamid to the account
+        with the specified username. There are a couple of cases in which the game will not 
+        be added. However, these cases can be removed if we enforce that they do not happen
+        on the client side. For one, if the game that they are trying to add does not exist
+        in the game_table, then the game is not added. For two, if they already have the game
+        on their watchlist, then it is not added again.
+        
+        @param username : the username of the account to perform the watchlist addition.
+        @param game_steamid : the id of the game to add.
+        
+        @return: the new watchlist for the user that contains the results after the addition has been processed.
         '''
         does_game_exist = self._does_game_exist(game_steamid)
         not_already_on_watchlist = self._is_not_already_on_watchlist(username, game_steamid)
@@ -73,10 +98,23 @@ class _FakeWatchlistAdditionService(object):
     
 class _WatchlistAdditionService(object):
     '''
+    This is the actual addition service used for testing. It performs operations on the test data 
+    files that do not end in _test.json.
     '''
     
     def attempt_addition(self, username, game_steamid):
         '''
+        Attempts to make the addition for the game with the spcified steamid to the account
+        with the specified username. There are a couple of cases in which the game will not 
+        be added. However, these cases can be removed if we enforce that they do not happen
+        on the client side. For one, if the game that they are trying to add does not exist
+        in the game_table, then the game is not added. For two, if they already have the game
+        on their watchlist, then it is not added again.
+        
+        @param username : the username of the account to perform the watchlist addition.
+        @param game_steamid : the id of the game to add.
+        
+        @return: the new watchlist for the user that contains the results after the addition has been processed.
         '''
         does_game_exist = self._does_game_exist(game_steamid)
         not_already_on_watchlist = self._is_not_already_on_watchlist(username, game_steamid)
