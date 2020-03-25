@@ -21,4 +21,3 @@
       <Label fx:id="errorLabel" alignment="CENTER" layoutX="218.0" layoutY="293.0" prefHeight="20.0" prefWidth="171.0" text="Label" textAlignment="CENTER" textFill="RED" wrapText="true" />
    </children>
 </AnchorPane>
-

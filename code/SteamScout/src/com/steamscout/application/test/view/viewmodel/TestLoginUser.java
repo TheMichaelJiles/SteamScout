@@ -51,6 +51,11 @@ public class TestLoginUser {
 	}
 	
 	@Test
+	public void testNotAllowNullService() {
+		assertThrows(IllegalArgumentException.class, () -> ViewModel.get().loginUser(null));
+	}
+	
+	@Test
 	public void testSuccessfulLogin() {
 		ViewModel.get().loginUser(new SuccessfulLoginService());
 		

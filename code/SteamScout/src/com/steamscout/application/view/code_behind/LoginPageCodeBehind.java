@@ -48,6 +48,7 @@ public class LoginPageCodeBehind {
 
 	@FXML
 	private void onCreateAccountPageButtonAction(ActionEvent event) {
+		PageConnectionUtility.transitionPageTo(UIFilePaths.CREATE_ACCOUNT_PAGE_FILENAME, this.getCurrentStage());
 	}
 
 	@FXML
