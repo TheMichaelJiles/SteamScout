@@ -10,17 +10,13 @@ package com.steamscout.application.model.game_data;
 public class Game {
 
 	private int appId;
+	private String title;
 	
 	private double currentPrice;
 	private double initialPrice;
-	
 	private boolean isOnSale;
-	private double userPriceThreshold;
 	
-	private String title;
-	private String studioDescription;
 	private String steamLink;
-	private String imageUrl;
 	
 	/**
 	 * Creates a new Game object that encapsulates information.
@@ -41,9 +37,7 @@ public class Game {
 		
 		this.title = title;
 		this.appId = appId;
-		this.studioDescription = "";
-		this.steamLink = "";
-		this.imageUrl = "";
+		this.steamLink = "https://store.steampowered.com/app/" + appId;
 	}
 	
 	@Override
@@ -73,28 +67,10 @@ public class Game {
 		return "Title: " + this.title + System.lineSeparator()
 			 + "AppId: " + this.appId + System.lineSeparator()
 			 + "SteamLink: " + this.steamLink + System.lineSeparator()
-			 + "StudioDescription: " + this.studioDescription + System.lineSeparator()
 			 + "InitialPrice: " + this.initialPrice + System.lineSeparator()
 			 + "CurrentPrice: " + this.currentPrice + System.lineSeparator()
 			 + "IsOnSale: " + this.isOnSale + System.lineSeparator()
-			 + "UserPriceThreshold: " + this.userPriceThreshold + System.lineSeparator()
 			 + System.lineSeparator();
-	}
-	
-	/**
-	 * Sets this games image url to the specified value.
-	 * 
-	 * @precondition imageUrl != null
-	 * @postcondition getImageUrl().equals(imageUrl)
-	 * 
-	 * @param imageUrl this game's image url.
-	 */
-	public void setImageUrl(String imageUrl) {
-		if (imageUrl == null) {
-			throw new IllegalArgumentException("imageUrl should not be null.");
-		}
-		
-		this.imageUrl = imageUrl;
 	}
 	
 	/**
@@ -128,54 +104,6 @@ public class Game {
 		
 		this.initialPrice = initialPrice;
 	}
-
-	/**
-	 * Sets this games price threshold.
-	 * 
-	 * @precondition userPriceThreshold >= 0
-	 * @postcondition getUserPriceThreshold() == userPriceThreshold
-	 * 
-	 * @param userPriceThreshold the game's price threshold.
-	 */
-	public void setUserPriceThreshold(double userPriceThreshold) {
-		if (userPriceThreshold < 0) {
-			throw new IllegalArgumentException("userPriceThreshold must be greater than or equal to zero.");
-		}
-		
-		this.userPriceThreshold = userPriceThreshold;
-	}
-
-	/**
-	 * Sets this game's description of its producing studio.
-	 * 
-	 * @precondition studioDescription != null
-	 * @postcondition getStudioDescription().equals(studioDescription)
-	 * 
-	 * @param studioDescription this game's description of its producing studio.
-	 */
-	public void setStudioDescription(String studioDescription) {
-		if (studioDescription == null) {
-			throw new IllegalArgumentException("studioDescription cannot be null.");
-		}
-		
-		this.studioDescription = studioDescription;
-	}
-
-	/**
-	 * Sets this game's steam link.
-	 * 
-	 * @precondition steamLink != null
-	 * @postcondition getSteamLink().equals(steamLink)
-	 * 
-	 * @param steamLink this game's link to steam web store.
-	 */
-	public void setSteamLink(String steamLink) {
-		if (steamLink == null) {
-			throw new IllegalArgumentException("steamLink cannot be null.");
-		}
-		
-		this.steamLink = steamLink;
-	}
 	
 	/**
 	 * Sets whether this game is on sale or not.
@@ -187,18 +115,6 @@ public class Game {
 	 */
 	public void setOnSale(boolean isOnSale) {
 		this.isOnSale = isOnSale;
-	}
-
-	/**
-	 * Gets this game's image url.
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @return this game's image url.
-	 */
-	public String getImageUrl() {
-		return this.imageUrl;
 	}
 	
 	/**
@@ -250,18 +166,6 @@ public class Game {
 	}
 
 	/**
-	 * Gets the price threshold set by a user for this game.
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @return this game's price threshold.
-	 */
-	public double getUserPriceThreshold() {
-		return this.userPriceThreshold;
-	}
-
-	/**
 	 * Gets the title of this game.
 	 * 
 	 * @precondition none
@@ -271,18 +175,6 @@ public class Game {
 	 */
 	public String getTitle() {
 		return this.title;
-	}
-
-	/**
-	 * Gets this game's description of its producing studio.
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @return the studio description for this game.
-	 */
-	public String getStudioDescription() {
-		return this.studioDescription;
 	}
 
 	/**

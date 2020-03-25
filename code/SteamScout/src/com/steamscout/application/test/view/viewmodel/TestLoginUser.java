@@ -2,17 +2,15 @@ package com.steamscout.application.test.view.viewmodel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
+import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.user.Credentials;
-import com.steamscout.application.model.user.InvalidCredentialsException;
-import com.steamscout.application.model.user.LoginService;
 import com.steamscout.application.model.user.User;
 import com.steamscout.application.view.ViewModel;
 
@@ -23,7 +21,7 @@ public class TestLoginUser {
 	private class SuccessfulLoginService implements LoginService {
 		@Override
 		public User login(Credentials credentials) throws InvalidCredentialsException {
-			Collection<Game> games = new ArrayList<Game>();
+			Watchlist games = new Watchlist();
 			games.add(new Game(1, "test-game-1"));
 			games.add(new Game(2, "test-game-2"));
 			return new User(credentials, games);

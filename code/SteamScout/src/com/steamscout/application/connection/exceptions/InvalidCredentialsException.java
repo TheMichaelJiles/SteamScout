@@ -1,4 +1,6 @@
-package com.steamscout.application.model.user;
+package com.steamscout.application.connection.exceptions;
+
+import com.steamscout.application.model.user.Credentials;
 
 /**
  * Exception that is thrown when attempting to login with invalid
@@ -7,7 +9,7 @@ package com.steamscout.application.model.user;
  * @author Luke Whaley
  *
  */
-public class InvalidCredentialsException extends IllegalArgumentException {
+public class InvalidCredentialsException extends Exception {
 
 	private static final long serialVersionUID = 3524344855409279186L;
 

@@ -2,13 +2,10 @@ package com.steamscout.application.test.model.user.user;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
 import org.junit.jupiter.api.Test;
 
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
@@ -21,7 +18,7 @@ public class TestConstructor {
 
 	@Test
 	public void testGameConstructorNotAllowNullCredentials() {
-		assertThrows(IllegalArgumentException.class, () -> new User(null, Collections.emptyList()));
+		assertThrows(IllegalArgumentException.class, () -> new User(null, new Watchlist()));
 	}
 	
 	@Test
@@ -44,7 +41,7 @@ public class TestConstructor {
 		
 		Game game0 = new Game(0, "a");
 		Game game1 = new Game(1, "aa");
-		Collection<Game> games = new ArrayList<Game>();
+		Watchlist games = new Watchlist();
 		games.add(game0);
 		games.add(game1);
 		

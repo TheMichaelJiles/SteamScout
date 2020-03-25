@@ -12,18 +12,6 @@ public class TestConstructor {
 	public void testNotAllowNullTitle() {
 		assertThrows(IllegalArgumentException.class, () -> new Game(1, null));
 	}
-
-	@Test
-	public void testNotAllowNullStudioDescription() {
-		Game game = new Game(1, "bop");
-		assertThrows(IllegalArgumentException.class, () -> game.setStudioDescription(null));
-	}
-	
-	@Test
-	public void testNotAllowNullSteamLink() {
-		Game game = new Game(1, "bop");
-		assertThrows(IllegalArgumentException.class, () -> game.setSteamLink(null));
-	}
 	
 	@Test
 	public void testNotAllowNegativeCurrentPrice() {
@@ -38,36 +26,17 @@ public class TestConstructor {
 	}
 	
 	@Test
-	public void testNotAllowNegativeUserPriceThreshold() {
-		Game game = new Game(1, "bop");
-		assertThrows(IllegalArgumentException.class, () -> game.setUserPriceThreshold(-1));
-	}
-	
-	@Test
-	public void testNotAllowNullImageUrl() {
-		Game game = new Game(1, "bop");
-		assertThrows(IllegalArgumentException.class, () -> game.setImageUrl(null));
-	}
-	
-	@Test
 	public void testValidPostconditions() {
 		Game game = new Game(1, "bop");
-		game.setStudioDescription("boo");
-		game.setSteamLink("bam");
 		game.setCurrentPrice(4);
 		game.setInitialPrice(5);
-		game.setUserPriceThreshold(6);
 		game.setOnSale(false);
-		game.setImageUrl("dongdig");
 		
 		assertAll(() -> assertEquals("bop", game.getTitle()),
-				() -> assertEquals("boo", game.getStudioDescription()),
-				() -> assertEquals("bam", game.getSteamLink()),
+				() -> assertEquals("https://store.steampowered.com/app/1", game.getSteamLink()),
 				() -> assertEquals(4, game.getCurrentPrice(), 0.000001),
 				() -> assertEquals(5, game.getInitialPrice(), 0.000001),
-				() -> assertEquals(6, game.getUserPriceThreshold(), 0.000001),
 				() -> assertEquals(false, game.isOnSale()),
-				() -> assertEquals(1, game.getAppId()),
-				() -> assertEquals("dongdig", game.getImageUrl()));
+				() -> assertEquals(1, game.getAppId()));
 	}
 }

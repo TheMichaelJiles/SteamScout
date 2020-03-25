@@ -26,17 +26,14 @@ public class TestAddAll {
 		Game testGame = new Game(00000, "Pizza Salesman");
 		testGame.setCurrentPrice(20.00);
 		testGame.setInitialPrice(40.00);
-		testGame.setSteamLink("link");
 		this.testNotification = new Notification(testGame);
 		Game testGame2 = new Game(00001, "Pizza Salesman 2");
 		testGame2.setCurrentPrice(50.00);
 		testGame2.setInitialPrice(60.00);
-		testGame2.setSteamLink("link");
 		this.testNotification2 = new Notification(testGame2);
 		Game testGame3 = new Game(00002, "Pizza Salesman 3");
 		testGame3.setCurrentPrice(50.00);
 		testGame3.setInitialPrice(60.00);
-		testGame3.setSteamLink("link");
 		this.testNotification3 = new Notification(testGame3);
 	}
 	

@@ -2,14 +2,12 @@ package com.steamscout.application.test.view.viewmodel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 import com.steamscout.application.view.ViewModel;
@@ -18,7 +16,7 @@ public class TestResetWatchlistProperty {
 
 	@BeforeEach
 	public void setUp() {
-		Collection<Game> games = new ArrayList<Game>();
+		Watchlist games = new Watchlist();
 		games.add(new Game(1, "te"));
 		games.add(new Game(2, "tes"));
 		games.add(new Game(3, "test"));

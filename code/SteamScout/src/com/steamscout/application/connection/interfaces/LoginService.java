@@ -1,4 +1,8 @@
-package com.steamscout.application.model.user;
+package com.steamscout.application.connection.interfaces;
+
+import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
+import com.steamscout.application.model.user.Credentials;
+import com.steamscout.application.model.user.User;
 
 /**
  * Defines behavior for logging in a user.

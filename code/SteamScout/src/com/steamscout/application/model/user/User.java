@@ -2,10 +2,6 @@ package com.steamscout.application.model.user;
 
 import com.steamscout.application.model.game_data.Watchlist;
 
-import java.util.Collection;
-
-import com.steamscout.application.model.game_data.Game;
-
 /**
  * A user abstraction that maintains data related to a specific user. A user
  * has a watchlist of games that they have subscribed to.
@@ -27,12 +23,7 @@ public class User {
 	 * @param credentials the credentials for this user.
 	 */
 	public User(Credentials credentials) {
-		if (credentials == null) {
-			throw new IllegalArgumentException("credentials should not be null.");
-		}
-		
-		this.credentials = credentials;
-		this.watchlist = new Watchlist();
+		this(credentials, new Watchlist());
 	}
 	
 	/**
@@ -45,9 +36,16 @@ public class User {
 	 * @param credentials the credentials for this user.
 	 * @param games the games to put in this user's watchlist.
 	 */
-	public User(Credentials credentials, Collection<Game> games) {
-		this(credentials);
-		this.watchlist.addAll(games);
+	public User(Credentials credentials, Watchlist games) {
+		if (credentials == null) {
+			throw new IllegalArgumentException("credentials should not be null.");
+		}
+		if (games == null) {
+			throw new IllegalArgumentException("games should not be null.");
+		}
+		
+		this.credentials = credentials;
+		this.watchlist = games;
 	}
 
 	/**

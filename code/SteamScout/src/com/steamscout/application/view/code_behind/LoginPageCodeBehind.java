@@ -3,7 +3,7 @@ package com.steamscout.application.view.code_behind;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
-import com.steamscout.application.model.user.User;
+import com.steamscout.application.connection.ServerLoginService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,8 +43,10 @@ public class LoginPageCodeBehind {
 
 	@FXML
 	private void onLoginButtonAction(ActionEvent event) {
-		ViewModel.get().loginUser(credentials -> new User(credentials));
-		PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
+		boolean isSuccessful = ViewModel.get().loginUser(new ServerLoginService());
+		if (isSuccessful) {
+			PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
+		}
 	}
 	
 	private Stage getCurrentStage() {

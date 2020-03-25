@@ -22,13 +22,12 @@ class TestConstructor {
 		Game aGame = new Game(00000, "Pizza Salesman");
 		aGame.setCurrentPrice(50.00);
 		aGame.setInitialPrice(60.00);
-		aGame.setSteamLink("link");
 		Notification aNotification = new Notification(aGame);
 		
 		assertAll(() -> assertEquals(50.00, aNotification.getCurrentPrice(), 0.00001),
 				() -> assertEquals(60.00, aNotification.getInitialPrice()),
 				() -> assertEquals("Pizza Salesman", aNotification.getTitle()),
-				() -> assertEquals("link", aNotification.getSteamLink()),
+				() -> assertEquals("https://store.steampowered.com/app/0", aNotification.getSteamLink()),
 				() -> assertTrue(aNotification.getTimeNotified().isBefore(LocalTime.now())));
 	}
 

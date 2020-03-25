@@ -19,7 +19,6 @@ public class TestAdd {
 		Game aGame = new Game(00000, "Pizza Salesman");
 		aGame.setCurrentPrice(50.00);
 		aGame.setInitialPrice(60.00);
-		aGame.setSteamLink("link");
 		this.aNotification = new Notification(aGame);
 	}
 	

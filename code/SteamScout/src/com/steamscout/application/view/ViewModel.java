@@ -1,10 +1,10 @@
 package com.steamscout.application.view;
 
-import com.steamscout.application.model.user.LoginService;
 import com.steamscout.application.model.user.User;
 
 import java.util.Map;
 
+import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
 import com.steamscout.application.model.notification.Notification;
@@ -191,8 +191,9 @@ public abstract class ViewModel {
 	 *                userProperty().getValue().getWatchlist().size()
 	 * 
 	 * @param loginsystem the system used to login the user.
+	 * @return whether or not the login was successful.
 	 */
-	public abstract void loginUser(LoginService loginsystem);
+	public abstract boolean loginUser(LoginService loginsystem);
 
 	/**
 	 * Gets the userProperty for the current user of the system.

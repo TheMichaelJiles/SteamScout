@@ -47,7 +47,7 @@ class Server(object):
         
             # Handle the request.
             process_handler = handler.ClientHandler(message)
-            response = process_handler.process_request(api_handler=api, test_mode)
+            response = process_handler.process_request(api, test_mode)
         
             # Send the Response back to the client.
             json_response = json.dumps(response)
