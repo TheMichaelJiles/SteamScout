@@ -91,6 +91,7 @@ public class BehaviorViewModel extends ViewModel {
 			User loggedInUser = loginsystem.login(loginCredentials);
 			this.userProperty().setValue(loggedInUser);
 			this.watchlistProperty().setValue(FXCollections.observableArrayList(loggedInUser.getWatchlist()));
+			this.loginPageErrorProperty().setValue(null);
 			return true;
 		} catch (InvalidCredentialsException e) {
 			this.loginPageErrorProperty().setValue("Invalid Credentials");

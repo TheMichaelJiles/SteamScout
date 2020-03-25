@@ -2,20 +2,22 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.LoginPageCodeBehind">
    <children>
-      <TextField fx:id="usernameTextField" layoutX="218.0" layoutY="160.0" promptText="username" />
-      <TextField fx:id="passwordTextField" layoutX="218.0" layoutY="208.0" promptText="password" />
       <Label layoutX="266.0" layoutY="113.0" text="Login" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="createAccountPageButton" layoutX="212.0" layoutY="257.0" mnemonicParsing="false" onAction="#onCreateAccountPageButtonAction" text="Create Account" />
+      <TextField fx:id="usernameTextField" layoutX="218.0" layoutY="160.0" promptText="username" />
+      <PasswordField fx:id="passwordTextField" layoutX="218.0" layoutY="200.0" />
       <Button fx:id="loginButton" layoutX="332.0" layoutY="257.0" mnemonicParsing="false" onAction="#onLoginButtonAction" text="Login" />
+      <Button fx:id="createAccountPageButton" layoutX="212.0" layoutY="257.0" mnemonicParsing="false" onAction="#onCreateAccountPageButtonAction" text="Create Account" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="218.0" layoutY="293.0" prefHeight="20.0" prefWidth="171.0" text="Label" textAlignment="CENTER" textFill="RED" wrapText="true" />
    </children>
 </AnchorPane>
