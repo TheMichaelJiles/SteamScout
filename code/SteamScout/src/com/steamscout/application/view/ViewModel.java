@@ -4,6 +4,7 @@ import com.steamscout.application.model.user.User;
 
 import java.util.Map;
 
+import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
@@ -37,6 +38,11 @@ public abstract class ViewModel {
 	private StringProperty loginPageUsernameProperty;
 	private StringProperty loginPagePasswordProperty;
 	private StringProperty loginPageErrorProperty;
+	
+	private StringProperty createAccountPageUsernameProperty;
+	private StringProperty createAccountPagePasswordProperty;
+	private StringProperty createAccountPageEmailProperty;
+	private StringProperty createAccountPageErrorProperty;
 
 	private SteamGames steamGames;
 
@@ -185,7 +191,7 @@ public abstract class ViewModel {
 	/**
 	 * Logs in the user.
 	 * 
-	 * @precondition none
+	 * @precondition loginsystem != null
 	 * @postcondition userProperty().getValue() != null &&
 	 *                watchlistProperty().getValue().size() ==
 	 *                userProperty().getValue().getWatchlist().size()
@@ -194,6 +200,18 @@ public abstract class ViewModel {
 	 * @return whether or not the login was successful.
 	 */
 	public abstract boolean loginUser(LoginService loginsystem);
+	
+	/**
+	 * Creates an account.
+	 * 
+	 * @precondition accountsystem != null
+	 * @postcondition if !createUserAccount(CreateAccountService), then
+	 * 				  createAccountPageErrorProperty().getValue().equals("Invalid Account")
+	 * 
+	 * @param accountsystem the system used to create the account.
+	 * @return true if the account was created, false otherwise.
+	 */
+	public abstract boolean createUserAccount(CreateAccountService accountsystem);
 
 	/**
 	 * Gets the userProperty for the current user of the system.
@@ -314,6 +332,61 @@ public abstract class ViewModel {
 	}
 
 	/**
+	 * Gets the create account page's username property. This is the property that
+	 * is set when the user enters text in the username textfield on the create account
+	 * page.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the create account page's username property
+	 */
+	public StringProperty createAccountPageUsernameProperty() {
+		return this.createAccountPageUsernameProperty;
+	}
+
+	/**
+	 * Gets the create account page's password property. This is the property that
+	 * is set when the user enters text in the password textfield on the create account
+	 * page.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the create account page's password property.
+	 */
+	public StringProperty createAccountPagePasswordProperty() {
+		return this.createAccountPagePasswordProperty;
+	}
+	
+	/**
+	 * Gets the create account page's email property. This is the property that 
+	 * is set when the user enters text in the email text field on the create account
+	 * page.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the create account page's email property.
+	 */
+	public StringProperty createAccountPageEmailProperty() {
+		return this.createAccountPageEmailProperty;
+	}
+
+	/**
+	 * Gets the create account page's error property. This is the property that is set
+	 * when the user tries to create an invalid account.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the create account page's error property.
+	 */
+	public StringProperty createAccountPageErrorProperty() {
+		return this.createAccountPageErrorProperty;
+	}
+
+	/**
 	 * Gets the selected game property for the currently selected game on the browse
 	 * page.
 	 * 
@@ -362,5 +435,9 @@ public abstract class ViewModel {
 		this.loginPageUsernameProperty = new SimpleStringProperty("");
 		this.loginPagePasswordProperty = new SimpleStringProperty("");
 		this.loginPageErrorProperty = new SimpleStringProperty();
+		this.createAccountPageUsernameProperty = new SimpleStringProperty("");
+		this.createAccountPagePasswordProperty = new SimpleStringProperty("");
+		this.createAccountPageEmailProperty = new SimpleStringProperty("");
+		this.createAccountPageErrorProperty = new SimpleStringProperty();
 	}
 }

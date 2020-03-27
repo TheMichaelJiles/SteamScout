@@ -8,13 +8,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.CreateAccountPageCodeBehind">
    <children>
-      <TextField fx:id="usernameTextField" layoutX="217.0" layoutY="160.0" promptText="username" />
-      <TextField fx:id="passwordTextField" layoutX="217.0" layoutY="208.0" promptText="password" />
-      <Label layoutX="219.0" layoutY="116.0" text="Create Account">
+      <TextField fx:id="usernameTextField" layoutX="215.0" layoutY="150.0" promptText="username" />
+      <TextField fx:id="passwordTextField" layoutX="215.0" layoutY="187.0" promptText="password" />
+      <Label layoutX="210.0" layoutY="100.0" text="Create Account">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="createButton" layoutX="270.0" layoutY="258.0" mnemonicParsing="false" onAction="#onCreateButtonAction" text="Create" />
+      <Button fx:id="createButton" layoutX="307.0" layoutY="258.0" mnemonicParsing="false" onAction="#onCreateButtonAction" prefHeight="26.0" prefWidth="79.0" text="Create" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="219.0" layoutY="291.0" prefHeight="16.0" prefWidth="171.0" text="Label" textAlignment="CENTER" textFill="RED" wrapText="true" />
+      <TextField fx:id="emailTextField" layoutX="215.0" layoutY="223.0" promptText="email" />
+      <Button fx:id="backButton" layoutX="215.0" layoutY="258.0" mnemonicParsing="false" onAction="#onBackButtonAction" prefHeight="26.0" prefWidth="79.0" text="Back" />
    </children>
 </AnchorPane>

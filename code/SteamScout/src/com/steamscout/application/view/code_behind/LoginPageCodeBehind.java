@@ -8,6 +8,8 @@ import com.steamscout.application.connection.ServerLoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -23,22 +25,30 @@ public class LoginPageCodeBehind {
 	private TextField usernameTextField;
 
 	@FXML
-	private TextField passwordTextField;
+	private PasswordField passwordTextField;
 
 	@FXML
 	private Button createAccountPageButton;
 
 	@FXML
 	private Button loginButton;
+	
+	@FXML
+	private Label errorLabel;
 
 	@FXML
 	private void initialize() {
 		ViewModel.get().loginPageUsernameProperty().bind(this.usernameTextField.textProperty());
 		ViewModel.get().loginPagePasswordProperty().bind(this.passwordTextField.textProperty());
+		this.errorLabel.textProperty().bind(ViewModel.get().loginPageErrorProperty());
+		
+		this.loginButton.disableProperty().bind((this.usernameTextField.textProperty().isNull().or(this.usernameTextField.textProperty().isEmpty())).
+				or(this.passwordTextField.textProperty().isNull().or(this.passwordTextField.textProperty().isEmpty())));
 	}
 
 	@FXML
 	private void onCreateAccountPageButtonAction(ActionEvent event) {
+		PageConnectionUtility.transitionPageTo(UIFilePaths.CREATE_ACCOUNT_PAGE_FILENAME, this.getCurrentStage());
 	}
 
 	@FXML
@@ -47,6 +57,9 @@ public class LoginPageCodeBehind {
 		if (isSuccessful) {
 			PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
 		}
+		
+		this.usernameTextField.textProperty().setValue("");
+		this.passwordTextField.textProperty().setValue("");
 	}
 	
 	private Stage getCurrentStage() {

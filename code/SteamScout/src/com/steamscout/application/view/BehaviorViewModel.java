@@ -3,7 +3,9 @@ package com.steamscout.application.view;
 import java.util.Collection;
 import java.util.Map;
 
+import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
+import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
@@ -86,11 +88,16 @@ public class BehaviorViewModel extends ViewModel {
 
 	@Override
 	public boolean loginUser(LoginService loginsystem) {
+		if (loginsystem == null) {
+			throw new IllegalArgumentException("login system should not be null.");
+		}
+		
 		Credentials loginCredentials = new Credentials(this.loginPageUsernameProperty().getValue(), this.loginPagePasswordProperty().getValue());
 		try {
 			User loggedInUser = loginsystem.login(loginCredentials);
 			this.userProperty().setValue(loggedInUser);
 			this.watchlistProperty().setValue(FXCollections.observableArrayList(loggedInUser.getWatchlist()));
+			this.loginPageErrorProperty().setValue(null);
 			return true;
 		} catch (InvalidCredentialsException e) {
 			this.loginPageErrorProperty().setValue("Invalid Credentials");
@@ -126,6 +133,23 @@ public class BehaviorViewModel extends ViewModel {
 	public void resetWatchlistProperty() {
 		Watchlist watchlist = this.userProperty().getValue().getWatchlist();
 		this.watchlistProperty().setValue(FXCollections.observableArrayList(watchlist));
+	}
+
+	@Override
+	public boolean createUserAccount(CreateAccountService accountsystem) {
+		if (accountsystem == null) {
+			throw new IllegalArgumentException("account system should not be null.");
+		}
+		
+		Credentials credentials = new Credentials(this.createAccountPageUsernameProperty().getValue(), this.createAccountPagePasswordProperty().getValue());
+		try {
+			accountsystem.createAccount(credentials, this.createAccountPageEmailProperty().getValue());
+			this.createAccountPageErrorProperty().setValue(null);
+			return true;
+		} catch (InvalidAccountException e) {
+			this.createAccountPageErrorProperty().setValue("Invalid Account");
+			return false;
+		}
 	}
 	
 	
