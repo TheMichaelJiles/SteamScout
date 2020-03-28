@@ -16,7 +16,7 @@ import com.steamscout.application.model.user.Credentials;
 public class ServerWatchlistAdditionService implements WatchlistAdditionService {
 
 	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
-
+	
 	@Override
 	public Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) {
 		try (Context context = ZMQ.context(1); Socket socket = context.socket(SocketType.REQ)) {

@@ -71,7 +71,15 @@ public class User {
 	public Credentials getCredentials() {
 		return this.credentials;
 	}
-
+	
+	/**
+	 * Sets the user's watchlist
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param newWatchlist the new watchlist 
+	 */
 	public void setWatchlist(Watchlist newWatchlist) {
 		this.watchlist = newWatchlist;
 		
