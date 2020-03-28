@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
+import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
 import com.steamscout.application.model.notification.Notification;
@@ -141,7 +142,7 @@ public abstract class ViewModel {
 	 *                watchlistProperty().getValue().size() ==
 	 *                watchlistProperty().getValue().size()@prev + 1
 	 */
-	public abstract boolean addSelectedGameToWatchlist();
+	public abstract boolean addSelectedGameToWatchlist(WatchlistAdditionService additionSystem);
 	
 	/**
 	 * Removes the game selected in the watchlist page listview

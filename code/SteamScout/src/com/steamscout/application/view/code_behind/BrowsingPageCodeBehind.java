@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import com.steamscout.application.connection.ServerWatchlistAdditionService;
 import com.steamscout.application.model.game_data.Game;
 
 import com.steamscout.application.util.PageConnectionUtility;
@@ -55,7 +56,7 @@ public class BrowsingPageCodeBehind {
 
     @FXML
     private void onAddButtonAction(ActionEvent event) {
-    	boolean isSuccessfullyAdded = ViewModel.get().addSelectedGameToWatchlist();
+    	boolean isSuccessfullyAdded = ViewModel.get().addSelectedGameToWatchlist(new ServerWatchlistAdditionService());
     	if (!isSuccessfullyAdded) {
     		this.gameAlreadyAddedLabel.setVisible(true);
     	} else {

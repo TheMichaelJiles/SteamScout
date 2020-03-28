@@ -26,7 +26,7 @@ class TestRemoveGameFromWatchlist {
 		
 		this.vm.browsePageSelectedGameProperty().setValue(this.testGame);
 		this.vm.userProperty().setValue(new User(new Credentials("person", "0000")));
-		this.vm.addSelectedGameToWatchlist();
+		//this.vm.addSelectedGameToWatchlist();
 	}
 	
 	@AfterEach

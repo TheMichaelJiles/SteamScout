@@ -1,33 +1,29 @@
 package com.steamscout.application.connection;
 
-import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
-import com.steamscout.application.connection.interfaces.LoginService;
-import com.steamscout.application.model.user.Credentials;
-import com.steamscout.application.model.user.User;
-import com.steamscout.application.model.game_data.Game;
-import com.steamscout.application.model.game_data.Watchlist;
-import com.steamscout.application.model.notification.NotificationCriteria;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import org.zeromq.SocketType;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 
-public class ServerLoginService implements LoginService {
+import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
+import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.model.game_data.Watchlist;
+import com.steamscout.application.model.notification.NotificationCriteria;
+import com.steamscout.application.model.user.Credentials;
+
+public class ServerWatchlistAdditionService implements WatchlistAdditionService {
 
 	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
-	
+
 	@Override
-	public User login(Credentials credentials) throws InvalidCredentialsException {
-		try (Context context = ZMQ.context(1);
-				Socket socket = context.socket(SocketType.REQ)) {
+	public Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) {
+		try (Context context = ZMQ.context(1); Socket socket = context.socket(SocketType.REQ)) {
 			socket.connect(HOST_PORT_PAIR);
-			System.out.println("Initiating Server Login Service");
+			System.out.println("Initiating Watchlist Addition Service");
 			
-			String sendingJson = this.getJsonString(credentials);
+			String sendingJson = this.getJsonString(credentials, gameToAdd);
 			socket.send(sendingJson.getBytes(ZMQ.CHARSET), 0);
 			System.out.println("Sent the following json");
 			System.out.println(new JSONObject(sendingJson).toString(4));
@@ -40,12 +36,12 @@ public class ServerLoginService implements LoginService {
 			return this.interpretJsonString(credentials, receivingJson);
 		}
 	}
-
-	protected User interpretJsonString(Credentials credentials, String receivingJson) throws InvalidCredentialsException {
+	
+	protected Watchlist interpretJsonString(Credentials credentials, String receivingJson) {
 		JSONObject root = new JSONObject(receivingJson);
-		boolean isLoginSuccessful = root.getBoolean("result");
-		if (isLoginSuccessful) {
-			JSONArray watchlistData = root.getJSONArray("watchlist");
+		boolean wasGameAdded = root.getBoolean("result");
+		if (wasGameAdded) {
+			JSONArray watchlistData = root.getJSONArray("games_on_watchlist");
 			Watchlist watchlist = new Watchlist();
 			for (int i = 0; i < watchlistData.length(); i++) {
 				JSONObject gameData = watchlistData.getJSONObject(i);
@@ -63,25 +59,30 @@ public class ServerLoginService implements LoginService {
 				watchlist.add(game);
 				watchlist.putNotificationCriteria(game, criteria);
 			}
-			return new User(credentials, watchlist);
+			return watchlist;
 		} else {
-			throw new InvalidCredentialsException(credentials);
+			return null;
 		}
 	}
 	
-	protected String getJsonString(Credentials credentials) {
+	protected String getJsonString(Credentials credentials, Game game) {
 		JSONObject user = new JSONObject();
 		user.put("username", credentials.getUsername());
 		user.put("password", credentials.getPassword());
 		
+		JSONObject gameToAdd = new JSONObject();
+		gameToAdd.put("data", game.getAppId());
+		
+		
 		JSONObject data = new JSONObject();
 		data.put("user", user);
+		data.put("steamid", game.getAppId());
 		
 		JSONObject root = new JSONObject();
-		root.put("type", "authenticate");
+		root.put("type", "watchlist_addition");
 		root.put("data", data);
 		
 		return root.toString();
 	}
-	
+
 }

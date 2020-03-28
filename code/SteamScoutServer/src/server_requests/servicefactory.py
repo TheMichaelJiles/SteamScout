@@ -8,6 +8,7 @@ from server_requests.userlogin import UserLogin
 from server_requests.gamefetcher import GameFetcher
 from server_requests.notification import Notification
 from server_requests.steamwishlistlink import SteamWishlistLink
+from server_requests.watchlistaddition import WatchlistAddition
 
 class ServiceFactory(object):
     '''
@@ -36,6 +37,8 @@ class ServiceFactory(object):
             return Notification(client_json['data']['user']['username'])
         if service_type == 'link_steam':
             return SteamWishlistLink(client_json['data']['user']['username'], client_json['data']['user']['steamid'], client_json['data']['user']['already_saved'], client_json['data']['user']['should_save'], api=api_handler)
+        if service_type == 'watchlist_addition':
+            return WatchlistAddition(client_json['data']['user']['username'], client_json['data']['steamid'])
         else:
             raise TypeError(f'Invalid Service Type: {service_type}')
         

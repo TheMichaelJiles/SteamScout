@@ -71,5 +71,10 @@ public class User {
 	public Credentials getCredentials() {
 		return this.credentials;
 	}
+
+	public void setWatchlist(Watchlist newWatchlist) {
+		this.watchlist = newWatchlist;
+		
+	}
 	
 }
