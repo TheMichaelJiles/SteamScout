@@ -11,6 +11,7 @@ import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 import com.steamscout.application.view.ViewModel;
 
+//TODO
 class TestRemoveGameFromWatchlist {
 	
 	private ViewModel vm;

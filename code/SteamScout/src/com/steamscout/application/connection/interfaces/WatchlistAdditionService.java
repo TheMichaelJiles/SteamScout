@@ -1,5 +1,6 @@
 package com.steamscout.application.connection.interfaces;
 
+import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.user.Credentials;
@@ -23,5 +24,5 @@ public interface WatchlistAdditionService {
 	 * @param gameToAdd the game to be added
 	 * @return the newly modified watchlist
 	 */
-	Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd);
+	Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) throws InvalidAdditionException;
 }

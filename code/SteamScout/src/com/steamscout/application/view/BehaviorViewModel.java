@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
+import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
@@ -46,13 +47,18 @@ public class BehaviorViewModel extends ViewModel {
 		User currentUser = this.userProperty().getValue();
 		Credentials userCredentials = currentUser.getCredentials();
 		Game gameToAdd = this.browsePageSelectedGameProperty().getValue();
-		Watchlist newWatchlist = additionSystem.addGameToWatchlist(userCredentials, gameToAdd);
-		currentUser.setWatchlist(newWatchlist);
-		if (newWatchlist == null) {
-			throw new IllegalArgumentException("New watchlist was null");
+		try {
+			Watchlist newWatchlist = additionSystem.addGameToWatchlist(userCredentials, gameToAdd);
+			currentUser.setWatchlist(newWatchlist);
+			if (newWatchlist == null) {
+				throw new IllegalArgumentException("New watchlist was null");
+			}
+			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
+			return true;
+		} catch (InvalidAdditionException e) {
+			System.err.print(e.getMessage());
+			return false;
 		}
-		this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
-		return true;
 	}
 	
 	@Override

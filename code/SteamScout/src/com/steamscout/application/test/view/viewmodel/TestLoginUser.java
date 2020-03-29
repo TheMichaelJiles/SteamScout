@@ -49,7 +49,7 @@ public class TestLoginUser {
 		ViewModel.get().userProperty().setValue(null);
 		ViewModel.get().watchlistProperty().clear();
 	}
-	
+
 	@Test
 	public void testNotAllowNullService() {
 		assertThrows(IllegalArgumentException.class, () -> ViewModel.get().loginUser(null));

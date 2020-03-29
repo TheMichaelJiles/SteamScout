@@ -7,6 +7,7 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 
+import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
@@ -18,7 +19,7 @@ public class ServerWatchlistAdditionService implements WatchlistAdditionService 
 	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
 	
 	@Override
-	public Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) {
+	public Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) throws InvalidAdditionException {
 		try (Context context = ZMQ.context(1); Socket socket = context.socket(SocketType.REQ)) {
 			socket.connect(HOST_PORT_PAIR);
 			System.out.println("Initiating Watchlist Addition Service");
@@ -37,7 +38,7 @@ public class ServerWatchlistAdditionService implements WatchlistAdditionService 
 		}
 	}
 	
-	protected Watchlist interpretJsonString(Credentials credentials, String receivingJson) {
+	protected Watchlist interpretJsonString(Credentials credentials, String receivingJson) throws InvalidAdditionException {
 		JSONObject root = new JSONObject(receivingJson);
 		boolean wasGameAdded = root.getBoolean("result");
 		if (wasGameAdded) {
@@ -61,7 +62,7 @@ public class ServerWatchlistAdditionService implements WatchlistAdditionService 
 			}
 			return watchlist;
 		} else {
-			return null;
+			throw new InvalidAdditionException();
 		}
 	}
 	
