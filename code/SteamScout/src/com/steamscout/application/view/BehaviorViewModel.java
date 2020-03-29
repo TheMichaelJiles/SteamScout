@@ -8,6 +8,7 @@ import com.steamscout.application.connection.exceptions.InvalidCredentialsExcept
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
+import com.steamscout.application.connection.interfaces.WatchlistModificationService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
@@ -119,19 +120,21 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void setSelectedGameNotificationCriteria(boolean onSale, boolean belowThreshold, double targetPrice) {
-		Watchlist watchlist = this.userProperty().getValue().getWatchlist();
-		
+	public void setSelectedGameNotificationCriteria(WatchlistModificationService modificationService, boolean onSale, boolean belowThreshold, double targetPrice) {
 		NotificationCriteria criteria = new NotificationCriteria();
+		User currentUser = this.userProperty().getValue();
 		criteria.shouldNotifyOnSale(onSale);
 		criteria.shouldNotifyWhenBelowTargetPrice(belowThreshold);
 		criteria.setTargetPrice(targetPrice);
-		
+		Game gameToModify;
 		if (watchlistPageSelectedGameProperty().getValue() == null) {
-			watchlist.putNotificationCriteria(this.browsePageSelectedGameProperty().getValue(), criteria);
+			gameToModify = this.browsePageSelectedGameProperty().getValue();
 		} else {
-			watchlist.putNotificationCriteria(this.watchlistPageSelectedGameProperty().getValue(), criteria);
+			gameToModify = this.watchlistPageSelectedGameProperty().getValue();
 		}
+		Watchlist newWatchlist = modificationService.modifyGameOnWatchlist(currentUser, gameToModify, criteria);
+		currentUser.setWatchlist(newWatchlist);
+		
 	}
 
 	@Override

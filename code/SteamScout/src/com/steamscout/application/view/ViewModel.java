@@ -7,8 +7,10 @@ import java.util.Map;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
+import com.steamscout.application.connection.interfaces.WatchlistModificationService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
+import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.Notification;
 
 import javafx.beans.property.ListProperty;
@@ -35,11 +37,11 @@ public abstract class ViewModel {
 
 	private StringProperty browsePageSearchTermProperty;
 	private ObjectProperty<Game> browsePageSelectedGameProperty;
-	
+
 	private StringProperty loginPageUsernameProperty;
 	private StringProperty loginPagePasswordProperty;
 	private StringProperty loginPageErrorProperty;
-	
+
 	private StringProperty createAccountPageUsernameProperty;
 	private StringProperty createAccountPagePasswordProperty;
 	private StringProperty createAccountPageEmailProperty;
@@ -98,40 +100,41 @@ public abstract class ViewModel {
 	 * @param steamData the data to give the SteamData object.
 	 */
 	public abstract void insertSteamData(Map<String, Integer> steamData);
-	
+
 	/**
-	 * Performs a search on the current user's watchlist for games that
-	 * match the given search term. Updates the watchlistProperty with
-	 * the results.
+	 * Performs a search on the current user's watchlist for games that match the
+	 * given search term. Updates the watchlistProperty with the results.
 	 * 
 	 * @precondition searchTerm != null
 	 * @postcondition watchlistProperty().getValue().containsAll(
-	 * 				  userProperty().getValue().getWatchlist().getMatchingGames(searchTerm))
+	 *                userProperty().getValue().getWatchlist().getMatchingGames(searchTerm))
 	 * 
 	 * @param searchTerm the term to search the watchlist with.
 	 */
 	public abstract void performWatchlistSearch(String searchTerm);
-	
+
 	/**
-	 * Resets the watchlistProperty to contain all items in the current
-	 * users watchlist.
+	 * Resets the watchlistProperty to contain all items in the current users
+	 * watchlist.
 	 * 
 	 * @precondition none
 	 * @postcondition watchlistProperty().getValue().containsAll(userProperty().getValue().getWatchlist())
 	 */
 	public abstract void resetWatchlistProperty();
-	
+
 	/**
-	 * Sets the notification criteria for the currently selected game on the watchlist page.
+	 * Sets the notification criteria for the currently selected game on the
+	 * watchlist page.
 	 * 
 	 * @precondition userProperty().getValue() != null
 	 * @postcondition none
 	 * 
-	 * @param onSale notify when on sale.
+	 * @param onSale         notify when on sale.
 	 * @param belowThreshold notify when below threshold.
-	 * @param targetPrice threshold target price.
+	 * @param targetPrice    threshold target price.
 	 */
-	public abstract void setSelectedGameNotificationCriteria(boolean onSale, boolean belowThreshold, double targetPrice);
+	public abstract void setSelectedGameNotificationCriteria(WatchlistModificationService modificationService,
+			boolean onSale, boolean belowThreshold, double targetPrice);
 
 	/**
 	 * Adds the currently selected game on the browse page to the user's watchlist
@@ -143,10 +146,9 @@ public abstract class ViewModel {
 	 *                watchlistProperty().getValue().size()@prev + 1
 	 */
 	public abstract boolean addSelectedGameToWatchlist(WatchlistAdditionService additionSystem);
-	
+
 	/**
-	 * Removes the game selected in the watchlist page listview
-	 * and watchlist
+	 * Removes the game selected in the watchlist page listview and watchlist
 	 * 
 	 * @precondition none
 	 * @postcondition watchlistProperty().getValue().size() ==
@@ -166,7 +168,7 @@ public abstract class ViewModel {
 	 * @param game the game to add to the user's watchlist.
 	 */
 	public abstract boolean addGameToWatchlist(Game game);
-	
+
 	/**
 	 * Removes the game specified from the watchlist
 	 * 
@@ -174,7 +176,7 @@ public abstract class ViewModel {
 	 * @postcondition if userProperty().getValue() != null, then
 	 *                watchlistProperty().getValue().size() ==
 	 *                watchlistProperty().getValue().size()@prev - 1
-	 *                
+	 * 
 	 * @param game the game to be removed from the watchlist
 	 */
 	public abstract void removeGameFromWatchlist(Game game);
@@ -201,13 +203,14 @@ public abstract class ViewModel {
 	 * @return whether or not the login was successful.
 	 */
 	public abstract boolean loginUser(LoginService loginsystem);
-	
+
 	/**
 	 * Creates an account.
 	 * 
 	 * @precondition accountsystem != null
 	 * @postcondition if !createUserAccount(CreateAccountService), then
-	 * 				  createAccountPageErrorProperty().getValue().equals("Invalid Account")
+	 *                createAccountPageErrorProperty().getValue().equals("Invalid
+	 *                Account")
 	 * 
 	 * @param accountsystem the system used to create the account.
 	 * @return true if the account was created, false otherwise.
@@ -251,10 +254,10 @@ public abstract class ViewModel {
 	public ListProperty<Game> watchlistProperty() {
 		return this.watchlistProperty;
 	}
-	
+
 	/**
-	 * Gets the watclistPage selected game property. Which holds the selected
-	 * item in the list view.
+	 * Gets the watclistPage selected game property. Which holds the selected item
+	 * in the list view.
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -291,7 +294,7 @@ public abstract class ViewModel {
 	public StringProperty browsePageSearchTermProperty() {
 		return this.browsePageSearchTermProperty;
 	}
-	
+
 	/**
 	 * Gets the login page's username property. This is the value that the user
 	 * enters into the username text field on the login page.
@@ -304,7 +307,7 @@ public abstract class ViewModel {
 	public StringProperty loginPageUsernameProperty() {
 		return this.loginPageUsernameProperty;
 	}
-	
+
 	/**
 	 * Gets the login page's password property. This is the value that the user
 	 * enters into the password text field on the login page.
@@ -317,11 +320,11 @@ public abstract class ViewModel {
 	public StringProperty loginPagePasswordProperty() {
 		return this.loginPagePasswordProperty;
 	}
-	
+
 	/**
-	 * Gets the login page's error property. This is the property that is set
-	 * when the user tries to log in with invalid credentials. This should 
-	 * be displayed to the user upon invalid login.
+	 * Gets the login page's error property. This is the property that is set when
+	 * the user tries to log in with invalid credentials. This should be displayed
+	 * to the user upon invalid login.
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -334,8 +337,8 @@ public abstract class ViewModel {
 
 	/**
 	 * Gets the create account page's username property. This is the property that
-	 * is set when the user enters text in the username textfield on the create account
-	 * page.
+	 * is set when the user enters text in the username textfield on the create
+	 * account page.
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -348,8 +351,8 @@ public abstract class ViewModel {
 
 	/**
 	 * Gets the create account page's password property. This is the property that
-	 * is set when the user enters text in the password textfield on the create account
-	 * page.
+	 * is set when the user enters text in the password textfield on the create
+	 * account page.
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -359,10 +362,10 @@ public abstract class ViewModel {
 	public StringProperty createAccountPagePasswordProperty() {
 		return this.createAccountPagePasswordProperty;
 	}
-	
+
 	/**
-	 * Gets the create account page's email property. This is the property that 
-	 * is set when the user enters text in the email text field on the create account
+	 * Gets the create account page's email property. This is the property that is
+	 * set when the user enters text in the email text field on the create account
 	 * page.
 	 * 
 	 * @precondition none
@@ -375,8 +378,8 @@ public abstract class ViewModel {
 	}
 
 	/**
-	 * Gets the create account page's error property. This is the property that is set
-	 * when the user tries to create an invalid account.
+	 * Gets the create account page's error property. This is the property that is
+	 * set when the user tries to create an invalid account.
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -412,7 +415,7 @@ public abstract class ViewModel {
 	public SteamGames getSteamGames() {
 		return this.steamGames;
 	}
-	
+
 	/**
 	 * Sets the steam games manager.
 	 * 

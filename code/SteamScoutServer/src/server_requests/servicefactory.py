@@ -9,6 +9,7 @@ from server_requests.gamefetcher import GameFetcher
 from server_requests.notification import Notification
 from server_requests.steamwishlistlink import SteamWishlistLink
 from server_requests.watchlistaddition import WatchlistAddition
+from server_requests.watchlistmodification import WatchlistModification
 
 class ServiceFactory(object):
     '''
@@ -39,6 +40,8 @@ class ServiceFactory(object):
             return SteamWishlistLink(client_json['data']['user']['username'], client_json['data']['user']['steamid'], client_json['data']['user']['already_saved'], client_json['data']['user']['should_save'], api=api_handler)
         if service_type == 'watchlist_addition':
             return WatchlistAddition(client_json['data']['user']['username'], client_json['data']['steamid'])
+        if service_type == 'watchlist_modification':
+            return WatchlistModification(client_json['data']['user']['username'], client_json['data']['game']['steamid'], client_json['data']['game']['onsaleselected'], client_json['data']['game']['targetprice'], client_json['data']['game']['targetpriceselected'])
         else:
             raise TypeError(f'Invalid Service Type: {service_type}')
         
