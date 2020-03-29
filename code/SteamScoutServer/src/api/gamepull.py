@@ -1,7 +1,7 @@
 '''
 Created on Mar 22, 2020
 
-@author: luke
+@author: luke, Nathan Lightholder
 '''
 
 from api.apihandler import APIHandler
@@ -75,6 +75,9 @@ class _GamePullService(object):
         results = self.api.make_request(url)
         
         results_json = results['json']
+        if results_json is None:
+            return None
+        
         if 'applist' not in results_json:
             return None
         

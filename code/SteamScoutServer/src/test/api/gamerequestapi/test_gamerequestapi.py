@@ -11,7 +11,7 @@ from api.gamerequestapi import _FakeGameRequestService
 from api.apihandler import APIHandler
 
 
-class Test(unittest.TestCase):
+class TestGameRequestAPI(unittest.TestCase):
 
     @patch.object(_FakeGameRequestService, 'attempt_get_info')
     def test_fake_get_info(self, mock):

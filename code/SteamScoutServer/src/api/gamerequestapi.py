@@ -1,7 +1,7 @@
 '''
 Created on Mar 21, 2020
 
-@author: luke
+@author: luke, Nathan Lightholder
 '''
 
 class GameRequestAPI(object):
