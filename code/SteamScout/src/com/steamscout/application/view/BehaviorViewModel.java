@@ -3,10 +3,15 @@ package com.steamscout.application.view;
 import java.util.Collection;
 import java.util.Map;
 
+import com.steamscout.application.connection.ServerWatchlistRemovalService;
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
+import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
+import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
+import com.steamscout.application.connection.interfaces.WatchlistModificationService;
+import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
@@ -37,26 +42,41 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public boolean addSelectedGameToWatchlist() {
-		return this.addGameToWatchlist(this.browsePageSelectedGameProperty().getValue());
+	public boolean addSelectedGameToWatchlist(WatchlistAdditionService additionSystem) {
+		if (additionSystem == null) {
+			throw new IllegalArgumentException("additionSystem should not be null.");
+		}
+		User currentUser = this.userProperty().getValue();
+		Credentials userCredentials = currentUser.getCredentials();
+		Game gameToAdd = this.browsePageSelectedGameProperty().getValue();
+		try {
+			Watchlist newWatchlist = additionSystem.addGameToWatchlist(userCredentials, gameToAdd);
+			currentUser.setWatchlist(newWatchlist);
+			if (newWatchlist == null) {
+				throw new IllegalArgumentException("New watchlist was null");
+			}
+			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
+			return true;
+		} catch (InvalidAdditionException e) {
+			System.err.print(e.getMessage());
+			return false;
+		}
 	}
 	
 	@Override
 	public void removeSelectedGameFromWatchlist() {
-		this.removeGameFromWatchlist(this.watchlistPageSelectedGameProperty().getValue());
+		this.removeGameFromWatchlist(new ServerWatchlistRemovalService(), this.watchlistPageSelectedGameProperty().getValue());
 	}
 	
 	@Override
-	public void removeGameFromWatchlist(Game game) {
+	public void removeGameFromWatchlist(WatchlistRemovalService removalService, Game game) {
 		if (game == null) {
 			throw new IllegalArgumentException("game should not be null.");
 		}
-
 		User currentUser = this.userProperty().getValue();
 		if (currentUser != null) {
-			Watchlist userWatchlist = currentUser.getWatchlist();
-			userWatchlist.remove(game);
-			this.watchlistProperty().setValue(FXCollections.observableArrayList(userWatchlist));
+			removalService.removeGameFromWatchlist(currentUser.getCredentials(), game);
+			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
 		}
 	}
 
@@ -106,19 +126,21 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void setSelectedGameNotificationCriteria(boolean onSale, boolean belowThreshold, double targetPrice) {
-		Watchlist watchlist = this.userProperty().getValue().getWatchlist();
-		
+	public void setSelectedGameNotificationCriteria(WatchlistModificationService modificationService, boolean onSale, boolean belowThreshold, double targetPrice) {
 		NotificationCriteria criteria = new NotificationCriteria();
+		User currentUser = this.userProperty().getValue();
 		criteria.shouldNotifyOnSale(onSale);
 		criteria.shouldNotifyWhenBelowTargetPrice(belowThreshold);
 		criteria.setTargetPrice(targetPrice);
-		
+		Game gameToModify;
 		if (watchlistPageSelectedGameProperty().getValue() == null) {
-			watchlist.putNotificationCriteria(this.browsePageSelectedGameProperty().getValue(), criteria);
+			gameToModify = this.browsePageSelectedGameProperty().getValue();
 		} else {
-			watchlist.putNotificationCriteria(this.watchlistPageSelectedGameProperty().getValue(), criteria);
+			gameToModify = this.watchlistPageSelectedGameProperty().getValue();
 		}
+		Watchlist newWatchlist = modificationService.modifyGameOnWatchlist(currentUser, gameToModify, criteria);
+		currentUser.setWatchlist(newWatchlist);
+		
 	}
 
 	@Override

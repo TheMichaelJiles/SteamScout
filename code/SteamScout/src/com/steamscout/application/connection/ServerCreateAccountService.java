@@ -10,6 +10,11 @@ import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.model.user.Credentials;
 
+/**
+ * 
+ * @author Luke Whaley
+ *
+ */
 public class ServerCreateAccountService implements CreateAccountService {
 
 	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";

@@ -99,23 +99,29 @@ class _WatchlistGameFetchingService(object):
         @param username : the username of the account to get the watchlist
         @return: the dictionary in the format described above.
         '''
-        steamids = []
+        watchlist_info = []
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as jsonfile:
             watchlist_table = json.load(jsonfile)
             for key in watchlist_table:
                 if watchlist_table[key]['username'] == username:
-                    steamids.append(watchlist_table[key]['steamid'])
+                    watchlist_info.append({'steamid': watchlist_table[key]['steamid'],
+                                     'targetprice_criteria': watchlist_table[key]['targetprice_criteria'],
+                                     'onsale_selected': watchlist_table[key]['onsale_selected'],
+                                     'targetprice_selected': watchlist_table[key]['targetprice_selected']})
            
         games = []   
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
             game_data = json.load(jsonfile)
-            for steamid in steamids:
+            for info in watchlist_info:
                 current_game = {}
-                current_game['steamid'] = steamid
-                current_game['title'] = game_data[str(steamid)]['title']
-                current_game['initialprice'] = game_data[str(steamid)]['initialprice']
-                current_game['actualprice'] = game_data[str(steamid)]['actualprice']
-                current_game['onsale'] = game_data[str(steamid)]['onsale']
+                current_game['steamid'] = info['steamid']
+                current_game['title'] = game_data[str(info['steamid'])]['title']
+                current_game['initialprice'] = game_data[str(info['steamid'])]['initialprice']
+                current_game['actualprice'] = game_data[str(info['steamid'])]['actualprice']
+                current_game['onsale'] = game_data[str(info['steamid'])]['onsale']
+                current_game['targetprice_criteria'] = info['targetprice_criteria']
+                current_game['onsale_selected'] = info['onsale_selected']
+                current_game['targetprice_selected'] = info['targetprice_selected']
                 games.append(current_game)
         return {'username': username, 'games_on_watchlist': games}
                 

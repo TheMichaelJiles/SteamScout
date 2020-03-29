@@ -124,7 +124,7 @@ class _WatchlistAdditionService(object):
             with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as jsonfile:
                 watchlist_data = json.load(jsonfile)
                 keys = map(lambda x: int(x), watchlist_data.keys())
-                watchlist_data[max(keys) + 1] = {'steamid': game_steamid,
+                watchlist_data[max(keys, default = 0) + 1] = {'steamid': game_steamid,
                                                            'username': username,
                                                            'targetprice_criteria': 0.0,
                                                            'onsale_selected': False,

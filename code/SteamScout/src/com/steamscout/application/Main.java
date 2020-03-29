@@ -42,6 +42,7 @@ public class Main extends Application {
 	    	fakeSteamData.put("Skyrim", 1);
 	    	fakeSteamData.put("Minecraft", 2);
 	    	fakeSteamData.put("Indiana Jones: Rise of the Old Man", 3);
+	    	fakeSteamData.put("TestGame", 1210010);
 	    	
 			ViewModel.get().insertSteamData(fakeSteamData);
 		} catch (Exception e) {
