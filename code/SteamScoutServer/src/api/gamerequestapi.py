@@ -91,6 +91,8 @@ class _GameRequestService(object):
             result = self.api.make_request(url)
         received_json = result['json']
         
+        if received_json is None:
+            return None
         if not received_json['success']:
             return None
         if 'data' not in received_json:
