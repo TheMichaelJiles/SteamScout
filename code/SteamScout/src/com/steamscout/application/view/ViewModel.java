@@ -8,6 +8,7 @@ import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
 import com.steamscout.application.connection.interfaces.WatchlistModificationService;
+import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
 import com.steamscout.application.model.game_data.Watchlist;
@@ -177,9 +178,10 @@ public abstract class ViewModel {
 	 *                watchlistProperty().getValue().size() ==
 	 *                watchlistProperty().getValue().size()@prev - 1
 	 * 
-	 * @param game the game to be removed from the watchlist
+	 * @param removalService the connection to the server for watchlist removal
+	 * @param game           the game to be removed from the watchlist
 	 */
-	public abstract void removeGameFromWatchlist(Game game);
+	public abstract void removeGameFromWatchlist(WatchlistRemovalService removalService, Game game);
 
 	/**
 	 * Performs a search using the steam api and the value within

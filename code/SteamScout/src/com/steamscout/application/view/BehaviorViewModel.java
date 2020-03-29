@@ -3,6 +3,7 @@ package com.steamscout.application.view;
 import java.util.Collection;
 import java.util.Map;
 
+import com.steamscout.application.connection.ServerWatchlistRemovalService;
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
@@ -10,6 +11,7 @@ import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
 import com.steamscout.application.connection.interfaces.WatchlistModificationService;
+import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
@@ -63,20 +65,18 @@ public class BehaviorViewModel extends ViewModel {
 	
 	@Override
 	public void removeSelectedGameFromWatchlist() {
-		this.removeGameFromWatchlist(this.watchlistPageSelectedGameProperty().getValue());
+		this.removeGameFromWatchlist(new ServerWatchlistRemovalService(), this.watchlistPageSelectedGameProperty().getValue());
 	}
 	
 	@Override
-	public void removeGameFromWatchlist(Game game) {
+	public void removeGameFromWatchlist(WatchlistRemovalService removalService, Game game) {
 		if (game == null) {
 			throw new IllegalArgumentException("game should not be null.");
 		}
-
 		User currentUser = this.userProperty().getValue();
 		if (currentUser != null) {
-			Watchlist userWatchlist = currentUser.getWatchlist();
-			userWatchlist.remove(game);
-			this.watchlistProperty().setValue(FXCollections.observableArrayList(userWatchlist));
+			removalService.removeGameFromWatchlist(currentUser.getCredentials(), game);
+			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
 		}
 	}
 
