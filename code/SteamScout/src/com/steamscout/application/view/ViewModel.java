@@ -2,8 +2,7 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.User;
 
-import java.util.Map;
-
+import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
@@ -101,7 +100,7 @@ public abstract class ViewModel {
 	 * 
 	 * @param steamData the data to give the SteamData object.
 	 */
-	public abstract void insertSteamData(Map<String, Integer> steamData);
+	public abstract void insertSteamData(ServerGameFetchService service);
 
 	/**
 	 * Performs a search on the current user's watchlist for games that match the

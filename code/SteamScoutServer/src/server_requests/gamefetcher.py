@@ -79,5 +79,6 @@ class _GameFetchingService(object):
                 game['steamid'] = int(steamid)
                 game.update(games[steamid])
                 list_of_game_dicts.append(game)
+                print(steamid)
             return {"games": list_of_game_dicts}
 

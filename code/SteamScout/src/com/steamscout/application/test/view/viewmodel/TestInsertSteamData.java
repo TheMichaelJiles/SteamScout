@@ -8,6 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.view.ViewModel;
 
 public class TestInsertSteamData {
@@ -24,8 +25,7 @@ public class TestInsertSteamData {
 
 	@Test
 	public void testSuccessfulInsertion() {
-		Map<String, Integer> data = new HashMap<String, Integer>();
-		data.put("test", 0);
+		ServerGameFetchService data = new ServerGameFetchService();
 		ViewModel.get().insertSteamData(data);
 		
 		assertAll(() -> assertEquals(false, ViewModel.get().getSteamGames().getTitles().isEmpty()),
