@@ -100,6 +100,6 @@ public class TestAddGameToWatchlist {
 		vm.userProperty().setValue(new User(new Credentials("test", "1234")));
 		Game game = new Game(1, "test");
 		vm.browsePageSelectedGameProperty().setValue(game);
-		assertThrows(NullPointerException.class, () -> vm.addSelectedGameToWatchlist(new NullReturnAdditionService()));
+		assertThrows(IllegalArgumentException.class, () -> vm.addSelectedGameToWatchlist(new NullReturnAdditionService()));
 	}
 }
