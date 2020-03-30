@@ -3,7 +3,6 @@ package com.steamscout.application;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;

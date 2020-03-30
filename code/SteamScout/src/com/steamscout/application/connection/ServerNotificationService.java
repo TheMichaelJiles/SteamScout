@@ -26,7 +26,7 @@ public class ServerNotificationService extends ServerService<NotificationList> i
 		JSONArray notificationData = root.getJSONArray("notifications");
 		NotificationList notifications = new NotificationList();
 		for (int i = 0; i < notificationData.length(); i++) {
-			JSONObject data = notificationData.getJSONObject(i);
+			JSONObject data = notificationData.getJSONObject(i);  
 
 			Game game = new Game(data.getInt("steamid"), data.getString("title"));
 			game.setCurrentPrice(data.getDouble("actualprice"));
@@ -53,6 +53,10 @@ public class ServerNotificationService extends ServerService<NotificationList> i
 		root.put("data", data);
 
 		return root.toString();
+	}
+	
+	protected void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
 	}
 
 }
