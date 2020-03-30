@@ -1,7 +1,7 @@
 '''
 Created on Mar 29, 2020
 
-@author: Nlight160
+@author: Nathan Lightholder
 '''
 import unittest
 from mock import patch
