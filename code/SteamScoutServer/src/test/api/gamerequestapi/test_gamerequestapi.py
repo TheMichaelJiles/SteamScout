@@ -47,7 +47,7 @@ class TestGameRequestAPI(unittest.TestCase):
         
         self.assertEqual(result, None)
         
-    ''' @patch.object(APIHandler, 'make_request')
+    '''@patch.object(APIHandler, 'make_request')
     def test_attempt_get_info_with_JSON_request_unsuccessful(self, mock):
         handler = APIHandler(0, 1)
         service = _GameRequestService(handler)
