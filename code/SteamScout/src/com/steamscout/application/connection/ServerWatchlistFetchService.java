@@ -56,4 +56,9 @@ public class ServerWatchlistFetchService extends ServerService<Watchlist> implem
 		
 		return root.toString();
 	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 }

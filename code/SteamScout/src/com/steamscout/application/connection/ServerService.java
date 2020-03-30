@@ -26,5 +26,4 @@ public abstract class ServerService<T> {
 	
 	protected abstract String getSendingJsonString();
 	
-	
 }
