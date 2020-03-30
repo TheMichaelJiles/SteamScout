@@ -1,31 +1,30 @@
-package com.steamscout.application.test.connection.serverwatchlistmodificationservice;
+package com.steamscout.application.test.connection.serverwatchlistremovalservice;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.steamscout.application.connection.ServerWatchlistModificationService;
+import com.steamscout.application.connection.ServerWatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
-import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
 class TestJsonExchange {
-	
-	private class TestServerWatchlistModificationService extends ServerWatchlistModificationService {
+
+	private class TestServerWatchlistRemovalService extends ServerWatchlistRemovalService {
 		public Watchlist interpretJsonString(Credentials credentials, String receivedJson) {
 			return super.interpretJsonString(credentials, receivedJson);
 		}
 		
-		public String getJsonString(Credentials credentials, Game game, NotificationCriteria notificationCriteria) {
-			return super.getJsonString(credentials, game, notificationCriteria);
+		public String getJsonString(Credentials credentials, Game game) {
+			return super.getJsonString(credentials, game);
 		}
 	}
 	
 	@Test
 	void testValidModification() {
-		TestServerWatchlistModificationService service = new TestServerWatchlistModificationService();
+		var service = new TestServerWatchlistRemovalService();
 		Credentials credentials = new Credentials("twhal", "1234");
 		User user = new User(credentials);
 		String receivedJson = "{\"result\": true, \"games_on_watchlist\": [{\"steamid\": 5, \"title\": \"test-game\", \"actualprice\": 39.99, \"initialprice\": 59.99, \"onsale\": true, \"onsale_selected\": true, \"targetprice_selected\": false, \"targetprice_criteria\": 0.0}]}";

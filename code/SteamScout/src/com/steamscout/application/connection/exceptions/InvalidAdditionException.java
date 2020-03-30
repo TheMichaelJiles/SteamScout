@@ -11,6 +11,8 @@ import com.steamscout.application.model.game_data.Game;
  */
 public class InvalidAdditionException extends Exception {
 
+	private static final long serialVersionUID = 8834346479963124001L;
+
 	/**
 	 * Constructs an invalidAdditionException for general addition. Signifies that
 	 * either the game is already on the watchlist, or the game does not exist

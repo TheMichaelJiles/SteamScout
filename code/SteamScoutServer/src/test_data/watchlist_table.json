@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"1": {"steamid": 1210010, "username": "TheMichaelJiles", "targetprice_criteria": 0, "onsale_selected": true, "targetprice_selected": false}, "2": {"steamid": 251040, "username": "nathan", "targetprice_criteria": 0, "onsale_selected": true, "targetprice_selected": false}, "3": {"steamid": 261550, "username": "nathan", "targetprice_criteria": 0, "onsale_selected": true, "targetprice_selected": false}}
+=======
+{"1": {"steamid": 1210010, "username": "TheMichaelJiles", "targetprice_criteria": 1000000, "onsale_selected": true, "targetprice_selected": true}}
+>>>>>>> branch 'master' of https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4.git

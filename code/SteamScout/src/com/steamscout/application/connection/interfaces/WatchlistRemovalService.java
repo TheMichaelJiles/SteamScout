@@ -2,7 +2,6 @@ package com.steamscout.application.connection.interfaces;
 
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
-import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
 /**
