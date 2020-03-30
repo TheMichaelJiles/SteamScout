@@ -32,6 +32,9 @@ class GamePull(object):
         '''
         service = _FakeGamePullService() if test_mode else _GamePullService(self.api)
         return service.make_pull()
+    
+    def cleanup(self):
+        self.api.stop_timer()
 
 class _FakeGamePullService(object):
     '''
