@@ -21,6 +21,15 @@ public abstract class ServerService<T> {
 
 	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
 	
+	/**
+	 * Sends getSendingJsonString() to the server. The server's response
+	 * is given to interpretJsonString(String).
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return interpretJsonString(String)
+	 */
 	protected T send() {
 		try (Context context = ZMQ.context(1);
 				Socket socket = context.socket(SocketType.REQ)) {
@@ -34,8 +43,26 @@ public abstract class ServerService<T> {
 		}
 	}
 	
+	/**
+	 * Defines the behavior for how the data received back from
+	 * the server is interpreted.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param json the json received from the server.
+	 * @return the interpreted data.
+	 */
 	protected abstract T interpretJsonString(String json);
 	
+	/**
+	 * Defines the string that is sent to the server as the request.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the string that is sent to the server as the request.
+	 */
 	protected abstract String getSendingJsonString();
 	
 }

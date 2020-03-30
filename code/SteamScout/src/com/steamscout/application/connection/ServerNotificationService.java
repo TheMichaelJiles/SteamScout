@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.steamscout.application.connection;
 
 import org.json.JSONArray;

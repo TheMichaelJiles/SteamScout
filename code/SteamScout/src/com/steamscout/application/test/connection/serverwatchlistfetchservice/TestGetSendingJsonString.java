@@ -15,7 +15,6 @@ public class TestGetSendingJsonString {
 			this.setUsername(username);
 			return super.getSendingJsonString();
 		}
-		
 	}
 	
 	@Test
