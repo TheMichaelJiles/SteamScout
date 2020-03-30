@@ -113,6 +113,7 @@ class _NotificationService(object):
                     game = {}
                     game['steamid'] = info['steamid']
                     game.update(game_data[str(info['steamid'])])
+                    game_notifications.append(game)
         
         return {'notifications': game_notifications}
 
