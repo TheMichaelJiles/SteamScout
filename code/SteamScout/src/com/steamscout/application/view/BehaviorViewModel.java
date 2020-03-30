@@ -3,6 +3,7 @@ package com.steamscout.application.view;
 import java.util.Collection;
 import java.util.Map;
 
+import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.connection.ServerWatchlistRemovalService;
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
@@ -35,12 +36,12 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void insertSteamData(Map<String, Integer> steamData) {
-		if (steamData == null) {
-			throw new IllegalArgumentException("steamData should not be null.");
+	public void insertSteamData(ServerGameFetchService service) {
+		if (service == null) {
+			throw new IllegalArgumentException("Game Fetch service should not be null.");
 		}
 
-		this.getSteamGames().initializeGames(steamData);
+		this.getSteamGames().initializeGames(service.FetchGames());
 	}
 
 	@Override
