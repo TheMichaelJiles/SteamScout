@@ -2,6 +2,7 @@ package com.steamscout.application.view;
 
 import java.util.Collection;
 
+import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
