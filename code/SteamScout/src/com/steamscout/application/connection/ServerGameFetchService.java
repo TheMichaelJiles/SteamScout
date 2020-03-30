@@ -23,6 +23,11 @@ public class ServerGameFetchService {
 			socket.connect(HOST_PORT_PAIR);
 			System.out.println("Initiating Game Fetch Service");
 			
+			String sendingJson = this.getJsonString();
+			socket.send(sendingJson.getBytes(ZMQ.CHARSET), 0);
+			System.out.println("Sent the following json");
+			System.out.println(new JSONObject(sendingJson).toString(4));
+			
 			byte[] serverResponseBytes = socket.recv(0);
 			String receivingJson = new String(serverResponseBytes, ZMQ.CHARSET);
 			System.out.println("Received the following json");
@@ -49,7 +54,7 @@ public class ServerGameFetchService {
 	
 	protected String getJsonString() {
 		JSONObject root = new JSONObject();
-		root.put("type", "game_fetch");
+		root.put("type", "fetch_games");
 
 		return root.toString();
 		

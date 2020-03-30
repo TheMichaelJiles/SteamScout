@@ -1,7 +1,6 @@
 package com.steamscout.application.view;
 
 import java.util.Collection;
-import java.util.Map;
 
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
@@ -10,6 +9,7 @@ import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
+import com.steamscout.application.connection.interfaces.WatchlistFetchService;
 import com.steamscout.application.connection.interfaces.WatchlistModificationService;
 import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
@@ -34,12 +34,12 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void insertSteamData(Map<String, Integer> steamData) {
-		if (steamData == null) {
-			throw new IllegalArgumentException("steamData should not be null.");
+	public void insertSteamData(ServerGameFetchService service) {
+		if (service == null) {
+			throw new IllegalArgumentException("Game Fetch service should not be null.");
 		}
 
-		this.getSteamGames().initializeGames(steamData);
+		this.getSteamGames().initializeGames(service.FetchGames());
 	}
 
 	@Override
@@ -189,6 +189,17 @@ public class BehaviorViewModel extends ViewModel {
 
 		NotificationList notifications = notificationSystem.UpdateNotifications(userCredentials);
 		this.notificationsProperty().setValue(FXCollections.observableArrayList(notifications));
+	}
+
+	@Override
+	public void loadWatchlist(WatchlistFetchService watchlistSystem) {
+		if (watchlistSystem == null) {
+			throw new IllegalArgumentException("watchlist system should not be null");
+		}
+		
+		String username = this.userProperty().getValue().getCredentials().getUsername();
+		this.userProperty().getValue().setWatchlist(watchlistSystem.fetchWatchlist(username));
+		this.resetWatchlistProperty();
 	}
 
 }

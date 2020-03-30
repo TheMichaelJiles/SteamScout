@@ -72,7 +72,6 @@ private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
 		root.put("data", data);
 
 		return root.toString();
-		
 	}
 
 }

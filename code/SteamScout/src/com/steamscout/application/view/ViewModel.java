@@ -2,12 +2,12 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.User;
 
-import java.util.Map;
-
+import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
+import com.steamscout.application.connection.interfaces.WatchlistFetchService;
 import com.steamscout.application.connection.interfaces.WatchlistModificationService;
 import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
@@ -100,7 +100,7 @@ public abstract class ViewModel {
 	 * 
 	 * @param steamData the data to give the SteamData object.
 	 */
-	public abstract void insertSteamData(Map<String, Integer> steamData);
+	public abstract void insertSteamData(ServerGameFetchService service);
 
 	/**
 	 * Performs a search on the current user's watchlist for games that match the
@@ -137,6 +137,18 @@ public abstract class ViewModel {
 	public abstract void setSelectedGameNotificationCriteria(WatchlistModificationService modificationService,
 			boolean onSale, boolean belowThreshold, double targetPrice);
 
+	
+	/**
+	 * Sets the watchlist for the current user using the 
+	 * specified WatchlistFetchService.
+	 * 
+	 * @precondition watchlistSystem != null
+	 * @postcondition userProperty().getValue().getWatchlist().equals(
+	 * 				  watchlistSystem.fetchWatchlist(userProperty().getValue().getCredentials().getUsername()))
+	 * @param watchlistSystem the system used to get the new watchlist.
+	 */
+	public abstract void loadWatchlist(WatchlistFetchService watchlistSystem);
+	
 	/**
 	 * Adds the currently selected game on the browse page to the user's watchlist
 	 * and updates the watchlist property accordingly.
