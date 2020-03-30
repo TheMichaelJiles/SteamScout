@@ -40,7 +40,7 @@ public class BehaviorViewModel extends ViewModel {
 			throw new IllegalArgumentException("Game Fetch service should not be null.");
 		}
 
-		this.getSteamGames().initializeGames(service.FetchGames()); 
+		this.getSteamGames().initializeGames(service.fetchGames()); 
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class BehaviorViewModel extends ViewModel {
 		User currentUser = this.userProperty().getValue();
 		Credentials userCredentials = currentUser.getCredentials();
 
-		NotificationList notifications = notificationSystem.UpdateNotifications(userCredentials);
+		NotificationList notifications = notificationSystem.updateNotifications(userCredentials);
 		this.notificationsProperty().setValue(FXCollections.observableArrayList(notifications));
 	}
 

@@ -28,7 +28,7 @@ public class TestPopulateNotifications {
 	private class PassingPopulateNotifications implements NotificationService {
 
 		@Override
-		public NotificationList UpdateNotifications(Credentials credentials) {
+		public NotificationList updateNotifications(Credentials credentials) {
 			NotificationList notifications = new NotificationList();
 			notifications.add(new Notification(new Game(00000, "Test")));
 			return notifications;

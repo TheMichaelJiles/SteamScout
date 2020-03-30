@@ -10,6 +10,12 @@ import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
+/**
+ * Modifies the notification criteria for a game on the server.
+ * 
+ * @author Michael Jiles
+ *
+ */
 public class ServerWatchlistModificationService extends ServerService<Watchlist> implements WatchlistModificationService {
 	
 	private Credentials credentials;

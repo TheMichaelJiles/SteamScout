@@ -17,7 +17,7 @@ public class TestInsertSteamData {
 	private class PassingGameFetchService implements GameFetchService {
 
 		@Override
-		public Map<String, Integer> FetchGames() {
+		public Map<String, Integer> fetchGames() {
 			Map<String, Integer> games = new HashMap<String, Integer>();
 			games.put("TestName", 00000);
 			return games;

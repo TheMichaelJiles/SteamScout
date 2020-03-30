@@ -22,6 +22,7 @@ public interface WatchlistAdditionService {
 	 * @param credentials the credentials of the user that owns the watchlist the
 	 * game should be added to
 	 * @param gameToAdd the game to be added
+	 * @throws InvalidAdditionException if the game can not be added to the watchlist.
 	 * @return the newly modified watchlist
 	 */
 	Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) throws InvalidAdditionException;

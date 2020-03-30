@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.steamscout.application.connection.interfaces;
 
 import java.util.Map;
@@ -19,5 +16,5 @@ public interface GameFetchService {
 	 * @precondition none
 	 * @return the games in the system
 	 */
-	Map<String, Integer> FetchGames();
+	Map<String, Integer> fetchGames();
 }
