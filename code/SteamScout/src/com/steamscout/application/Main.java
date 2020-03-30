@@ -40,7 +40,7 @@ public class Main extends Application {
 			primaryStage.show();
 	    	
 			ViewModel.get().insertSteamData(new ServerGameFetchService());
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			e.printStackTrace();
 		}
 	}

@@ -9,18 +9,13 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-<<<<<<< HEAD
 import com.steamscout.application.connection.interfaces.GameFetchService;
+	
+public class ServerGameFetchService extends ServerService<Map<String, Integer>> implements GameFetchService{
 
-public class ServerGameFetchService implements GameFetchService{
-	
-	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
-=======
-public class ServerGameFetchService extends ServerService<Map<String, Integer>> {
->>>>>>> branch 'master' of https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4.git
-	
+	@Override
 	public Map<String, Integer> FetchGames() {
-		return this.send();
+		return this.send();  
 	}
 
 	@Override
