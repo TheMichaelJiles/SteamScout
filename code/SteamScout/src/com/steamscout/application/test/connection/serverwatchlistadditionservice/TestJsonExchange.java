@@ -2,6 +2,7 @@ package com.steamscout.application.test.connection.serverwatchlistadditionservic
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import com.steamscout.application.connection.ServerWatchlistAdditionService;
@@ -27,7 +28,7 @@ class TestJsonExchange {
 	}
 	
 	@Test
-	public void testValidAddition() {
+	public void testInterpretJson() {
 		TestServerWatchlistAdditionService service = new TestServerWatchlistAdditionService();
 		Credentials credentials = new Credentials("twhal", "1234");
 		User user = new User(credentials);
@@ -41,6 +42,21 @@ class TestJsonExchange {
 		assertAll(() -> assertEquals(5, game.getAppId()),
 				() -> assertEquals("test-game", game.getTitle()),
 				() -> assertEquals(1, user.getWatchlist().size()));
+	}
+	
+	@Test
+	public void testGetJsonString() {
+		TestServerWatchlistAdditionService service = new TestServerWatchlistAdditionService();
+		Credentials credentials = new Credentials("twhal", "1234");
+		Game game = new Game(4, "test");
+		String json = service.getJsonString(credentials, game);
+		
+		JSONObject jsonobj = new JSONObject(json);
+		
+		assertAll(() -> assertEquals("watchlist_addition", jsonobj.getString("type")),
+				() -> assertEquals("twhal", jsonobj.getJSONObject("data").getJSONObject("user").getString("username")),
+				() -> assertEquals("1234", jsonobj.getJSONObject("data").getJSONObject("user").getString("password")),
+				() -> assertEquals(4, jsonobj.getJSONObject("data").get("steamid")));
 	}
 
 }

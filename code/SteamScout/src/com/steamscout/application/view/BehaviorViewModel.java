@@ -53,11 +53,11 @@ public class BehaviorViewModel extends ViewModel {
 		Credentials userCredentials = currentUser.getCredentials();
 		Game gameToAdd = this.browsePageSelectedGameProperty().getValue();
 		try {
+			if (additionSystem.addGameToWatchlist(userCredentials, gameToAdd) == null) {
+				throw new NullPointerException("New watchlist was null");
+			}
 			Watchlist newWatchlist = additionSystem.addGameToWatchlist(userCredentials, gameToAdd);
 			currentUser.setWatchlist(newWatchlist);
-			if (newWatchlist == null) {
-				throw new IllegalArgumentException("New watchlist was null");
-			}
 			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
 			return true;
 		} catch (InvalidAdditionException e) {
