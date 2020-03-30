@@ -13,17 +13,19 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
+import com.steamscout.application.model.user.User;
 
 public class ServerWatchlistRemovalService implements WatchlistRemovalService {
 
 	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
 
 	@Override
-	public Watchlist removeGameFromWatchlist(Credentials credentials, Game game) {
+	public Watchlist removeGameFromWatchlist(User currentUser, Game game) {
 		try (Context context = ZMQ.context(1); Socket socket = context.socket(SocketType.REQ)) {
 			socket.connect(HOST_PORT_PAIR);
 			System.out.println("Initiating Watchlist Addition Service");
-
+			
+			Credentials credentials = currentUser.getCredentials();
 			String sendingJson = this.getJsonString(credentials, game);
 			socket.send(sendingJson.getBytes(ZMQ.CHARSET), 0);
 			System.out.println("Sent the following json");

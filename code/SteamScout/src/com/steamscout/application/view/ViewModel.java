@@ -152,11 +152,13 @@ public abstract class ViewModel {
 	/**
 	 * Removes the game selected in the watchlist page listview and watchlist
 	 * 
+	 * @param removalService the server connection used to remove the game
+	 * 
 	 * @precondition none
 	 * @postcondition watchlistProperty().getValue().size() ==
 	 *                watchlistProperty().getValue().size()@prev - 1
 	 */
-	public abstract void removeSelectedGameFromWatchlist();
+	public abstract void removeSelectedGameFromWatchlist(WatchlistRemovalService removalService);
 
 	/**
 	 * Adds the specified game to the user's watchlist and updates the watchlist

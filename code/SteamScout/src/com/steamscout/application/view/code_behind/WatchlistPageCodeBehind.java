@@ -1,5 +1,6 @@
 package com.steamscout.application.view.code_behind;
 
+import com.steamscout.application.connection.ServerWatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
@@ -85,7 +86,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void onRemoveButtonAction(ActionEvent event) {
-    	ViewModel.get().removeSelectedGameFromWatchlist();
+    	ViewModel.get().removeSelectedGameFromWatchlist(new ServerWatchlistRemovalService());
     }
 
     @FXML

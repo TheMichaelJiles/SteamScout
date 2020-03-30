@@ -66,9 +66,8 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void removeSelectedGameFromWatchlist() {
-		this.removeGameFromWatchlist(new ServerWatchlistRemovalService(),
-				this.watchlistPageSelectedGameProperty().getValue());
+	public void removeSelectedGameFromWatchlist(WatchlistRemovalService removalService) {
+		this.removeGameFromWatchlist(removalService, this.watchlistPageSelectedGameProperty().getValue());
 	}
 
 	@Override
@@ -78,7 +77,7 @@ public class BehaviorViewModel extends ViewModel {
 		}
 		User currentUser = this.userProperty().getValue();
 		if (currentUser != null) {
-			removalService.removeGameFromWatchlist(currentUser.getCredentials(), game);
+			removalService.removeGameFromWatchlist(currentUser, game);
 			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
 		}
 	}
