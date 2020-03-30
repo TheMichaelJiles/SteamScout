@@ -45,4 +45,5 @@ public class TestJsonExchange {
 				() -> assertEquals("twhal", jsonobj.getJSONObject("data").getJSONObject("user").getString("username")),
 				() -> assertEquals("1234", jsonobj.getJSONObject("data").getJSONObject("user").getString("password")));
 	}
+	
 }
