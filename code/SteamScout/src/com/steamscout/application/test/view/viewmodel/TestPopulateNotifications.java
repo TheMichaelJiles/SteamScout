@@ -4,11 +4,8 @@
 package com.steamscout.application.test.view.viewmodel;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
@@ -49,14 +46,14 @@ public class TestPopulateNotifications {
 	@Test
 	public void TestPopulateNotificationsShouldNotTakeNullService() {
 		ViewModel vm = ViewModel.get();
-		assertThrows(IllegalArgumentException.class, () -> vm.PopulateNotifications(null));
+		assertThrows(IllegalArgumentException.class, () -> vm.populateNotifications(null));
 	}
 	
 	@Test
 	public void TestPopulateNotificationsAddsNotificationsToProperty() {
 		PassingPopulateNotifications service = new PassingPopulateNotifications();
 		ViewModel.get().userProperty().set(new User(new Credentials("TestName", "TestPassword")));
-		ViewModel.get().PopulateNotifications(service);
+		ViewModel.get().populateNotifications(service);
 		
 		assertFalse(ViewModel.get().notificationsProperty().isEmpty());
 	}

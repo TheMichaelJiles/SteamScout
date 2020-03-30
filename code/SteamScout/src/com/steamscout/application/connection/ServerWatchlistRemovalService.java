@@ -66,13 +66,28 @@ public class ServerWatchlistRemovalService extends ServerService<Watchlist> impl
 		return root.toString();
 	}
 
+	/**
+	 * The credentials for the user having the game removed.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param credentials the credentials for the user having the game removed.
+	 */
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
 
+	/**
+	 * Sets the game for which this service will attempt to remove.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param game the game for this service to remove.
+	 */
 	public void setGame(Game game) {
 		this.game = game;
 	}
 
-	
 }

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * NotificationList functions as a collection for Notifications
  * 
- * @Author Nathan Lightholder
+ * @author Nathan Lightholder
  *
  */
 public class NotificationList implements Collection<Notification> {
