@@ -55,6 +55,7 @@ class _FakeGameFetchingService(object):
                 game['steamid'] = int(steamid)
                 game.update(games[steamid])
                 list_of_game_dicts.append(game)
+                
             return {"games": list_of_game_dicts}
         
 class _GameFetchingService(object):
