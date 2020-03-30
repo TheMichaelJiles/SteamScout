@@ -72,6 +72,7 @@ public class NavigationBarCodeBehind {
 
 	@FXML
 	private void onLogoutButtonAction(ActionEvent event) {
+		ViewModel.get().initializeProperties();
 		PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
 	}
 

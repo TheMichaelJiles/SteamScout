@@ -101,7 +101,7 @@ public class WatchlistPageCodeBehind {
     }
     
     private void displayNoResultsLabelIfNecessary() {
-		if (this.watchlistListView.getItems().isEmpty()) {
+		if (ViewModel.get().watchlistProperty().getValue().isEmpty()) {
     		this.noResultsLabel.setVisible(true);
     	} else {
     		this.hideNoResultsLabel();

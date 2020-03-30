@@ -39,6 +39,9 @@ public class BrowsingPageCodeBehind {
     private Button searchButton;
     
     @FXML
+    private Button clearSearchButton;
+    
+    @FXML
     private Label noResultsLabel;
     
     @FXML
@@ -69,9 +72,16 @@ public class BrowsingPageCodeBehind {
     	ViewModel.get().performSearch();
     	this.displayNoResultsLabelIfNecessary();
     }
+    
+    @FXML
+    private void onClearSearchButtonAction(ActionEvent event) {
+    	ViewModel.get().searchResultsProperty().getValue().clear();
+    	this.searchBarTextField.setText(null);
+    	this.noResultsLabel.setVisible(false);
+    }
 
 	private void displayNoResultsLabelIfNecessary() {
-		if (this.gameResultsListView.getItems().isEmpty()) {
+		if (ViewModel.get().searchResultsProperty().getValue().isEmpty()) {
     		this.noResultsLabel.setVisible(true);
     	} else {
     		this.noResultsLabel.setVisible(false);
@@ -88,7 +98,7 @@ public class BrowsingPageCodeBehind {
     }
     
     private void setUpDisableBindings() {
-    	this.searchButton.disableProperty().bind(this.searchBarTextField.textProperty().isEmpty());
+    	this.searchButton.disableProperty().bind(this.searchBarTextField.textProperty().isEmpty().or(this.searchBarTextField.textProperty().isNull()));
     	this.addButton.disableProperty().bind(this.gameResultsListView.getSelectionModel().selectedItemProperty().isNull());
     }
     

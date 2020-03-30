@@ -459,7 +459,26 @@ public abstract class ViewModel {
 		this.steamGames = steamGames;
 	}
 
-	private void initializeProperties() {
+	/**
+	 * Initializes all properties to their default values.
+	 * 
+	 * @precondition none
+	 * @postcondition userProperty().getValue() == null &&
+	 * 				  notificationsProperty().getValue().size() == 0 &&
+	 * 				  watchlistProperty().getValue().size() == 0 &&
+	 * 				  searchResultsProperty().getValue().size() == 0 &&
+	 * 				  browsePageSearchTermProperty().getValue().equals("") &&
+	 * 				  browsePageSelectedGameProperty().getValue() == null &&
+	 * 				  watchlistPageSelectedGameProperty().getValue() == null &&
+	 * 				  loginPageUsernameProperty().getValue().equals("") &&
+	 * 				  loginPagePasswordProperty().getValue().equals("") &&
+	 * 				  loginPageErrorProperty().getValue() == null &&
+	 * 				  createAccountPageUsernameProperty().getValue().equals("") &&
+	 * 				  createAccountPagePasswordProperty().getValue().equals("") &&
+	 * 				  createAccountPageEmailProperty().getValue().equals("") &&
+	 * 				  createAccountPageErrorProperty().getValue() == null
+	 */
+	public void initializeProperties() {
 		this.userProperty = new SimpleObjectProperty<User>();
 		this.notificationsProperty = new SimpleListProperty<Notification>(FXCollections.emptyObservableList());
 		this.watchlistProperty = new SimpleListProperty<Game>(FXCollections.emptyObservableList());
