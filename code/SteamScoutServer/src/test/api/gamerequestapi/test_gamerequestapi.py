@@ -70,9 +70,7 @@ class TestGameRequestAPI(unittest.TestCase):
     def test_attempt_get_info_with_unsuccessful(self, mock):
         handler = APIHandler(0, 0)
         service = _GameRequestService(handler)
-        mock.return_value = {'was_successful': True, 'json': 
-                            {'success': False, 'data': 
-                            {'steamid': 4, 'initialprice': 39.99, 'actualprice': 29.99, 'onsale': True}}}
+        mock.return_value = {'was_successful': True, 'json': {'4': {'success': True, 'data': {'price_overview': {'final': 3999, 'initial': 2999, 'discount_percent': 5}}}}}
         result = service.attempt_get_info(00000);
         handler.stop_timer()
         
