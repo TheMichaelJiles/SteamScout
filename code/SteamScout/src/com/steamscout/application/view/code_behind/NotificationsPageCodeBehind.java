@@ -3,6 +3,7 @@ package com.steamscout.application.view.code_behind;
 import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
+import com.steamscout.application.view.ViewModel;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ public class NotificationsPageCodeBehind {
     @FXML
     void initialize() {
     	this.setUpNavigationBar();
+    	this.notificationsListView.itemsProperty().bind(ViewModel.get().notificationsProperty());
     }
 
     @FXML

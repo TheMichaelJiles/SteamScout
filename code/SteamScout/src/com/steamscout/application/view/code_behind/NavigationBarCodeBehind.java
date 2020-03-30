@@ -5,8 +5,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.steamscout.application.Main;
+import com.steamscout.application.connection.ServerNotificationService;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
+import com.steamscout.application.view.ViewModel;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,6 +78,7 @@ public class NavigationBarCodeBehind {
 	@FXML
 	private void onNotificationsButtonAction(ActionEvent event) {
 		PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
+		ViewModel.get().PopulateNotifications(new ServerNotificationService());
 	}
 
 	@FXML

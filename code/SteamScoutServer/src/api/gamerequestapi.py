@@ -89,8 +89,8 @@ class _GameRequestService(object):
         result = self.api.make_request(url)
         while not result['was_successful']:
             result = self.api.make_request(url)
-        received_json = result['json']
-        
+        received_json = result['json'][str(steamid)]
+        print(received_json)
         if received_json is None:
             return None
         if not received_json['success']:

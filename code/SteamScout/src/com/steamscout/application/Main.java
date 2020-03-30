@@ -38,12 +38,6 @@ public class Main extends Application {
 			primaryStage.setTitle(TITLE);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
-			//Map<String, Integer> fakeSteamData = new HashMap<String, Integer>();
-	    	//fakeSteamData.put("Skyrim", 1);
-	    	//fakeSteamData.put("Minecraft", 2);
-	    	//fakeSteamData.put("Indiana Jones: Rise of the Old Man", 3);
-	    	//fakeSteamData.put("TestGame", 1210010);
 	    	
 			ViewModel.get().insertSteamData(new ServerGameFetchService());
 		} catch (Exception e) {
