@@ -4,6 +4,7 @@ import com.steamscout.application.model.user.User;
 
 import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
+import com.steamscout.application.connection.interfaces.GameFetchService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
@@ -98,9 +99,9 @@ public abstract class ViewModel {
 	 * @postcondition !getSteamGames().getTitles().isEmpty() &&
 	 *                !getSteamGames().getIds().isEmpty()
 	 * 
-	 * @param steamData the data to give the SteamData object.
+	 * @param service the data to give the SteamData object.
 	 */
-	public abstract void insertSteamData(ServerGameFetchService service);
+	public abstract void insertSteamData(GameFetchService service);
 
 	/**
 	 * Performs a search on the current user's watchlist for games that match the

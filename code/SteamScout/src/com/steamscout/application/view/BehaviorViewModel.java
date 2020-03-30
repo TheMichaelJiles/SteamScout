@@ -7,6 +7,7 @@ import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
+import com.steamscout.application.connection.interfaces.GameFetchService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
@@ -35,12 +36,12 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void insertSteamData(ServerGameFetchService service) {
+	public void insertSteamData(GameFetchService service) {
 		if (service == null) {
 			throw new IllegalArgumentException("Game Fetch service should not be null.");
 		}
 
-		this.getSteamGames().initializeGames(service.FetchGames());
+		this.getSteamGames().initializeGames(service.FetchGames()); 
 	}
 
 	@Override

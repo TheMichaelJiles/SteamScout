@@ -13,7 +13,9 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 
-public class ServerGameFetchService {
+import com.steamscout.application.connection.interfaces.GameFetchService;
+
+public class ServerGameFetchService implements GameFetchService{
 	
 	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
 	
