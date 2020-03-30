@@ -47,31 +47,12 @@ class TestGameRequestAPI(unittest.TestCase):
         
         self.assertEqual(result, None)
         
-    '''@patch.object(APIHandler, 'make_request')
-    def test_attempt_get_info_with_JSON_request_unsuccessful(self, mock):
-        handler = APIHandler(0, 1)
-        service = _GameRequestService(handler)
-        mock.return_value = {'was_successful': False}
-        result = service.attempt_get_info(00000);
-        
-        self.assertEqual(result, None)'''
-    
     @patch.object(APIHandler, 'make_request')   
-    def test_attempt_get_info_with_JSON_is_none(self, mock):
-        handler = APIHandler(0, 1)
-        service = _GameRequestService(handler)
-        mock.return_value = {'was_successful': True, 'json': None}
-        result = service.attempt_get_info(00000);
-        handler.stop_timer()
-        
-        self.assertEqual(result, None)
-        
-    @patch.object(APIHandler, 'make_request')   
-    def test_attempt_get_info_with_unsuccessful(self, mock):
+    def test_attempt_get_info_with_unsuccessfulId(self, mock):
         handler = APIHandler(0, 0)
         service = _GameRequestService(handler)
-        mock.return_value = {'was_successful': True, 'json': {'4': {'success': True, 'data': {'price_overview': {'final': 3999, 'initial': 2999, 'discount_percent': 5}}}}}
-        result = service.attempt_get_info(00000);
+        mock.return_value = {'was_successful': True, 'json': {'4': {'success': False, 'data': {'price_overview': {'final': 3999, 'initial': 2999, 'discount_percent': 5}}}}}
+        result = service.attempt_get_info(4);
         handler.stop_timer()
         
         self.assertEqual(result, None)
@@ -80,9 +61,8 @@ class TestGameRequestAPI(unittest.TestCase):
     def test_attempt_get_info_without_data(self, mock):
         handler = APIHandler(0, 1)
         service = _GameRequestService(handler)
-        mock.return_value = {'was_successful': True, 'json': 
-                            {'success': True, 'steamid': 4, 'initialprice': 39.99, 'actualprice': 29.99, 'onsale': True}}
-        result = service.attempt_get_info(00000);
+        mock.return_value = {'was_successful': True, 'json': {'4': {'success': True, 'notData': {'price_overview': {'final': 3999, 'initial': 2999, 'discount_percent': 5}}}}}
+        result = service.attempt_get_info(4);
         handler.stop_timer()
         
         self.assertEqual(result, None)
@@ -91,10 +71,8 @@ class TestGameRequestAPI(unittest.TestCase):
     def test_attempt_get_info_without_price_overview(self, mock):
         handler = APIHandler(0, 1)
         service = _GameRequestService(handler)
-        mock.return_value = {'was_successful': True, 'json': 
-                            {'success': True, 'data': 
-                            {'steamid': 4, 'initialprice': 39.99, 'actualprice': 29.99, 'onsale': True}}}
-        result = service.attempt_get_info(00000);
+        mock.return_value = {'was_successful': True, 'json': {'4': {'success': True, 'data': {'notprice_overview': {'final': 3999, 'initial': 2999, 'discount_percent': 5}}}}}
+        result = service.attempt_get_info(4);
         handler.stop_timer()
         
         self.assertEqual(result, None)
@@ -103,16 +81,13 @@ class TestGameRequestAPI(unittest.TestCase):
     def test_attempt_get_info_with_valid_data(self, mock):
         handler = APIHandler(0, 1)
         service = _GameRequestService(handler)
-        mock.return_value = {'was_successful': True, 'json': 
-                            {'success': True, 'data': 
-                            {'steamid': 4, 'price_overview': 
-                            {'initial': 3999, 'final': 1999, 'discount_percent': 50}}}}
+        mock.return_value = {'was_successful': True, 'json': {'4': {'success': True, 'data': {'price_overview': {'final': 3999, 'initial': 2999, 'discount_percent': 5}}}}}
         result = service.attempt_get_info(4);
         handler.stop_timer()
         
         self.assertEqual(result, {'steamid': 4,
-                'initialprice': 3999 / 100,
-                'actualprice': 1999 / 100,
+                'initialprice': 2999 / 100,
+                'actualprice': 3999 / 100,
                 'onsale': 50 > 0})
         
 
