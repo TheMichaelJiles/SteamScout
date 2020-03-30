@@ -14,11 +14,14 @@ class TestJsonExchange {
 
 	private class TestServerWatchlistRemovalService extends ServerWatchlistRemovalService {
 		public Watchlist interpretJsonString(Credentials credentials, String receivedJson) {
-			return super.interpretJsonString(credentials, receivedJson);
+			this.setCredentials(credentials);
+			return super.interpretJsonString(receivedJson);
 		}
 		
 		public String getJsonString(Credentials credentials, Game game) {
-			return super.getJsonString(credentials, game);
+			this.setCredentials(credentials);
+			this.setGame(game);
+			return super.getSendingJsonString();
 		}
 	}
 	

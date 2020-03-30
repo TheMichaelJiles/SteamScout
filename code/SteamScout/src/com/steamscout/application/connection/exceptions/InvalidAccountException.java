@@ -9,7 +9,7 @@ import com.steamscout.application.model.user.Credentials;
  * @author Luke Whaley
  *
  */
-public class InvalidAccountException extends Exception {
+public class InvalidAccountException extends RuntimeException {
 
 	private static final long serialVersionUID = 7623736374817257290L;
 

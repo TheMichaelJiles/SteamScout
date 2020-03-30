@@ -13,11 +13,14 @@ public class TestJsonExchange {
 
 	private class TestServerCreateAccountService extends ServerCreateAccountService {
 		public String getJsonString(Credentials credentials, String email) {
-			return super.getJsonString(credentials, email);
+			this.setCredentials(credentials);
+			this.setEmail(email);
+			return super.getSendingJsonString();
 		}
 		
 		public void interpretJsonString(Credentials credentials, String receivingJson) throws InvalidAccountException {
-			super.interpretJsonString(credentials, receivingJson);
+			this.setCredentials(credentials);
+			super.interpretJsonString(receivingJson);
 		}
 	}
 	
