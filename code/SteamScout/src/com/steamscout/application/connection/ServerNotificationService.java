@@ -68,7 +68,7 @@ private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
 		data.put("user", user);
 
 		JSONObject root = new JSONObject();
-		root.put("type", "notification");
+		root.put("type", "check_notifications");
 		root.put("data", data);
 
 		return root.toString();
