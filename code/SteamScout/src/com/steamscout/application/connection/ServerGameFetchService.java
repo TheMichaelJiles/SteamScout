@@ -39,7 +39,7 @@ public class ServerGameFetchService {
 	
 	protected Map<String, Integer> interpretJsonString(String receivingJson) {
 		JSONObject root = new JSONObject(receivingJson);
-		JSONArray gameData = root.getJSONArray("notifications");
+		JSONArray gameData = root.getJSONArray("games");
 		Map<String, Integer> steamGames = new HashMap<String, Integer>();
 		for (int i = 0; i < gameData.length(); i++) {
 			JSONObject data = gameData.getJSONObject(i);
