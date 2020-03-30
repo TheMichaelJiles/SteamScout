@@ -9,12 +9,14 @@ import com.steamscout.application.connection.exceptions.InvalidAdditionException
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
+import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
 import com.steamscout.application.connection.interfaces.WatchlistModificationService;
 import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
+import com.steamscout.application.model.notification.NotificationList;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
@@ -27,7 +29,7 @@ import javafx.collections.FXCollections;
  *
  */
 public class BehaviorViewModel extends ViewModel {
-	
+
 	protected BehaviorViewModel() {
 		super();
 	}
@@ -62,12 +64,13 @@ public class BehaviorViewModel extends ViewModel {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void removeSelectedGameFromWatchlist() {
-		this.removeGameFromWatchlist(new ServerWatchlistRemovalService(), this.watchlistPageSelectedGameProperty().getValue());
+		this.removeGameFromWatchlist(new ServerWatchlistRemovalService(),
+				this.watchlistPageSelectedGameProperty().getValue());
 	}
-	
+
 	@Override
 	public void removeGameFromWatchlist(WatchlistRemovalService removalService, Game game) {
 		if (game == null) {
@@ -85,7 +88,7 @@ public class BehaviorViewModel extends ViewModel {
 		if (game == null) {
 			throw new IllegalArgumentException("game to add to watchlist should not be null.");
 		}
-		
+
 		boolean isSuccessfullyAdded = false;
 		User currentUser = this.userProperty().getValue();
 		if (currentUser != null) {
@@ -94,13 +97,14 @@ public class BehaviorViewModel extends ViewModel {
 			this.watchlistProperty().setValue(FXCollections.observableArrayList(userWatchlist));
 		}
 		return isSuccessfullyAdded;
-		
+
 	}
 
 	@Override
 	public void performSearch() {
 		try {
-			Collection<Game> searchResults = this.getSteamGames().getMatchingGames(this.browsePageSearchTermProperty().getValue());
+			Collection<Game> searchResults = this.getSteamGames()
+					.getMatchingGames(this.browsePageSearchTermProperty().getValue());
 			this.searchResultsProperty().setValue(FXCollections.observableArrayList(searchResults));
 		} catch (InterruptedException e) {
 		}
@@ -111,8 +115,9 @@ public class BehaviorViewModel extends ViewModel {
 		if (loginsystem == null) {
 			throw new IllegalArgumentException("login system should not be null.");
 		}
-		
-		Credentials loginCredentials = new Credentials(this.loginPageUsernameProperty().getValue(), this.loginPagePasswordProperty().getValue());
+
+		Credentials loginCredentials = new Credentials(this.loginPageUsernameProperty().getValue(),
+				this.loginPagePasswordProperty().getValue());
 		try {
 			User loggedInUser = loginsystem.login(loginCredentials);
 			this.userProperty().setValue(loggedInUser);
@@ -126,7 +131,8 @@ public class BehaviorViewModel extends ViewModel {
 	}
 
 	@Override
-	public void setSelectedGameNotificationCriteria(WatchlistModificationService modificationService, boolean onSale, boolean belowThreshold, double targetPrice) {
+	public void setSelectedGameNotificationCriteria(WatchlistModificationService modificationService, boolean onSale,
+			boolean belowThreshold, double targetPrice) {
 		NotificationCriteria criteria = new NotificationCriteria();
 		User currentUser = this.userProperty().getValue();
 		criteria.shouldNotifyOnSale(onSale);
@@ -140,14 +146,14 @@ public class BehaviorViewModel extends ViewModel {
 		}
 		Watchlist newWatchlist = modificationService.modifyGameOnWatchlist(currentUser, gameToModify, criteria);
 		currentUser.setWatchlist(newWatchlist);
-		
+
 	}
 
 	@Override
 	public void performWatchlistSearch(String searchTerm) {
 		Watchlist watchlist = this.userProperty().getValue().getWatchlist();
 		Collection<Game> matches = watchlist.getMatchingGames(searchTerm);
-		
+
 		this.watchlistProperty().setValue(FXCollections.observableArrayList(matches));
 	}
 
@@ -162,8 +168,9 @@ public class BehaviorViewModel extends ViewModel {
 		if (accountsystem == null) {
 			throw new IllegalArgumentException("account system should not be null.");
 		}
-		
-		Credentials credentials = new Credentials(this.createAccountPageUsernameProperty().getValue(), this.createAccountPagePasswordProperty().getValue());
+
+		Credentials credentials = new Credentials(this.createAccountPageUsernameProperty().getValue(),
+				this.createAccountPagePasswordProperty().getValue());
 		try {
 			accountsystem.createAccount(credentials, this.createAccountPageEmailProperty().getValue());
 			this.createAccountPageErrorProperty().setValue(null);
@@ -173,6 +180,17 @@ public class BehaviorViewModel extends ViewModel {
 			return false;
 		}
 	}
-	
-	
+
+	@Override
+	public void PopulateNotifications(NotificationService notificationSystem) {
+		if (notificationSystem == null) {
+			throw new IllegalArgumentException("notification system should not be null.");
+		}
+		User currentUser = this.userProperty().getValue();
+		Credentials userCredentials = currentUser.getCredentials();
+
+		NotificationList notifications = notificationSystem.UpdateNotifications(userCredentials);
+		this.notificationsProperty().setValue(FXCollections.observableArrayList(notifications));
+	}
+
 }

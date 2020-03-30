@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
+import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
 import com.steamscout.application.connection.interfaces.WatchlistModificationService;
 import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
@@ -218,6 +219,17 @@ public abstract class ViewModel {
 	 * @return true if the account was created, false otherwise.
 	 */
 	public abstract boolean createUserAccount(CreateAccountService accountsystem);
+	
+	/**
+	 * Populates the notification property with updated notifications
+	 * 
+	 * @precondition notificationService != null
+	 * @postcondition notificationsProperty is set to the updated notifications
+	 * 
+	 * @param notificationSystem system responsible for handling server response
+	 * 		  regarding notifications
+	 */
+	public abstract void PopulateNotifications(NotificationService notificationSystem);
 
 	/**
 	 * Gets the userProperty for the current user of the system.
