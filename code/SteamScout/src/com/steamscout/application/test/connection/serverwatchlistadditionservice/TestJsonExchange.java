@@ -11,6 +11,7 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
+import com.steamscout.application.view.ViewModel;
 
 class TestJsonExchange {
 
@@ -42,6 +43,14 @@ class TestJsonExchange {
 		assertAll(() -> assertEquals(5, game.getAppId()),
 				() -> assertEquals("test-game", game.getTitle()),
 				() -> assertEquals(1, user.getWatchlist().size()));
+	}
+	
+	@Test
+	public void testExceptionInterpretJson() {
+		var service = new TestServerWatchlistAdditionService();
+		Credentials credentials = new Credentials("twhal", "1234");
+		String receivedJson = "{\"result\": false, \"games_on_watchlist\": [{\"steamid\": 5, \"title\": \"test-game\", \"actualprice\": 39.99, \"initialprice\": 59.99, \"onsale\": true, \"onsale_selected\": true, \"targetprice_selected\": false, \"targetprice_criteria\": 0.0}]}";
+			assertThrows(InvalidAdditionException.class, () -> service.interpretJsonString(credentials, receivedJson));
 	}
 	
 	@Test
