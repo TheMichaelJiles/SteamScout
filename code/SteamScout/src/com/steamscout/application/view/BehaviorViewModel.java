@@ -1,10 +1,8 @@
 package com.steamscout.application.view;
 
 import java.util.Collection;
-import java.util.Map;
 
 import com.steamscout.application.connection.ServerGameFetchService;
-import com.steamscout.application.connection.ServerWatchlistRemovalService;
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
@@ -12,6 +10,7 @@ import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
+import com.steamscout.application.connection.interfaces.WatchlistFetchService;
 import com.steamscout.application.connection.interfaces.WatchlistModificationService;
 import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
@@ -191,6 +190,17 @@ public class BehaviorViewModel extends ViewModel {
 
 		NotificationList notifications = notificationSystem.UpdateNotifications(userCredentials);
 		this.notificationsProperty().setValue(FXCollections.observableArrayList(notifications));
+	}
+
+	@Override
+	public void loadWatchlist(WatchlistFetchService watchlistSystem) {
+		if (watchlistSystem == null) {
+			throw new IllegalArgumentException("watchlist system should not be null");
+		}
+		
+		String username = this.userProperty().getValue().getCredentials().getUsername();
+		this.userProperty().getValue().setWatchlist(watchlistSystem.fetchWatchlist(username));
+		this.resetWatchlistProperty();
 	}
 
 }
