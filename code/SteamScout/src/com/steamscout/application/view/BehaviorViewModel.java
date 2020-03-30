@@ -2,6 +2,7 @@ package com.steamscout.application.view;
 
 import java.util.Collection;
 
+import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
@@ -196,7 +197,7 @@ public class BehaviorViewModel extends ViewModel {
 		if (watchlistSystem == null) {
 			throw new IllegalArgumentException("watchlist system should not be null");
 		}
-		
+
 		String username = this.userProperty().getValue().getCredentials().getUsername();
 		this.userProperty().getValue().setWatchlist(watchlistSystem.fetchWatchlist(username));
 		this.resetWatchlistProperty();
