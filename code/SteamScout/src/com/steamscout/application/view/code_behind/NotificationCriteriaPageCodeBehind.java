@@ -18,6 +18,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * This is the pop up that displays when the user is to set notification
+ * criteria for a specific game.
+ * 
+ * @author Luke Whaley
+ *
+ */
 public class NotificationCriteriaPageCodeBehind {
 	
 	private static final String TARGET_PRICE_REGEX = "\\$\\d*\\.\\d{0,2}";

@@ -11,6 +11,12 @@ import com.steamscout.application.model.notification.NotificationCriteria;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * This service logs in to the server on behalf of a user.
+ * 
+ * @author Luke Whaley
+ *
+ */
 public class ServerLoginService extends ServerService<User> implements LoginService {
 	
 	private Credentials credentials;	
@@ -66,9 +72,16 @@ public class ServerLoginService extends ServerService<User> implements LoginServ
 		return root.toString();
 	}
 
+	/**
+	 * The credentials for the user logging in.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param credentials the credentials for the user logging in.
+	 */
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
-	
 	
 }

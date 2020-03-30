@@ -77,7 +77,7 @@ public class NavigationBarCodeBehind {
 
 	@FXML
 	private void onNotificationsButtonAction(ActionEvent event) {
-		ViewModel.get().PopulateNotifications(new ServerNotificationService());
+		ViewModel.get().populateNotifications(new ServerNotificationService());
 		PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
 	}
 

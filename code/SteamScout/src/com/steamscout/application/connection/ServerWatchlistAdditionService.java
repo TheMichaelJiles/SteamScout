@@ -72,13 +72,28 @@ public class ServerWatchlistAdditionService extends ServerService<Watchlist> imp
 		return root.toString();
 	}
 
+	/**
+	 * The credentials for the user having a game added.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param credentials the credentials for the user having a game added.
+	 */
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
 
+	/**
+	 * The game to add.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param game the game to add.
+	 */
 	public void setGame(Game game) {
 		this.game = game;
 	}
-
 	
 }

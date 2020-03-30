@@ -112,7 +112,6 @@ public class Notification {
 	@Override
 	public String toString() {
 		return this.title;
-		
 	}
 
 }

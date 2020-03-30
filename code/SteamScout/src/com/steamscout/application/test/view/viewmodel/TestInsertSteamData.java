@@ -8,13 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.connection.interfaces.GameFetchService;
-import com.steamscout.application.connection.interfaces.NotificationService;
-import com.steamscout.application.model.game_data.Game;
-import com.steamscout.application.model.notification.Notification;
-import com.steamscout.application.model.notification.NotificationList;
-import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.view.ViewModel;
 
 public class TestInsertSteamData {

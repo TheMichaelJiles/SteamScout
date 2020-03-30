@@ -77,17 +77,40 @@ public class ServerWatchlistModificationService extends ServerService<Watchlist>
 		return root.toString();
 	}
 
+	/**
+	 * The credentials for the user having criteria modified.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param credentials the credentials for the user having the criteria modified.
+	 */
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
 
+	/**
+	 * The game to change the criteria of.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param game the game to change the criteria of.
+	 */
 	public void setGame(Game game) {
 		this.game = game;
 	}
 
+	/**
+	 * The new criteria that will be modified.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param criteria the new criteria that will be modified.
+	 */
 	public void setCriteria(NotificationCriteria criteria) {
 		this.criteria = criteria;
 	}
 
-	
 }
