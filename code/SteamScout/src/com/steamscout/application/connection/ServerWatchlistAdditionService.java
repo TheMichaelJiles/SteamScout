@@ -2,10 +2,6 @@ package com.steamscout.application.connection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.zeromq.SocketType;
-import org.zeromq.ZMQ;
-import org.zeromq.ZMQ.Context;
-import org.zeromq.ZMQ.Socket;
 
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
@@ -14,32 +10,21 @@ import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
 
-public class ServerWatchlistAdditionService implements WatchlistAdditionService {
-
-	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";
+public class ServerWatchlistAdditionService extends ServerService<Watchlist> implements WatchlistAdditionService {
+	
+	private Credentials credentials;
+	private Game game;
 	
 	@Override
-	public Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) throws InvalidAdditionException {
-		try (Context context = ZMQ.context(1); Socket socket = context.socket(SocketType.REQ)) {
-			socket.connect(HOST_PORT_PAIR);
-			System.out.println("Initiating Watchlist Addition Service");
-			
-			String sendingJson = this.getJsonString(credentials, gameToAdd);
-			socket.send(sendingJson.getBytes(ZMQ.CHARSET), 0);
-			System.out.println("Sent the following json");
-			System.out.println(new JSONObject(sendingJson).toString(4));
-			
-			byte[] serverResponseBytes = socket.recv(0);
-			String receivingJson = new String(serverResponseBytes, ZMQ.CHARSET);
-			System.out.println("Received the following json");
-			System.out.println(new JSONObject(receivingJson).toString(4));
-			
-			return this.interpretJsonString(credentials, receivingJson);
-		}
+	public Watchlist addGameToWatchlist(Credentials credentials, Game game) throws InvalidAdditionException {
+		this.credentials = credentials;
+		this.game = game;
+		return this.send();
 	}
 	
-	protected Watchlist interpretJsonString(Credentials credentials, String receivingJson) throws InvalidAdditionException {
-		JSONObject root = new JSONObject(receivingJson);
+	@Override
+	protected Watchlist interpretJsonString(String json) {
+		JSONObject root = new JSONObject(json);
 		boolean wasGameAdded = root.getBoolean("result");
 		if (wasGameAdded) {
 			JSONArray watchlistData = root.getJSONArray("games_on_watchlist");
@@ -65,19 +50,20 @@ public class ServerWatchlistAdditionService implements WatchlistAdditionService 
 			throw new InvalidAdditionException();
 		}
 	}
-	
-	protected String getJsonString(Credentials credentials, Game game) {
+
+	@Override
+	protected String getSendingJsonString() {
 		JSONObject user = new JSONObject();
-		user.put("username", credentials.getUsername());
-		user.put("password", credentials.getPassword());
+		user.put("username", this.credentials.getUsername());
+		user.put("password", this.credentials.getPassword());
 		
 		JSONObject gameToAdd = new JSONObject();
-		gameToAdd.put("data", game.getAppId());
+		gameToAdd.put("data", this.game.getAppId());
 		
 		
 		JSONObject data = new JSONObject();
 		data.put("user", user);
-		data.put("steamid", game.getAppId());
+		data.put("steamid", this.game.getAppId());
 		
 		JSONObject root = new JSONObject();
 		root.put("type", "watchlist_addition");
@@ -86,4 +72,13 @@ public class ServerWatchlistAdditionService implements WatchlistAdditionService 
 		return root.toString();
 	}
 
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	
 }

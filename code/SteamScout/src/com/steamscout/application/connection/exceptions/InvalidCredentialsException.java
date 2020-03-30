@@ -9,7 +9,7 @@ import com.steamscout.application.model.user.Credentials;
  * @author Luke Whaley
  *
  */
-public class InvalidCredentialsException extends Exception {
+public class InvalidCredentialsException extends RuntimeException {
 
 	private static final long serialVersionUID = 3524344855409279186L;
 

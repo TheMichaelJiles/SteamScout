@@ -9,7 +9,7 @@ import com.steamscout.application.model.game_data.Game;
  * @author TheMichaelJiles
  *
  */
-public class InvalidAdditionException extends Exception {
+public class InvalidAdditionException extends RuntimeException {
 
 	private static final long serialVersionUID = 8834346479963124001L;
 

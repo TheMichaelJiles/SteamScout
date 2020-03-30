@@ -15,11 +15,15 @@ class TestJsonExchange {
 	
 	private class TestServerWatchlistModificationService extends ServerWatchlistModificationService {
 		public Watchlist interpretJsonString(Credentials credentials, String receivedJson) {
-			return super.interpretJsonString(credentials, receivedJson);
+			this.setCredentials(credentials);
+			return super.interpretJsonString(receivedJson);
 		}
 		
 		public String getJsonString(Credentials credentials, Game game, NotificationCriteria notificationCriteria) {
-			return super.getJsonString(credentials, game, notificationCriteria);
+			this.setCredentials(credentials);
+			this.setGame(game);
+			this.setCriteria(notificationCriteria);
+			return super.getSendingJsonString();
 		}
 	}
 	

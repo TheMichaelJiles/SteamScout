@@ -19,11 +19,13 @@ public class TestJsonExchange {
 	private class TestServerLoginService extends ServerLoginService {
 		
 		public User interpretJsonString(Credentials credentials, String receivingJson) throws InvalidCredentialsException {
-			return super.interpretJsonString(credentials, receivingJson);
+			this.setCredentials(credentials);
+			return super.interpretJsonString(receivingJson);
 		}
 		
 		public String getJsonString(Credentials credentials) {
-			return super.getJsonString(credentials);
+			this.setCredentials(credentials);
+			return super.getSendingJsonString();
 		}
 		
 	}
