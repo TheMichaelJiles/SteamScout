@@ -4,7 +4,6 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import com.steamscout.application.connection.ServerWatchlistModificationService;
-import com.steamscout.application.connection.interfaces.WatchlistModificationService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.User;

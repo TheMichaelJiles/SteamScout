@@ -11,6 +11,8 @@ import com.steamscout.application.model.user.Credentials;
  */
 public class InvalidAccountException extends Exception {
 
+	private static final long serialVersionUID = 7623736374817257290L;
+
 	/**
 	 * Constructs an InvalidAccountException for the specified credentials. This
 	 * exception signifies that there is already a record for an account with

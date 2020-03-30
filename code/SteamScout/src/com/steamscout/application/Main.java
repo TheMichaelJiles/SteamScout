@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
 import javafx.application.Application;
