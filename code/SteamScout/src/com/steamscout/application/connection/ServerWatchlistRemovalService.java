@@ -10,6 +10,12 @@ import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
 import com.steamscout.application.model.user.User;
 
+/**
+ * Removes a game from a user's watchlist on the server.
+ * 
+ * @author Michael Jiles
+ *
+ */
 public class ServerWatchlistRemovalService extends ServerService<Watchlist> implements WatchlistRemovalService {
 
 	private Credentials credentials;

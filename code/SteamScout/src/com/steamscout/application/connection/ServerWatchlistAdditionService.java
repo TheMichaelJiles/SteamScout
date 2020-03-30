@@ -10,6 +10,12 @@ import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.user.Credentials;
 
+/**
+ * Adds a game to a user's watchlist on the server.
+ * 
+ * @author Michael Jiles
+ *
+ */
 public class ServerWatchlistAdditionService extends ServerService<Watchlist> implements WatchlistAdditionService {
 	
 	private Credentials credentials;

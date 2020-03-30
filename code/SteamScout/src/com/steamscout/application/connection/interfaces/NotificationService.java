@@ -17,8 +17,8 @@ public interface NotificationService {
 	 * @precondition credentials != null
 	 * @return a list of notifications that meet sale criteria
 	 * 
-	 * @param credentials, The credentials of the user receiving the notifications
+	 * @param credentials The credentials of the user receiving the notifications
 	 */
-	NotificationList UpdateNotifications(Credentials credentials);
+	NotificationList updateNotifications(Credentials credentials);
 
 }

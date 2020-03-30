@@ -10,11 +10,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.steamscout.application.connection.interfaces.GameFetchService;
-	
-public class ServerGameFetchService extends ServerService<Map<String, Integer>> implements GameFetchService{
+
+/**
+ * Fetches all of the steam games stored on the server. These are the
+ * games that are searched through on the browse page.
+ * 
+ * @author Nathan Lightholder
+ *
+ */
+public class ServerGameFetchService extends ServerService<Map<String, Integer>> implements GameFetchService {
 
 	@Override
-	public Map<String, Integer> FetchGames() {
+	public Map<String, Integer> fetchGames() {
 		return this.send();  
 	}
 

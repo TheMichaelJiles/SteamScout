@@ -8,6 +8,12 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.NotificationCriteria;
 
+/**
+ * Fetches a user's watchlist stored on the server.
+ * 
+ * @author Luke Whaley
+ *
+ */
 public class ServerWatchlistFetchService extends ServerService<Watchlist> implements WatchlistFetchService {
 	
 	private String username;

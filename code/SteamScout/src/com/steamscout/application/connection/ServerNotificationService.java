@@ -9,13 +9,19 @@ import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.model.notification.NotificationList;
 import com.steamscout.application.model.user.Credentials;
 
-
+/**
+ * Checks with the server to see if there are any new notifications
+ * to be shown.
+ * 
+ * @author Nathan Lightholder
+ *
+ */
 public class ServerNotificationService extends ServerService<NotificationList> implements NotificationService {
 	
 	private Credentials credentials;
 	
 	@Override
-	public NotificationList UpdateNotifications(Credentials credentials) {
+	public NotificationList updateNotifications(Credentials credentials) {
 		this.credentials = credentials;
 		return this.send();
 	}

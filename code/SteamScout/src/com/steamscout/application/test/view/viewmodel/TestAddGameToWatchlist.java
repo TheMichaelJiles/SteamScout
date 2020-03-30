@@ -31,7 +31,15 @@ public class TestAddGameToWatchlist {
 		public Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) throws InvalidAdditionException {
 			throw new InvalidAdditionException(gameToAdd);
 		}
+	}
+	
+	private class NullReturnAdditionService implements WatchlistAdditionService {
 
+		@Override
+		public Watchlist addGameToWatchlist(Credentials credentials, Game gameToAdd) throws InvalidAdditionException {
+			return null;
+		}
+		
 	}
 
 	@BeforeEach
@@ -71,5 +79,27 @@ public class TestAddGameToWatchlist {
 		boolean wasAdded = vm.addSelectedGameToWatchlist(new InvalidAdditionService());
 		
 		assertEquals(false, wasAdded);
+	}
+	
+	@Test
+	public void testNullUser() {
+		ViewModel vm = ViewModel.get();
+		vm.userProperty().setValue(null);
+		Game game = new Game(1, "test");
+		assertEquals(false, vm.addGameToWatchlist(game));
+	}
+	
+	@Test
+	public void testAdditionSystemNull() {
+		assertThrows(IllegalArgumentException.class, () -> ViewModel.get().addSelectedGameToWatchlist(null));
+	}
+	
+	@Test
+	public void testAdditionSystemReturnNull() {
+		ViewModel vm = ViewModel.get();
+		vm.userProperty().setValue(new User(new Credentials("test", "1234")));
+		Game game = new Game(1, "test");
+		vm.browsePageSelectedGameProperty().setValue(game);
+		assertThrows(IllegalArgumentException.class, () -> vm.addSelectedGameToWatchlist(new NullReturnAdditionService()));
 	}
 }

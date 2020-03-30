@@ -2,6 +2,7 @@ package com.steamscout.application.test.connection.serverwatchlistmodificationse
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import com.steamscout.application.connection.ServerWatchlistModificationService;
@@ -39,6 +40,28 @@ class TestJsonExchange {
 		assertAll(() -> assertEquals(5, game.getAppId()),
 				() -> assertEquals("test-game", game.getTitle()),
 				() -> assertEquals(1, user.getWatchlist().size()));
+	}
+	
+	@Test
+	public void testGetJsonString() {
+		TestServerWatchlistModificationService service = new TestServerWatchlistModificationService();
+		Credentials credentials = new Credentials("twhal", "1234");
+		Game game = new Game(4, "test");
+		NotificationCriteria criteria = new NotificationCriteria();
+		criteria.setTargetPrice(5.0);
+		criteria.shouldNotifyOnSale(true);
+		criteria.shouldNotifyWhenBelowTargetPrice(true);
+		String json = service.getJsonString(credentials, game, criteria);
+		
+		JSONObject jsonobj = new JSONObject(json);
+		
+		assertAll(() -> assertEquals("watchlist_modification", jsonobj.getString("type")),
+				() -> assertEquals("twhal", jsonobj.getJSONObject("data").getJSONObject("user").getString("username")),
+				() -> assertEquals("1234", jsonobj.getJSONObject("data").getJSONObject("user").getString("password")),
+				() -> assertEquals(4, jsonobj.getJSONObject("data").getJSONObject("game").get("steamid")),
+				() -> assertEquals(5, jsonobj.getJSONObject("data").getJSONObject("game").get("targetprice")),
+				() -> assertEquals(true, jsonobj.getJSONObject("data").getJSONObject("game").get("targetpriceselected")),
+				() -> assertEquals(true, jsonobj.getJSONObject("data").getJSONObject("game").get("onsaleselected")));
 	}
 
 }
