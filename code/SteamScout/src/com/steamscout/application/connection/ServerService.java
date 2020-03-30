@@ -5,6 +5,18 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 
+/**
+ * This service contains functionality to send and receive
+ * json to and from the server.
+ * 
+ * Children need only specify the json string to send to the
+ * server and how to interpret the json results. Then, they may
+ * call send() to receive their interpreted json data from the server.
+ * 
+ * @author Luke Whaley
+ *
+ * @param <T> the result of the interpretted data from the server.
+ */
 public abstract class ServerService<T> {
 
 	private static final String HOST_PORT_PAIR = "tcp://127.0.0.1:5555";

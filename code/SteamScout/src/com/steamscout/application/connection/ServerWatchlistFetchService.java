@@ -57,6 +57,14 @@ public class ServerWatchlistFetchService extends ServerService<Watchlist> implem
 		return root.toString();
 	}
 
+	/**
+	 * The username of the desired watchlist.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param username the username of the desired watchlist.
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}

@@ -29,6 +29,7 @@ public class ParallelIterable<T> {
 	 * @postcondition none
 	 * 
 	 * @param collection the collection in which this parallelized iterable gets its data.
+	 * @param speed correlates proportionally with the number of threads utilized.
 	 */
 	public ParallelIterable(Collection<T> collection, IterationSpeed speed) {
 		if (collection == null) {

@@ -6,6 +6,12 @@ import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.model.user.Credentials;
 
+/**
+ * Contacts the server and creates a new account on behalf of a user.
+ * 
+ * @author Luke Whaley
+ *
+ */
 public class ServerCreateAccountService extends ServerService<Object> implements CreateAccountService {
 	
 	private Credentials credentials;
@@ -45,10 +51,26 @@ public class ServerCreateAccountService extends ServerService<Object> implements
 		return root.toString();
 	}
 
+	/**
+	 * The credentials for the new account.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param credentials the credentials for the new account.
+	 */
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
 
+	/**
+	 * The email of the new account.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param email the email of the new account.
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}

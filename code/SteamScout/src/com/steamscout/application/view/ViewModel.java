@@ -2,7 +2,6 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.User;
 
-import com.steamscout.application.connection.ServerGameFetchService;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.GameFetchService;
 import com.steamscout.application.connection.interfaces.LoginService;
@@ -131,6 +130,7 @@ public abstract class ViewModel {
 	 * @precondition userProperty().getValue() != null
 	 * @postcondition none
 	 * 
+	 * @param modificationService the interface used to make the modification.
 	 * @param onSale         notify when on sale.
 	 * @param belowThreshold notify when below threshold.
 	 * @param targetPrice    threshold target price.
@@ -158,6 +158,8 @@ public abstract class ViewModel {
 	 * @postcondition if userProperty().getValue() != null, then
 	 *                watchlistProperty().getValue().size() ==
 	 *                watchlistProperty().getValue().size()@prev + 1
+	 * @param additionSystem the interface used to make the addition.
+	 * @return true if the game was succecssfully added; false otherwise.
 	 */
 	public abstract boolean addSelectedGameToWatchlist(WatchlistAdditionService additionSystem);
 
@@ -182,6 +184,7 @@ public abstract class ViewModel {
 	 *                watchlistProperty().getValue().size()@prev + 1
 	 * 
 	 * @param game the game to add to the user's watchlist.
+	 * @return true if the game was successfully added; false otherwise.
 	 */
 	public abstract boolean addGameToWatchlist(Game game);
 
@@ -243,7 +246,7 @@ public abstract class ViewModel {
 	 * @param notificationSystem system responsible for handling server response
 	 * 		  regarding notifications
 	 */
-	public abstract void PopulateNotifications(NotificationService notificationSystem);
+	public abstract void populateNotifications(NotificationService notificationSystem);
 
 	/**
 	 * Gets the userProperty for the current user of the system.

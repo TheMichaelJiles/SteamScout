@@ -40,8 +40,8 @@ public class Watchlist implements Collection<Game> {
 	 * 				 contains(game)
 	 * @postcondition getNotificationCriteria(game).equals(criteria)
 	 * 
-	 * @param game
-	 * @param criteria
+	 * @param game the game for which the notification criteria is for.
+	 * @param criteria the criteria for the game.
 	 */
 	public void putNotificationCriteria(Game game, NotificationCriteria criteria) {
 		if (game == null) {
