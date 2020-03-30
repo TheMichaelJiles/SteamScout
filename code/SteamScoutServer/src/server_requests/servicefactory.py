@@ -11,6 +11,7 @@ from server_requests.steamwishlistlink import SteamWishlistLink
 from server_requests.watchlistaddition import WatchlistAddition
 from server_requests.watchlistmodification import WatchlistModification
 from server_requests.watchlistremoval import WatchlistRemoval
+from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class ServiceFactory(object):
     '''
@@ -35,6 +36,8 @@ class ServiceFactory(object):
             return UserLogin(client_json['data']['user']['username'], client_json['data']['user']['password']) 
         if service_type == 'fetch_games':
             return GameFetcher()
+        if service_type == 'fetch_watchlist':
+            return WatchlistGameFetcher(client_json['data']['user']['username'])
         if service_type == 'check_notifications':
             return Notification(client_json['data']['user']['username'])
         if service_type == 'link_steam':

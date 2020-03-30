@@ -4,6 +4,7 @@ import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
 import com.steamscout.application.connection.ServerLoginService;
+import com.steamscout.application.connection.ServerWatchlistFetchService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,6 +56,7 @@ public class LoginPageCodeBehind {
 	private void onLoginButtonAction(ActionEvent event) {
 		boolean isSuccessful = ViewModel.get().loginUser(new ServerLoginService());
 		if (isSuccessful) {
+			ViewModel.get().loadWatchlist(new ServerWatchlistFetchService());
 			PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
 		}
 		
