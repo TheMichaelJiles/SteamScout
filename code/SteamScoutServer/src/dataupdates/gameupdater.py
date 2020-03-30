@@ -29,7 +29,7 @@ class GameUpdater(object):
         puller = GamePull()
         print('Pulling Games From API...')
         games = puller.pull_games(test_mode)
-        
+        puller.cleanup()
         if test_mode:
             path = os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json')
         else:
