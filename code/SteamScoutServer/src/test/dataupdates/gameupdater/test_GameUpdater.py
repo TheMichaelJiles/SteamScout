@@ -3,6 +3,7 @@ Created on Mar 29, 2020
 
 @author: Nathan Lightholder
 '''
+
 import unittest, os, json
 from mock import patch
 from dataupdates.gameupdater import GameUpdater
@@ -11,9 +12,7 @@ from api.gamepull import GamePull
 
 class TestGameUpdater(unittest.TestCase):
 
-
     def test_game_updater_test(self):
-        
         updater = GameUpdater()
         result = updater.fill_game_table(True)
         
@@ -37,9 +36,7 @@ class TestGameUpdater(unittest.TestCase):
         updater = GameUpdater()
         mock.return_value = '0'
         result = updater.fill_game_table(True)
-        
         self.assertFalse(result)
-
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
