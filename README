@@ -16,3 +16,5 @@ Installation Instructions: (Development Environment)
 			- Change classpath to your javafx/lib jars.
 		2. JUnit 5 to run unit tests.
 		3. Maven for utilization of the pom.xml file.
+		4. Python Dependencies - mock, requests, pyzmq, coverage
+		
