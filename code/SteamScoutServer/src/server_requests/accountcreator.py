@@ -44,42 +44,8 @@ class AccountCreator(object):
                             
         @return: the json response to the client
         '''
-        service = _FakeAccountCreatorService() if test_mode else _AccountCreatorService()
-        return service.attempt_create_account(self.user_name, self.password, self.email)
-        
-class _FakeAccountCreatorService(object):
-    '''
-    Used for testing purposes. When the database is not available, 
-    or when performing tests, then this class is used to perform the 
-    AccountCreation service.
-    '''
-    
-    def attempt_create_account(self, user_name, password, email):
-        '''
-        Attempts to create an account for the user. The data is retrieved 
-        from the json files within the SteamScoutServer/test_data
-        directory.
-        
-        @param user_name : string - The username for the login.
-        @param password : string - The password for the login.
-        @param email : string - The user's email.
-        
-        @return: The json response object.
-        '''
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table_test.json'), 'r') as jsonfile:
-            user_data = json.load(jsonfile)
-            username_already_exists = user_name in user_data
-            username_doesnt_already_exist = not username_already_exists
-        if username_doesnt_already_exist:
-            user_data[user_name] = {'password': password,
-                                    'email': email,
-                                    'steamid': 0}
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table_test.json'), 'w') as jsonfile:
-                json.dump(user_data, jsonfile)
-        
-        details = 'Creation Successful.' if username_doesnt_already_exist else 'Creation Unsuccessful: Username Already Taken.'
-        json_response = {"result": username_doesnt_already_exist, "details": details}
-        return json_response
+        service = _AccountCreatorService()
+        return service.attempt_create_account(self.user_name, self.password, self.email, 'user_table_test.json' if test_mode else 'user_table.json')
         
 class _AccountCreatorService(object):
     '''
@@ -87,7 +53,7 @@ class _AccountCreatorService(object):
     then this class is used to perform the AccountCreation service.
     '''
     
-    def attempt_create_account(self, user_name, password, email):
+    def attempt_create_account(self, user_name, password, email, filename):
         '''
         Attempts to create an account for the user. The data is retrieved 
         from the database.
@@ -98,7 +64,7 @@ class _AccountCreatorService(object):
         
         @return: The json response object.
         '''
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'r') as jsonfile:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
             user_data = json.load(jsonfile)
             username_already_exists = user_name in user_data
             username_doesnt_already_exist = not username_already_exists
@@ -106,7 +72,7 @@ class _AccountCreatorService(object):
             user_data[user_name] = {'password': password,
                                     'email': email,
                                     'steamid': 0}
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'w') as jsonfile:
+            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
                 json.dump(user_data, jsonfile)
         
         details = 'Creation Successful.' if username_doesnt_already_exist else 'Creation Unsuccessful: Username Already Taken.'
