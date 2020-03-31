@@ -30,61 +30,18 @@ class WatchlistGameFetcher(object):
         @param test_mode : whether or not to run the service in test mode.
         @return: the dictionary that contains all games on the specified users watchlist.
         '''
-        service = _FakeWatchlistGameFetchingService() if test_mode else _WatchlistGameFetchingService()
-        return service.fetch_games_on_watchlist(self.username)
+        service = _WatchlistGameFetchingService()
+        watchlist_path = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
+        game_table_path = 'game_table_test.json' if test_mode else 'game_table.json'
+        return service.fetch_games_on_watchlist(self.username, watchlist_path, game_table_path)
         
-class _FakeWatchlistGameFetchingService(object):
-    '''
-    This is the fake watchlist fetching service that pulls data from the _test.json files.
-    '''
-    
-    def fetch_games_on_watchlist(self, username):
-        '''
-        Fetches all games on the specified username's watchlist. The returned dictionary is of the format
-        {'username': username, 'games_on_watchlist': [{'steamid': steamid,
-                                                       'title': title,
-                                                       'initialprice': initialprice,
-                                                       'actualprice': actualprice,
-                                                       'onsale': onsale,
-                                                       'targetprice_criteria': targetprice_criteria,
-                                                       'onsale_selected': onsale_selected,
-                                                       'targetprice_selected': targetprice_selected}, ...]}
-                                                       
-        @param username : the username of the account to get the watchlist
-        @return: the dictionary in the format described above.
-        '''
-        watchlist_info = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table_test.json'), 'r') as jsonfile:
-            watchlist_table = json.load(jsonfile)
-            for key in watchlist_table:
-                if watchlist_table[key]['username'] == username:
-                    watchlist_info.append({'steamid': watchlist_table[key]['steamid'],
-                                     'targetprice_criteria': watchlist_table[key]['targetprice_criteria'],
-                                     'onsale_selected': watchlist_table[key]['onsale_selected'],
-                                     'targetprice_selected': watchlist_table[key]['targetprice_selected']})
-           
-        games = []   
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json'), 'r') as jsonfile:
-            game_data = json.load(jsonfile)
-            for info in watchlist_info:
-                current_game = {}
-                current_game['steamid'] = info['steamid']
-                current_game['title'] = game_data[str(info['steamid'])]['title']
-                current_game['initialprice'] = game_data[str(info['steamid'])]['initialprice']
-                current_game['actualprice'] = game_data[str(info['steamid'])]['actualprice']
-                current_game['onsale'] = game_data[str(info['steamid'])]['onsale']
-                current_game['targetprice_criteria'] = info['targetprice_criteria']
-                current_game['onsale_selected'] = info['onsale_selected']
-                current_game['targetprice_selected'] = info['targetprice_selected']
-                games.append(current_game)
-        return {'username': username, 'games_on_watchlist': games}
     
 class _WatchlistGameFetchingService(object):
     '''
     This is the actual watchlist fetching service that pulls data from the non _test.json files.
     '''
     
-    def fetch_games_on_watchlist(self, username):
+    def fetch_games_on_watchlist(self, username, watchlist_path, game_table_path):
         '''
         Fetches all games on the specified username's watchlist. The returned dictionary is of the format
         {'username': username, 'games_on_watchlist': [{'steamid': steamid,
@@ -100,7 +57,7 @@ class _WatchlistGameFetchingService(object):
         @return: the dictionary in the format described above.
         '''
         watchlist_info = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as jsonfile:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_path), 'r') as jsonfile:
             watchlist_table = json.load(jsonfile)
             for key in watchlist_table:
                 if watchlist_table[key]['username'] == username:
@@ -110,7 +67,7 @@ class _WatchlistGameFetchingService(object):
                                      'targetprice_selected': watchlist_table[key]['targetprice_selected']})
            
         games = []   
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_table_path), 'r') as jsonfile:
             game_data = json.load(jsonfile)
             for info in watchlist_info:
                 current_game = {}
