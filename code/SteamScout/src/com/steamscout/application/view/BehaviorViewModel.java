@@ -15,6 +15,7 @@ import com.steamscout.application.connection.interfaces.WatchlistModificationSer
 import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.Watchlist;
+import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.model.notification.NotificationCriteria;
 import com.steamscout.application.model.notification.NotificationList;
 import com.steamscout.application.model.user.Credentials;

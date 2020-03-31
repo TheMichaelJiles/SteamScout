@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane id="Notifications" fx:id="notificationsPageBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.NotificationsPageCodeBehind">
+<BorderPane id="Notifications" fx:id="notificationsPageBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.NotificationsPageCodeBehind">
    <right>
       <AnchorPane prefHeight="400.0" prefWidth="443.0" BorderPane.alignment="CENTER">
          <children>
@@ -17,6 +16,7 @@
                </font>
             </Label>
             <ListView fx:id="notificationsListView" layoutX="26.0" layoutY="56.0" prefHeight="295.0" prefWidth="390.0" />
+            <Label fx:id="noNotificationsWarning" layoutX="154.0" layoutY="34.0" text="You have no notifications!" textFill="#902121" visible="false" />
          </children>
       </AnchorPane>
    </right>

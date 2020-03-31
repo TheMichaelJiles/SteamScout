@@ -7,6 +7,7 @@ import com.steamscout.application.view.ViewModel;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -26,9 +27,13 @@ public class NotificationsPageCodeBehind {
     private BorderPane notificationsPageBorderPane;
     
     @FXML
+    private Label noNotificationLabel;
+    
+    @FXML
     void initialize() {
     	this.setUpNavigationBar();
     	this.notificationsListView.itemsProperty().bind(ViewModel.get().notificationsProperty());
+    	this.handleNoNotificationsWarning();
     }
 
     @FXML
@@ -54,6 +59,16 @@ public class NotificationsPageCodeBehind {
     	this.notificationsPageBorderPane.setLeft(NavigationBarCodeBehind.getNavigationBarAsPane());
     	this.disableCurrentPageButton();
     }
+	
+	private void handleNoNotificationsWarning() {
+		if (ViewModel.get().notificationsProperty().isEmpty()) {
+			this.notificationsListView.setDisable(true);
+			this.noNotificationLabel.setVisible(true);
+		} else {
+			this.notificationsListView.setDisable(false);
+			this.noNotificationLabel.setVisible(false);
+		}
+	}
 
 	private void disableCurrentPageButton() {
 		VBox vbox = (VBox) this.notificationsPageBorderPane.getChildren().get(1);
