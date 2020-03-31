@@ -48,37 +48,9 @@ class UserLogin(object):
                             
         @return: the json response to the client
         '''
-        service = _FakeUserLoginService() if test_mode else _UserLoginService()
-        return service.attempt_login(self.user_name, self.password)
+        service = _UserLoginService()
+        return service.attempt_login(self.user_name, self.password, 'user_table_test.json' if test_mode else 'user_table')
         
-class _FakeUserLoginService(object):
-    '''
-    Used for testing purposes. When the database is not available, 
-    or when performing tests, then this class is used to perform the 
-    UserLogin service.
-    '''
-    
-    def attempt_login(self, user_name, password):
-        '''
-        Fetches the watchlist data for the given username and password
-        pair. The data is retrieved from the json files within the SteamScoutServer/test_data
-        directory.
-        
-        @param user_name : string - The username for the login.
-        @param password : string - The password for the login.
-        
-        @return: The json response object.
-        '''
-        is_valid = False
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table_test.json'), 'r') as user_json:
-            user_data = json.load(user_json)
-            if user_name in user_data and user_data[user_name]['password'] == password:
-                is_valid = True
-                    
-        watchlist_game_fetch = WatchlistGameFetcher(user_name)
-        results = watchlist_game_fetch.process_service(test_mode=True)
-            
-        return {"result": is_valid, "watchlist": results['games_on_watchlist'] if is_valid else []}
     
 class _UserLoginService(object):
     '''
@@ -86,7 +58,7 @@ class _UserLoginService(object):
     then this class is used to perform the UserLogin service.
     '''
     
-    def attempt_login(self, user_name, password):
+    def attempt_login(self, user_name, password, filename):
         '''
         Fetches the watchlist data for the given username and password
         pair. The data is retrieved from the data stored in the database.
@@ -97,12 +69,12 @@ class _UserLoginService(object):
         @return: The json response object.
         '''
         is_valid = False
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'user_table.json'), 'r') as user_json:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as user_json:
             user_data = json.load(user_json)
             if user_name in user_data and user_data[user_name]['password'] == password:
                 is_valid = True
                     
         watchlist_game_fetch = WatchlistGameFetcher(user_name)
-        results = watchlist_game_fetch.process_service(test_mode=True)
+        results = watchlist_game_fetch.process_service(test_mode=(filename == 'user_table_test.json'))
             
         return {"result": is_valid, "watchlist": results['games_on_watchlist'] if is_valid else []}
