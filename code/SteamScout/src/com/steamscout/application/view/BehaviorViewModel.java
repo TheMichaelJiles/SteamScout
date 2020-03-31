@@ -77,7 +77,7 @@ public class BehaviorViewModel extends ViewModel {
 		}
 		User currentUser = this.userProperty().getValue();
 		if (currentUser != null) {
-			removalService.removeGameFromWatchlist(currentUser, game);
+			currentUser.setWatchlist(removalService.removeGameFromWatchlist(currentUser, game));
 			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
 		}
 	}

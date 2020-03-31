@@ -49,7 +49,7 @@ class UserLogin(object):
         @return: the json response to the client
         '''
         service = _UserLoginService()
-        return service.attempt_login(self.user_name, self.password, 'user_table_test.json' if test_mode else 'user_table')
+        return service.attempt_login(self.user_name, self.password, 'user_table_test.json' if test_mode else 'user_table.json')
         
     
 class _UserLoginService(object):
