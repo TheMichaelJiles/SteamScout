@@ -27,7 +27,7 @@ public class NotificationsPageCodeBehind {
     private BorderPane notificationsPageBorderPane;
     
     @FXML
-    private Label noNotificationLabel;
+    private Label noNotificationsLabel;
     
     @FXML
     void initialize() {
@@ -63,10 +63,10 @@ public class NotificationsPageCodeBehind {
 	private void handleNoNotificationsWarning() {
 		if (ViewModel.get().notificationsProperty().isEmpty()) {
 			this.notificationsListView.setDisable(true);
-			this.noNotificationLabel.setVisible(true);
+			this.noNotificationsLabel.setVisible(true);
 		} else {
 			this.notificationsListView.setDisable(false);
-			this.noNotificationLabel.setVisible(false);
+			this.noNotificationsLabel.setVisible(false);
 		}
 	}
 

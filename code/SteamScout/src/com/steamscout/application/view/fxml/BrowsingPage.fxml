@@ -16,14 +16,14 @@
             <ListView fx:id="gameResultsListView" layoutX="36.0" layoutY="107.0" prefHeight="246.0" prefWidth="371.0" />
             <Button fx:id="addButton" layoutX="202.0" layoutY="366.0" mnemonicParsing="false" onAction="#onAddButtonAction" text="Add" />
             <Button fx:id="searchButton" layoutX="242.0" layoutY="58.0" mnemonicParsing="false" onAction="#onSearchButtonAction" text="Search" />
-            <Label fx:id="noResultsLabel" layoutX="36.0" layoutY="67.0" text="There are no results that match the entered criteria" textFill="#901313" visible="false" />
-            <Label fx:id="gameAlreadyAddedLabel" layoutX="36.0" layoutY="67.0" text="Selected game has already been added to your watchlist!" textFill="#901313" visible="false" />
+            <Label fx:id="gameAlreadyAddedLabel" layoutX="36.0" layoutY="86.0" text="Selected game has already been added to your watchlist!" textFill="#901313" visible="false" />
             <Button fx:id="clearSearchButton" layoutX="315.0" layoutY="58.0" mnemonicParsing="false" onAction="#onClearSearchButtonAction" text="Clear Search" />
             <Label alignment="CENTER" layoutX="36.0" layoutY="12.0" text="Browsing">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
+            <Label fx:id="noResultsLabel" layoutX="37.0" layoutY="88.0" text="There are no results that match the entered criteria" textFill="#901313" visible="false" />
          </children>
       </AnchorPane>
    </right>

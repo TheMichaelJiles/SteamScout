@@ -16,7 +16,7 @@
                </font>
             </Label>
             <ListView fx:id="notificationsListView" layoutX="26.0" layoutY="56.0" prefHeight="295.0" prefWidth="390.0" />
-            <Label fx:id="noNotificationsWarning" layoutX="154.0" layoutY="34.0" text="You have no notifications!" textFill="#902121" visible="false" />
+            <Label fx:id="noNotificationsLabel" layoutX="154.0" layoutY="34.0" text="You have no notifications!" textFill="#902121" visible="false" />
          </children>
       </AnchorPane>
    </right>

@@ -18,7 +18,7 @@
             <Button fx:id="modifyButton" layoutX="149.0" layoutY="366.0" mnemonicParsing="false" onAction="#onModifyButtonAction" text="Modify" />
             <Button fx:id="searchButton" layoutX="254.0" layoutY="63.0" mnemonicParsing="false" onAction="#onSearchButtonAction" text="Search" />
             <Button fx:id="clearSearchButton" layoutX="319.0" layoutY="63.0" mnemonicParsing="false" onAction="#onClearSearchButtonAction" text="Clear Search" />
-            <Label fx:id="noResultsLabel" layoutX="19.0" layoutY="70.0" text="There are no results that match the entered criteria" textFill="#901313" visible="false" />
+            <Label fx:id="noResultsLabel" layoutX="34.0" layoutY="90.0" text="There are no results that match the entered criteria" textFill="#901313" visible="false" />
             <Label layoutX="32.0" layoutY="14.0" text="Watchlist">
                <font>
                   <Font size="23.0" />
