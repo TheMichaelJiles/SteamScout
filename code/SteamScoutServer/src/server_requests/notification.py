@@ -36,47 +36,8 @@ class Notification(object):
         
         @return: The json string containing the notification data to send back to the client.
         '''
-        service = _FakeNotificationService() if test_mode else _NotificationService()
-        return service.attempt_fetch_notifications(self.user_name)
-    
-class _FakeNotificationService(object):
-    '''
-    This notification service is for testing purposes. All data accessed is read
-    from the json files within the test_data directory.
-    '''
-    
-    def attempt_fetch_notifications(self, user_name):
-        '''
-        Attempts to fetch the notifications for the specified user. This is a test
-        implementation. So, none of the data in the database is touched. Data is read 
-        strictly from the test_data/watchlist_table.json file.
-        
-        @param user_name : string - the user's username.
-        
-        @return: The json string to send back to the user.
-        '''
-        id_info = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table_test.json'), 'r') as watchlist_file:
-            watchlist_data = json.load(watchlist_file)
-            for key in watchlist_data:
-                if watchlist_data[key]['username'] == user_name:
-                    id_info.append({'steamid': watchlist_data[key]['steamid'],
-                                    'onsale_selected': watchlist_data[key]['onsale_selected'],
-                                    'targetprice_selected': watchlist_data[key]['targetprice_selected'],
-                                    'targetprice_criteria': watchlist_data[key]['targetprice_criteria']})
-        game_notifications = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json'), 'r') as game_file:
-            game_data = json.load(game_file)
-            for info in id_info:
-                onsale = info['onsale_selected'] and game_data[str(info['steamid'])]['onsale']
-                below_criteria = info['targetprice_selected'] and game_data[str(info['steamid'])]['actualprice'] <= info['targetprice_criteria']
-                if onsale or below_criteria:
-                    game = {}
-                    game['steamid'] = info['steamid']
-                    game.update(game_data[str(info['steamid'])])
-                    game_notifications.append(game)
-        
-        return {'notifications': game_notifications}
+        service = _NotificationService()
+        return service.attempt_fetch_notifications(self.user_name, 'watchlist_table_test.json' if test_mode else 'watchlist_table.json', 'game_table_test.json' if test_mode else 'game_table.json')
     
 class _NotificationService(object):
     '''
@@ -84,7 +45,7 @@ class _NotificationService(object):
     is read from the database.
     '''
     
-    def attempt_fetch_notifications(self, user_name):
+    def attempt_fetch_notifications(self, user_name, watchlist_filename, game_filename):
         '''
         Attempts to fetch notifications for the specified user. This is the 
         production implementation. Therefore, all data is read from the database.
@@ -94,7 +55,7 @@ class _NotificationService(object):
         @return: The json string to send back to the user.
         '''
         id_info = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as watchlist_file:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_filename), 'r') as watchlist_file:
             watchlist_data = json.load(watchlist_file)
             for key in watchlist_data:
                 if watchlist_data[key]['username'] == user_name:
@@ -104,7 +65,7 @@ class _NotificationService(object):
                                     'targetprice_criteria': watchlist_data[key]['targetprice_criteria']})
                     
         game_notifications = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as game_file:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_filename), 'r') as game_file:
             game_data = json.load(game_file)
             for info in id_info:
                 onsale = info['onsale_selected'] and game_data[str(info['steamid'])]['onsale']
