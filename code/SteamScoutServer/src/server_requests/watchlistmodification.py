@@ -9,7 +9,7 @@ from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class WatchlistModification(object):
     '''
-    Leaving for Michael to finish this class and write the unit tests for it.
+    Handles modifying the notification criteria of a game on a user's watchlist.
     '''
     
 
