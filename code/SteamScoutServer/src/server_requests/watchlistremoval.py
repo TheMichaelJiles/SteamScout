@@ -35,40 +35,8 @@ class WatchlistRemoval(object):
         @param test_mode : whether or not to run the service in test mode.
         @return: the users new watchlist information after the removal processing.
         '''
-        service = _FakeWatchlistRemovalService() if test_mode else _WatchlistRemovalService()
-        return service.attempt_removal(self.username, self.game_steamid)
-        
-class _FakeWatchlistRemovalService(object):
-    '''
-    This is the fake watchlist removal service that operates on the test data file watchlist_table_test.json.
-    It removes a game from a user's watchlist.
-    '''
-    
-    def attempt_removal(self, username, game_steamid):
-        '''
-        Removes the game from the user's watchlist and commits the changes. Then,
-        fetches the new watchlist data after the processed removal and returns it in
-        dictionary format.
-        
-        @param username : the username of the account to remove the game
-        @param game_steamid : the steamid of the game to remove
-        
-        @return the new watchlist data for the account.
-        @see: server_requests.gamefetcher.WatchlistGameFetcher for the returned results.
-        '''
-        key_to_remove = None
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table_test.json'), 'r') as jsonfile:
-            watchlist_data = json.load(jsonfile)
-            for key in watchlist_data:
-                if watchlist_data[key]['username'] == username and watchlist_data[key]['steamid'] == game_steamid:
-                    key_to_remove = key
-        
-        watchlist_data.pop(key_to_remove, None)
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table_test.json'), 'w') as jsonfile:
-            json.dump(watchlist_data, jsonfile)
-        
-        watchlist_game_fetcher = WatchlistGameFetcher(username)
-        return watchlist_game_fetcher.process_service(test_mode=True)
+        service = _WatchlistRemovalService()
+        return service.attempt_removal(self.username, self.game_steamid, 'watchlist_table_test.json' if test_mode else 'watchlist_table.json')
         
 class _WatchlistRemovalService(object):
     '''
@@ -76,7 +44,7 @@ class _WatchlistRemovalService(object):
     It removes a game form a user's watchlist.
     '''
     
-    def attempt_removal(self, username, game_steamid):
+    def attempt_removal(self, username, game_steamid, filename):
         '''
         Removes the game from the user's watchlist and commits the changes. Then,
         fetches the new watchlist data after the processed removal and returns it in
@@ -84,19 +52,21 @@ class _WatchlistRemovalService(object):
         
         @param username : the username of the account to remove the game
         @param game_steamid : the steamid of the game to remove
+        @param filename : the filename of the table to be used
         
         @return the new watchlist data for the account.
         @see: server_requests.gamefetcher.WatchlistGameFetcher for the returned results.
         '''
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'r') as jsonfile:
+        key_to_remove = None
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
             watchlist_data = json.load(jsonfile)
             for key in watchlist_data:
                 if watchlist_data[key]['username'] == username and watchlist_data[key]['steamid'] == game_steamid:
                     key_to_remove = key
-            watchlist_data.pop(key_to_remove, None)
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'watchlist_table.json'), 'w') as jsonfile:
+        watchlist_data.pop(key_to_remove, None)
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
             json.dump(watchlist_data, jsonfile)
         
         watchlist_game_fetcher = WatchlistGameFetcher(username)
-        return watchlist_game_fetcher.process_service(test_mode=False)
+        return watchlist_game_fetcher.process_service(test_mode=(filename == 'watchlist_table_test.json'))
             
