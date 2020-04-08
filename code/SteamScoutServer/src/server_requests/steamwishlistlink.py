@@ -73,8 +73,13 @@ class _WishlistLinkingService(object):
         was_successful = wishlist_games['was_successful']
         returning_json = {"result": was_successful}
         
-        if was_successful:
-            api_json = wishlist_games['json']
+        api_json = wishlist_games['json']
+        
+        if 'success' in api_json:
+            returning_json['result'] = False
+        
+        if returning_json['result']:
+            
             for key in api_json:
                 addition_service = WatchlistAddition(user_name, int(key))
                 addition_service.process_service(test_mode)
