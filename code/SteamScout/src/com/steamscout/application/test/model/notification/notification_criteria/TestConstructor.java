@@ -14,7 +14,8 @@ public class TestConstructor {
 		
 		assertAll(() -> assertEquals(false, criteria.shouldNotifyOnSale()),
 				() -> assertEquals(false, criteria.shouldNotifyWhenBelowTargetPrice()),
-				() -> assertEquals(0, criteria.getTargetPrice(), 0.000001));
+				() -> assertEquals(0, criteria.getTargetPrice(), 0.000001),
+				() -> assertEquals(true, criteria.isDefault()));
 	}
 
 }

@@ -25,20 +25,23 @@ public class TestSetters {
 	public void testShouldNotifyWhenBelowTargetPrice() {
 		this.criteria.shouldNotifyWhenBelowTargetPrice(true);
 		
-		assertEquals(true, this.criteria.shouldNotifyWhenBelowTargetPrice());
+		assertAll(() -> assertEquals(true, this.criteria.shouldNotifyWhenBelowTargetPrice()),
+				() -> assertEquals(false, this.criteria.isDefault()));
 	}
 	
 	@Test
 	public void testShouldNotifyOnSale() {
 		this.criteria.shouldNotifyOnSale(true);
 		
-		assertEquals(true, this.criteria.shouldNotifyOnSale());
+		assertAll(() -> assertEquals(true, this.criteria.shouldNotifyOnSale()),
+				() -> assertEquals(false, this.criteria.isDefault()));
 	}
 	
 	@Test
 	public void testSetTargetPrice() {
 		this.criteria.setTargetPrice(5.99);
 		
-		assertEquals(5.99, this.criteria.getTargetPrice(), 0.0000001);
+		assertAll(() -> assertEquals(5.99, this.criteria.getTargetPrice(), 0.0000001),
+				() -> assertEquals(false, this.criteria.isDefault()));
 	}
 }

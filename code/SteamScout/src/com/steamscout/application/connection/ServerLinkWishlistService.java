@@ -24,7 +24,7 @@ public class ServerLinkWishlistService extends ServerService<Watchlist> implemen
 	/**
 	 * Creates a new ServerLinkWishlistService with the specified username.
 	 * 
-	 * @precondition username != null
+	 * @precondition accountId != null
 	 * @postcondition none
 	 * 
 	 * @param accountId the Steam account id associated with the desired wishlist.

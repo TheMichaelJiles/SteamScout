@@ -88,6 +88,17 @@ public abstract class ViewModel {
 	}
 
 	/**
+	 * Determines whether the specified game has had notification criteria set or not.
+	 * 
+	 * @precondition game != null
+	 * @postcondition none
+	 * 
+	 * @param game the game to check for notification criteria.
+	 * @return true if the game has had notification criteria set; false otherwise.
+	 */
+	public abstract boolean containsNotificationCriteria(Game game);
+	
+	/**
 	 * Inserts the specified data into the this view model for use by the SteamGames
 	 * object. The purpose of this is to guarantee we only have to make the api call
 	 * for getting names and ids once - on application startup during loading

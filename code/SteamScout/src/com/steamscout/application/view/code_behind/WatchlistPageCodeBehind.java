@@ -5,7 +5,7 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
-import com.steamscout.application.view.game_listcell.GameListCell;
+import com.steamscout.application.view.game_listcell.WatchlistGameListCell;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,7 +54,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void initialize() {
-    	this.watchlistListView.setCellFactory(listview -> new GameListCell());
+    	this.watchlistListView.setCellFactory(listview -> new WatchlistGameListCell());
     	this.setUpBindings();
     	this.setUpListeners();
     	this.setUpNavigationBar();

@@ -74,7 +74,7 @@ public class BehaviorViewModel extends ViewModel {
 	@Override
 	public void removeGameFromWatchlist(WatchlistRemovalService removalService, Game game) {
 		if (game == null) {
-			throw new IllegalArgumentException("game should not be null.");
+			throw new IllegalArgumentException("game shouldn't be null.");
 		}
 		User currentUser = this.userProperty().getValue();
 		if (currentUser != null) {
@@ -146,7 +146,7 @@ public class BehaviorViewModel extends ViewModel {
 		}
 		Watchlist newWatchlist = modificationService.modifyGameOnWatchlist(currentUser, gameToModify, criteria);
 		currentUser.setWatchlist(newWatchlist);
-
+		this.resetWatchlistProperty();
 	}
 
 	@Override
@@ -216,6 +216,21 @@ public class BehaviorViewModel extends ViewModel {
 			this.userProperty().getValue().setWatchlist(result);
 			this.resetWatchlistProperty();
 		}
+	}
+
+	@Override
+	public boolean containsNotificationCriteria(Game game) {
+		if (game == null) {
+			throw new IllegalArgumentException("game should not be null.");
+		}
+		
+		boolean containsCriteria = false;
+		Watchlist currentWatchlist = this.userProperty().getValue().getWatchlist();
+		NotificationCriteria criteria = currentWatchlist.getNotificationCriteria(game);
+		if (criteria != null) {
+			containsCriteria = !criteria.isDefault();
+		}
+		return containsCriteria;
 	}
 
 }
