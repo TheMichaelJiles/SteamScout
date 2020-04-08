@@ -11,7 +11,7 @@ from api.steam_user_wishlist import WishlistRequestAPI
 class TestSteamWishlistLink(unittest.TestCase):
 
     def test_linksemptywatchlist_turkeybob(self):
-        service = SteamWishlistLink('turkeybob', 0, False, False)
+        service = SteamWishlistLink('turkeybob', 0, False)
         result = service.process_service(test_mode = True)
         self.assertTrue(result['result'])
         
@@ -25,8 +25,8 @@ class TestSteamWishlistLink(unittest.TestCase):
         wishlist_service = WishlistRequestAPI(0)
         wishlist_games = wishlist_service.fetch_wishlist(test_mode = True)
           
-        for game in wishlist_games:
-            removal_service = WatchlistRemoval('turkeybob', game['steamid'])
+        for game in wishlist_games['json']:
+            removal_service = WatchlistRemoval('turkeybob', int(game))
             removal_service.process_service(test_mode=True)
         
     
