@@ -4,6 +4,7 @@ import com.steamscout.application.model.user.User;
 
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.GameFetchService;
+import com.steamscout.application.connection.interfaces.LinkWishlistService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
@@ -149,6 +150,17 @@ public abstract class ViewModel {
 	 * @param watchlistSystem the system used to get the new watchlist.
 	 */
 	public abstract void loadWatchlist(WatchlistFetchService watchlistSystem);
+	
+	/**
+	 * Links a Steam wishlist with the currently logged in user's watchlist.
+	 * 
+	 * @precondition linkingSystem != null
+	 * @postcondition userProperty().getValue().getWatchlist().size() >= 
+	 * 				  userProperty().getValue().getWatchlist().size()@prev
+	 * 
+	 * @param linkingSystem the system used to perform the watchlist linking.
+	 */
+	public abstract void linkWatchlist(LinkWishlistService linkingSystem);
 	
 	/**
 	 * Adds the currently selected game on the browse page to the user's watchlist

@@ -4,6 +4,8 @@ Created on Mar 3, 2020
 @author: Luke Whaley, Nathan Lightholder, Michael Jiles
 '''
 
+import os, json
+
 from api.steam_user_wishlist import WishlistRequestAPI
 from server_requests.watchlistaddition import WatchlistAddition
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
@@ -17,19 +19,15 @@ class SteamWishlistLink(object):
     steam_user_wishlist._FakeWishlistRequestService. 
     '''
 
-    def __init__(self, user_name, user_steam_id, id_already_saved, id_should_save, api=None):
+    def __init__(self, user_name, user_steam_id, api=None):
         '''
         Initializes the parameters needed to link a steam wishlist.
         
         @param user_name : string - the user's username.
         @param user_steam_id : integer - the user's steam id for their steam account.
-        @param id_already_saved : boolean - whether or not the user's steam id for their account is already saved.
-        @param id_should_save : boolean - whether or not to save the user's steam id in the database.
         '''
         self.user_name = user_name
         self.user_steam_id = user_steam_id
-        self.id_already_saved = id_already_saved
-        self.id_should_save = id_should_save
         self.api = api
         
     def process_service(self, test_mode = False):
@@ -46,45 +44,8 @@ class SteamWishlistLink(object):
                         
         @return: The json string to return back to the client. It contains a result value, and the user's newly updated watchlist.
         '''
-        service = _FakeWishlistLinkingService() if test_mode else _WishlistLinkingService(self.api)
-        return service.link_wishlist(self.user_name, self.user_steam_id, self.id_already_saved, self.id_should_save)
-        
-class _FakeWishlistLinkingService(object):
-    '''
-    This wishlist linking service is used for testing purposes. All system data accessed from
-    within this class is pulled from other fakes or through the json files within the test_data directory.
-    '''
-    
-    def link_wishlist(self, user_name, user_steam_id, id_already_saved, id_should_save):
-        '''
-        Links the wishlist of the specified user with the user's watchlist. Performs the wishlist api call
-        through the use of the steam_user_wishlist._FakeWishlistRequestService. Reads all data from/to the
-        json files within the test_data directory. Since this is used for testing purposes. No writing to the test
-        files will occur. We can't write to the test files then repeated calls to the same tests will start to fail.
-        The test expects certain information to be in the test files and certain information to not be in there. Adding
-        to the test files when running the unit tests will break these expectations for subsequent runs of the unit tests.
-        
-        @param user_name : string - the user's username.
-        @param user_steam_id : integer - the user's steam id for their steam account.
-        @param id_already_saved : boolean - whether or not the user's steam id for their account is already saved.
-        @param id_should_save : boolean - whether or not to save the user's steam id in the database.
-        
-        @return: The json string to send back to the client.
-        '''      
-        
-        # This starts the main steam linking process.
-        wishlist_service = WishlistRequestAPI(user_steam_id)
-        wishlist_games = wishlist_service.fetch_wishlist(test_mode = True)
-          
-        for game in wishlist_games:
-            addition_service = WatchlistAddition(user_name, game['steamid'])
-            addition_service.process_service(test_mode=True)
-            
-        watchlist_game_fetch = WatchlistGameFetcher(user_name)
-        results = watchlist_game_fetch.process_service(test_mode=True)
-                       
-        return {"result": True, "watchlist": results['games_on_watchlist']}
-        
+        service = _WishlistLinkingService(self.api)
+        return service.link_wishlist(self.user_name, self.user_steam_id, test_mode)
         
 class _WishlistLinkingService(object):
     '''
@@ -95,7 +56,7 @@ class _WishlistLinkingService(object):
     def __init__(self, api):
         self.api = api
     
-    def link_wishlist(self, user_name, user_steam_id, id_already_saved, id_should_save):
+    def link_wishlist(self, user_name, user_steam_id, test_mode):
         '''
         Links the wishlist of the specified user with the user's watchlist. Performs the wishlist api call
         through the use of the steam_user_wishlist._WishlistRequestService. Reads/Writes all data from/to the
@@ -103,15 +64,30 @@ class _WishlistLinkingService(object):
         
         @param user_name : string - the user's username.
         @param user_steam_id : integer - the user's steam id for their steam account.
-        @param id_already_saved : boolean - whether or not the user's steam id for their account is already saved.
-        @param id_should_save : boolean - whether or not to save the user's steam id in the database.
         
         @return: The json string to send back to the client.
         '''
         wishlist_service = WishlistRequestAPI(user_steam_id, api=self.api)
-        wishlist_games = wishlist_service.fetch_wishlist(test_mode=False)
-        # Parse the wishlist games and add them to the correct users watchlist using the WatchlistAddition request.
-        # Return the new watchlist data using the WatchlistGameFetcher request.
-        # check wishlist_games['was_successful'] first.
-        return None
+        wishlist_games = wishlist_service.fetch_wishlist(test_mode)
+        print(wishlist_games)
+        was_successful = wishlist_games['was_successful']
+        returning_json = {"result": was_successful}
+        
+        api_json = wishlist_games['json']
+        
+        if 'success' in api_json:
+            returning_json['result'] = False
+        
+        if returning_json['result']:
+            
+            for key in api_json:
+                addition_service = WatchlistAddition(user_name, int(key))
+                addition_service.process_service(test_mode)
+        
+        watchlist_game_fetch = WatchlistGameFetcher(user_name)
+        results = watchlist_game_fetch.process_service(test_mode)
+            
+        returning_json['watchlist'] = results['games_on_watchlist']
+        
+        return returning_json
     

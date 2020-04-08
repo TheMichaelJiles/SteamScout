@@ -7,6 +7,7 @@ import com.steamscout.application.connection.exceptions.InvalidAdditionException
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.GameFetchService;
+import com.steamscout.application.connection.interfaces.LinkWishlistService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
@@ -201,6 +202,20 @@ public class BehaviorViewModel extends ViewModel {
 		String username = this.userProperty().getValue().getCredentials().getUsername();
 		this.userProperty().getValue().setWatchlist(watchlistSystem.fetchWatchlist(username));
 		this.resetWatchlistProperty();
+	}
+
+	@Override
+	public void linkWatchlist(LinkWishlistService linkingSystem) {
+		if (linkingSystem == null) {
+			throw new IllegalArgumentException("linking system should not be null.");
+		}
+		
+		String username = this.userProperty().getValue().getCredentials().getUsername();
+		Watchlist result = linkingSystem.linkSteamWishlist(username);
+		if (result != null) {
+			this.userProperty().getValue().setWatchlist(result);
+			this.resetWatchlistProperty();
+		}
 	}
 
 }

@@ -31,9 +31,9 @@ class TestWishlistRequestAPI(unittest.TestCase):
         service = _FakeWishlistRequestService()
         result = service.make_request(None)
         
-        self.assertEqual(result, [{"steamid": 23942, "title": "Jurassic Park"},
-                                  {"steamid": 19510, "title": "Home Alone: Revenge"},
-                                  {"steamid": 15498, "title": "Mr. Burger: Taste the Grease"}])
+        self.assertEqual(result, {'was_successful': 'true', 'json': {"23942" : {"title": "Jurassic Park"},
+                                 "19510": { "title": "Home Alone: Revenge"},
+                                 "15498" : { "title": "Mr. Burger: Taste the Grease"}}})
     
     @patch.object(APIHandler, 'make_request')    
     def test_make_request(self, mock):

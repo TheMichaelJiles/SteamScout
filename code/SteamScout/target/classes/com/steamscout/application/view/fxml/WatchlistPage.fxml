@@ -14,8 +14,8 @@
          <children>
             <TextField fx:id="searchBarTextField" layoutX="32.0" layoutY="62.0" prefHeight="27.0" prefWidth="210.0" promptText="search games..." />
             <ListView fx:id="watchlistListView" layoutX="32.0" layoutY="109.0" prefHeight="246.0" prefWidth="371.0" />
-            <Button fx:id="removeButton" layoutX="227.0" layoutY="366.0" mnemonicParsing="false" onAction="#onRemoveButtonAction" text="Remove" />
-            <Button fx:id="modifyButton" layoutX="149.0" layoutY="366.0" mnemonicParsing="false" onAction="#onModifyButtonAction" text="Modify" />
+            <Button fx:id="removeButton" layoutX="331.0" layoutY="364.0" mnemonicParsing="false" onAction="#onRemoveButtonAction" text="Remove" />
+            <Button fx:id="modifyButton" layoutX="261.0" layoutY="364.0" mnemonicParsing="false" onAction="#onModifyButtonAction" text="Modify" />
             <Button fx:id="searchButton" layoutX="254.0" layoutY="63.0" mnemonicParsing="false" onAction="#onSearchButtonAction" text="Search" />
             <Button fx:id="clearSearchButton" layoutX="319.0" layoutY="63.0" mnemonicParsing="false" onAction="#onClearSearchButtonAction" text="Clear Search" />
             <Label fx:id="noResultsLabel" layoutX="34.0" layoutY="90.0" text="There are no results that match the entered criteria" textFill="#901313" visible="false" />
@@ -24,6 +24,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
+            <Button fx:id="linkSteamWishlistButton" layoutX="34.0" layoutY="366.0" mnemonicParsing="false" onAction="#onLinkSteamWishlistButtonAction" text="Link Steam Wishlist" />
          </children>
       </AnchorPane>
    </right>
