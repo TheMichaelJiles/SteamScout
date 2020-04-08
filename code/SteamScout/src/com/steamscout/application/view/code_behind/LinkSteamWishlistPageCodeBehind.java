@@ -4,6 +4,7 @@ import com.steamscout.application.connection.ServerLinkWishlistService;
 import com.steamscout.application.view.ViewModel;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -33,6 +34,7 @@ public class LinkSteamWishlistPageCodeBehind {
     
     @FXML
     private void initialize() {
+    	this.idLengthProperty = new SimpleIntegerProperty();
     	this.setIdTooltip();
     	this.idLengthProperty.bind(this.accountIdTextField.textProperty().length());
     	this.linkAccountsButton.disableProperty().bind(this.idLengthProperty.isNotEqualTo(17));

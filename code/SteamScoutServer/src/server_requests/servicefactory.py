@@ -41,7 +41,7 @@ class ServiceFactory(object):
         if service_type == 'check_notifications':
             return Notification(client_json['data']['user']['username'])
         if service_type == 'link_steam':
-            return SteamWishlistLink(client_json['data']['user']['username'], client_json['data']['user']['steamid'], client_json['data']['user']['should_save'], api=api_handler)
+            return SteamWishlistLink(client_json['data']['user']['username'], client_json['data']['user']['steamid'], api=api_handler)
         if service_type == 'watchlist_addition':
             return WatchlistAddition(client_json['data']['user']['username'], client_json['data']['steamid'])
         if service_type == 'watchlist_modification':
