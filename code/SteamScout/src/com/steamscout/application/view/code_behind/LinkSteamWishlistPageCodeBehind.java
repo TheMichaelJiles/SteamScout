@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.stage.Stage;
 
 /**
  * This page pops up when the user chooses to link their Steam wishlist
@@ -38,12 +39,25 @@ public class LinkSteamWishlistPageCodeBehind {
     	this.setIdTooltip();
     	this.idLengthProperty.bind(this.accountIdTextField.textProperty().length());
     	this.linkAccountsButton.disableProperty().bind(this.idLengthProperty.isNotEqualTo(17));
+    	this.accountIdTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+    		if (!newValue.isBlank()) {
+    			try {
+        			Long.parseLong(newValue);
+        		} catch (NumberFormatException e) {
+        			this.accountIdTextField.textProperty().setValue(oldValue);
+        		}
+    		}
+    	});
+    	this.accountIdTextField.textProperty().setValue("");
     }
     
     @FXML
     private void onLinkAccountsButtonAction(ActionEvent event) {
     	String accountId = this.accountIdTextField.textProperty().getValue();
     	ViewModel.get().linkWatchlist(new ServerLinkWishlistService(accountId));
+    	
+    	Stage currentStage = (Stage) this.linkAccountsButton.getScene().getWindow();
+    	currentStage.close();
     }
     
     private void setIdTooltip() {

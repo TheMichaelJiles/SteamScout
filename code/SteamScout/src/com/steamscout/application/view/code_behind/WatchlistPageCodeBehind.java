@@ -95,6 +95,7 @@ public class WatchlistPageCodeBehind {
     @FXML
     private void onRemoveButtonAction(ActionEvent event) {
     	ViewModel.get().removeSelectedGameFromWatchlist(new ServerWatchlistRemovalService());
+    	this.watchlistListView.getSelectionModel().select(0);
     }
 
     @FXML
