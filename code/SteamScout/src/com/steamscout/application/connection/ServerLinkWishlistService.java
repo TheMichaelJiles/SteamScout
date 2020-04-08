@@ -20,7 +20,6 @@ public class ServerLinkWishlistService extends ServerService<Watchlist> implemen
 
 	private String username;
 	private String accountId;
-	private boolean shouldSaveId;
 	
 	/**
 	 * Creates a new ServerLinkWishlistService with the specified username.
@@ -29,11 +28,9 @@ public class ServerLinkWishlistService extends ServerService<Watchlist> implemen
 	 * @postcondition none
 	 * 
 	 * @param accountId the Steam account id associated with the desired wishlist.
-	 * @param shouldSaveId whether or not to save the accountId for future links.
 	 */
-	public ServerLinkWishlistService(String accountId, boolean shouldSaveId) {
+	public ServerLinkWishlistService(String accountId) {
 		this.setAccountId(accountId);
-		this.shouldSaveId = shouldSaveId;
 	}
 	
 	@Override
@@ -75,7 +72,6 @@ public class ServerLinkWishlistService extends ServerService<Watchlist> implemen
 		JSONObject user = new JSONObject();
 		user.put("username", this.username);
 		user.put("steamid", this.accountId);
-		user.put("should_save", this.shouldSaveId);
 
 		JSONObject data = new JSONObject();
 		data.put("user", user);
@@ -101,19 +97,6 @@ public class ServerLinkWishlistService extends ServerService<Watchlist> implemen
 			throw new IllegalArgumentException("account id should not be null.");
 		}
 		this.accountId = accountId;
-	}
-
-	/**
-	 * Sets whether or not the system should save the entered Steam
-	 * account id.
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 * @param shouldSaveId whether or not the system should save the Steam account id.
-	 */
-	public void shouldSaveId(boolean shouldSaveId) {
-		this.shouldSaveId = shouldSaveId;
 	}
 	
 	/**

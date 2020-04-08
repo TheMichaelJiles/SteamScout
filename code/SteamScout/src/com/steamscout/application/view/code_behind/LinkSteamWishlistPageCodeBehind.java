@@ -6,7 +6,6 @@ import com.steamscout.application.view.ViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 /**
@@ -22,15 +21,11 @@ public class LinkSteamWishlistPageCodeBehind {
     private TextField accountIdTextField;
 
     @FXML
-    private CheckBox saveIdCheckBox;
-
-    @FXML
     private Button linkAccountsButton;
     
     @FXML
     private void onLinkAccountsButtonAction(ActionEvent event) {
     	String accountId = this.accountIdTextField.textProperty().getValue();
-    	boolean shouldSave = this.saveIdCheckBox.selectedProperty().getValue();
-    	ViewModel.get().linkWatchlist(new ServerLinkWishlistService(accountId, shouldSave));
+    	ViewModel.get().linkWatchlist(new ServerLinkWishlistService(accountId));
     }
 }
