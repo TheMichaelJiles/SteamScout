@@ -16,3 +16,24 @@ Installation Instructions: (Development Environment)
 			- Change classpath to your javafx/lib jars.
 		2. JUnit 5 to run unit tests.
 		3. Maven for utilization of the pom.xml file.
+		4. Python Dependencies - mock, requests, pyzmq, coverage
+		
+
+For the application to work in its current state:		
+1. Run server.py in the SteamScoutServer project.
+2. Run the main application in the SteamScout project.
+
+The server's data primary data is updated in two ways.
+
+One way is via the gameupdater.py python module. This pulls
+the steam information for each game in their database and 
+writes it to a json file. This is a standalone python module
+that is ran when the server is down.
+
+Another way is with the watchlistupdater.py. This module is essential for the
+notification functionality. This is the module that is intended to be ran once per day.
+It iterates through each game on all watchlists and polls the api for the most up to date
+pricing information. To test this, find a game on steam that is on sale and add it to 
+your watchlist. Then, shut down the server and run the watchlistupdater.py module. 
+Once this is done, restart the server and if the notification criteria for the game you 
+selected is for onsale notifications, then the notification will show up on the notifications page.
