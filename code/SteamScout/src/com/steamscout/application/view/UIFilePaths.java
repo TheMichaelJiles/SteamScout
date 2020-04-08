@@ -16,4 +16,5 @@ public class UIFilePaths {
 	public static final String WATCHLIST_PAGE_FILENAME = "WatchlistPage.fxml";
 	public static final String NOTIFICATION_CRITERIA_PAGE_FILENAME = "NotificationCriteriaPage.fxml";
 	public static final String NAVIGATION_BAR_FILENAME = "NavigationBar.fxml";
+	public static final String LINK_STEAM_WISHLIST_PAGE = "LinkSteamWishlistPage.fxml";
 }

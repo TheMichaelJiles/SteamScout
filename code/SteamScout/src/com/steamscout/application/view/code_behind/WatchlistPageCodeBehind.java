@@ -41,6 +41,9 @@ public class WatchlistPageCodeBehind {
     
     @FXML
     private Button clearSearchButton;
+    
+    @FXML
+    private Button linkSteamWishlistButton;
 
     @FXML
     private BorderPane watchlistPageBorderPane;
@@ -55,6 +58,11 @@ public class WatchlistPageCodeBehind {
     	this.setUpBindings();
     	this.setUpListeners();
     	this.setUpNavigationBar();
+    }
+    
+    @FXML
+    private void onLinkSteamWishlistButtonAction(ActionEvent event) {
+    	PageConnectionUtility.openModal(UIFilePaths.LINK_STEAM_WISHLIST_PAGE, this.getCurrentStage());
     }
     
     @FXML
