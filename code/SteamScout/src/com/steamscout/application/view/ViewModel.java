@@ -2,6 +2,8 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.User;
 
+import java.util.List;
+
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.GameFetchService;
 import com.steamscout.application.connection.interfaces.LinkWishlistService;
@@ -83,7 +85,6 @@ public abstract class ViewModel {
 	 */
 	protected ViewModel() {
 		this.initializeProperties();
-
 		this.steamGames = new SteamGames();
 	}
 
@@ -97,6 +98,28 @@ public abstract class ViewModel {
 	 * @return true if the game has had notification criteria set; false otherwise.
 	 */
 	public abstract boolean containsNotificationCriteria(Game game);
+	
+	/**
+	 * Gets a list of all steam games that are relevant to the specified text.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param text the text to make the prediction from.
+	 * @return a list of all steam games that are relevant to the specified text.
+	 */
+	public abstract List<String> makeBrowsePagePrediction(String text);
+	
+	/**
+	 * Gets a list of all watchlist games that are relevant to the specified text.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param text the text to make the prediction from.
+	 * @return a list of all watchlist games that are relevant to the specified text.
+	 */
+	public abstract List<String> makeWatchlistPagePrediction(String text);
 	
 	/**
 	 * Inserts the specified data into the this view model for use by the SteamGames

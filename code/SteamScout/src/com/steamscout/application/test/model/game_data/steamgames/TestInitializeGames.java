@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -60,5 +61,15 @@ public class TestInitializeGames {
 		
 		assertAll(() -> assertEquals(false, this.games.getTitles().isEmpty()),
 				() -> assertEquals(false, this.games.getIds().isEmpty()));
+	}
+	
+	@Test
+	public void testTrieMatch() {
+		Map<String, Integer> data = new HashMap<String, Integer>();
+		data.put("Minecraft: 3-year old edition", 3);
+		this.games.initializeGames(data);
+		
+		List<String> results = this.games.makePrediction("Mine");
+		assertEquals(true, results.contains("minecraft: 3-year old edition"));
 	}
 }

@@ -5,6 +5,7 @@ import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
+import com.steamscout.application.view.autotextfield.PredictionTextField;
 import com.steamscout.application.view.game_listcell.WatchlistGameListCell;
 
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -24,9 +26,11 @@ import javafx.stage.Stage;
  */
 public class WatchlistPageCodeBehind {
 
-    @FXML
     private TextField searchBarTextField;
 
+    @FXML
+    private AnchorPane pane;
+    
     @FXML
     private ListView<Game> watchlistListView;
 
@@ -54,10 +58,21 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void initialize() {
+    	this.initializeTextField();
+    	
     	this.watchlistListView.setCellFactory(listview -> new WatchlistGameListCell());
     	this.setUpBindings();
     	this.setUpListeners();
     	this.setUpNavigationBar();
+    }
+    
+    private void initializeTextField() {
+    	this.searchBarTextField = new PredictionTextField(term -> ViewModel.get().makeWatchlistPagePrediction(term), 10);
+    	this.searchBarTextField.setPrefWidth(210);
+    	this.searchBarTextField.setPrefHeight(27);
+    	this.pane.getChildren().add(this.searchBarTextField);
+    	this.searchBarTextField.setLayoutX(32);
+    	this.searchBarTextField.setLayoutY(62);
     }
     
     @FXML

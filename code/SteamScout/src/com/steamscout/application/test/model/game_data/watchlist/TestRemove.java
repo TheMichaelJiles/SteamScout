@@ -71,4 +71,18 @@ public class TestRemove {
 		
 		assertEquals(true, list.isEmpty());
 	}
+	
+	@Test
+	public void testRemoveNull() {
+		Game test = new Game(4, "test");
+		Game test0 = new Game(5, "test0");
+		Watchlist list = new Watchlist();
+		
+		list.add(test);
+		list.add(test0);
+		
+		list.remove(null);
+		
+		assertEquals(2, list.size());
+	}
 }

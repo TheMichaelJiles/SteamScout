@@ -1,6 +1,7 @@
 package com.steamscout.application.view;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
@@ -231,6 +232,16 @@ public class BehaviorViewModel extends ViewModel {
 			containsCriteria = !criteria.isDefault();
 		}
 		return containsCriteria;
+	}
+
+	@Override
+	public List<String> makeBrowsePagePrediction(String text) {
+		return this.getSteamGames().makePrediction(text);
+	}
+
+	@Override
+	public List<String> makeWatchlistPagePrediction(String text) {
+		return this.userProperty().getValue().getWatchlist().makePrediction(text);
 	}
 
 }

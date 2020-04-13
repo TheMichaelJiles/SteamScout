@@ -37,8 +37,18 @@ public class Trie {
 			throw new IllegalArgumentException("minimum number of characters must be at least " + MINIMUM_CHAR_LIMIT);
 		}
 		
-		this.root = new Node();
+		this.clear();
 		this.minimumNumberOfCharacters = minimumNumberOfCharacters;
+	}
+	
+	/**
+	 * Clears this trie of all populations.
+	 * 
+	 * @precondition none
+	 * @postcondition predict will return empty list regardless of argument.
+	 */
+	public void clear() {
+		this.root = new Node();
 	}
 	
 	/**
@@ -132,8 +142,22 @@ public class Trie {
 		}
 		
 		for (String word : words) {
-			this.add(word);
+			this.populateWord(word);
 		}
+	}
+	
+	/**
+	 * Adds a singular word to this trie. Null value is ignored.
+	 * Word is stripped of leading and trailing whitespace as well
+	 * as converted to lower case.
+	 * 
+	 * @precondition none
+	 * @postcondition if word >= getMinimumNumberOfCharacters(), then
+	 * 				  predict(word).contains(word)
+	 * @param word the word to add to the trie.
+	 */
+	public void populateWord(String word) {
+		this.add(word);
 	}
 	
 	private void add(String word) {
@@ -157,6 +181,39 @@ public class Trie {
 		}
 		Node nextNode = currentNode.children.get(nextCharacter);
 		this.addCharacterNodes(nextNode, characters);
+	}
+	
+	/**
+	 * Removes the specified word from this trie if it exists.
+	 * 
+	 * @precondition none
+	 * @postcondition !predict(word).contains(word)
+	 * 
+	 * @param word the word to remove from this trie.
+	 */
+	public void remove(String word) {
+		if (word == null) {
+			return;
+		}
+		
+		Queue<Character> characters = this.toCharacterQueue(word.strip().toLowerCase());
+		this.remove(this.root, characters);
+	}
+	
+	private void remove(Node currentNode, Queue<Character> characters) {
+		if (characters.isEmpty()) {
+			currentNode.children.remove(null);
+			return;
+		}
+		
+		Character nextCharacter = characters.remove();
+		if (currentNode.children.containsKey(nextCharacter)) {
+			Node nextNode = currentNode.children.get(nextCharacter);
+			this.remove(nextNode, characters);
+			if (nextNode.children.size() == 0) {
+				currentNode.children.remove(nextNode.value);
+			}
+		}
 	}
 	
 	private Queue<Character> toCharacterQueue(String word) {
