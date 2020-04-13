@@ -34,7 +34,7 @@ public class Trie {
 	 */
 	public Trie(int minimumNumberOfCharacters) {
 		if (minimumNumberOfCharacters < MINIMUM_CHAR_LIMIT) {
-			throw new IllegalArgumentException("minimum number of characters must be at least 1.");
+			throw new IllegalArgumentException("minimum number of characters must be at least " + MINIMUM_CHAR_LIMIT);
 		}
 		
 		this.root = new Node();
