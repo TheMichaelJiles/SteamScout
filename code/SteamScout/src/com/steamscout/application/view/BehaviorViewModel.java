@@ -7,6 +7,7 @@ import com.steamscout.application.connection.exceptions.InvalidAdditionException
 import com.steamscout.application.connection.exceptions.InvalidCredentialsException;
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.GameFetchService;
+import com.steamscout.application.connection.interfaces.LinkWishlistService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
@@ -73,7 +74,7 @@ public class BehaviorViewModel extends ViewModel {
 	@Override
 	public void removeGameFromWatchlist(WatchlistRemovalService removalService, Game game) {
 		if (game == null) {
-			throw new IllegalArgumentException("game should not be null.");
+			throw new IllegalArgumentException("game shouldn't be null.");
 		}
 		User currentUser = this.userProperty().getValue();
 		if (currentUser != null) {
@@ -145,7 +146,7 @@ public class BehaviorViewModel extends ViewModel {
 		}
 		Watchlist newWatchlist = modificationService.modifyGameOnWatchlist(currentUser, gameToModify, criteria);
 		currentUser.setWatchlist(newWatchlist);
-
+		this.resetWatchlistProperty();
 	}
 
 	@Override
@@ -201,6 +202,35 @@ public class BehaviorViewModel extends ViewModel {
 		String username = this.userProperty().getValue().getCredentials().getUsername();
 		this.userProperty().getValue().setWatchlist(watchlistSystem.fetchWatchlist(username));
 		this.resetWatchlistProperty();
+	}
+
+	@Override
+	public void linkWatchlist(LinkWishlistService linkingSystem) {
+		if (linkingSystem == null) {
+			throw new IllegalArgumentException("linking system should not be null.");
+		}
+		
+		String username = this.userProperty().getValue().getCredentials().getUsername();
+		Watchlist result = linkingSystem.linkSteamWishlist(username);
+		if (result != null) {
+			this.userProperty().getValue().setWatchlist(result);
+			this.resetWatchlistProperty();
+		}
+	}
+
+	@Override
+	public boolean containsNotificationCriteria(Game game) {
+		if (game == null) {
+			throw new IllegalArgumentException("game should not be null.");
+		}
+		
+		boolean containsCriteria = false;
+		Watchlist currentWatchlist = this.userProperty().getValue().getWatchlist();
+		NotificationCriteria criteria = currentWatchlist.getNotificationCriteria(game);
+		if (criteria != null) {
+			containsCriteria = !criteria.isDefault();
+		}
+		return containsCriteria;
 	}
 
 }

@@ -48,9 +48,9 @@ class _FakeWishlistRequestService(object):
                                                      {"steamid": 19510, "title": "Home Alone: Revenge"},
                                                      {"steamid": 15498, "title": "Mr. Burger: Taste the Grease"}]
         '''
-        return [{"steamid": 23942, "title": "Jurassic Park"},
-                {"steamid": 19510, "title": "Home Alone: Revenge"},
-                {"steamid": 15498, "title": "Mr. Burger: Taste the Grease"}]
+        return {'was_successful': 'true', 'json': {"23942" : {"title": "Jurassic Park"},
+               "19510": { "title": "Home Alone: Revenge"},
+               "15498" : { "title": "Mr. Burger: Taste the Grease"}}}
         
 class _WishlistRequestService(object):
     '''

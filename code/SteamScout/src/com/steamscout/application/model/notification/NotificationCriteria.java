@@ -29,6 +29,19 @@ public class NotificationCriteria {
 	}
 
 	/**
+	 * Determines whether or not this NotificationCriteria object
+	 * is in the default state.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return true if this criteria is in the default state; false otherwise.
+	 */
+	public boolean isDefault() {
+		return !this.shouldNotifyOnSale && !this.shouldNotifyWhenBelowTargetPrice && this.targetPrice == 0;
+	}
+	
+	/**
 	 * Gets whether or not the notification should be sent
 	 * when the game is on sale.
 	 * 

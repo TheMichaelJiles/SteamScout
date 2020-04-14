@@ -4,6 +4,7 @@ import com.steamscout.application.model.user.User;
 
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.GameFetchService;
+import com.steamscout.application.connection.interfaces.LinkWishlistService;
 import com.steamscout.application.connection.interfaces.LoginService;
 import com.steamscout.application.connection.interfaces.NotificationService;
 import com.steamscout.application.connection.interfaces.WatchlistAdditionService;
@@ -87,6 +88,17 @@ public abstract class ViewModel {
 	}
 
 	/**
+	 * Determines whether the specified game has had notification criteria set or not.
+	 * 
+	 * @precondition game != null
+	 * @postcondition none
+	 * 
+	 * @param game the game to check for notification criteria.
+	 * @return true if the game has had notification criteria set; false otherwise.
+	 */
+	public abstract boolean containsNotificationCriteria(Game game);
+	
+	/**
 	 * Inserts the specified data into the this view model for use by the SteamGames
 	 * object. The purpose of this is to guarantee we only have to make the api call
 	 * for getting names and ids once - on application startup during loading
@@ -149,6 +161,17 @@ public abstract class ViewModel {
 	 * @param watchlistSystem the system used to get the new watchlist.
 	 */
 	public abstract void loadWatchlist(WatchlistFetchService watchlistSystem);
+	
+	/**
+	 * Links a Steam wishlist with the currently logged in user's watchlist.
+	 * 
+	 * @precondition linkingSystem != null
+	 * @postcondition userProperty().getValue().getWatchlist().size() >= 
+	 * 				  userProperty().getValue().getWatchlist().size()@prev
+	 * 
+	 * @param linkingSystem the system used to perform the watchlist linking.
+	 */
+	public abstract void linkWatchlist(LinkWishlistService linkingSystem);
 	
 	/**
 	 * Adds the currently selected game on the browse page to the user's watchlist
