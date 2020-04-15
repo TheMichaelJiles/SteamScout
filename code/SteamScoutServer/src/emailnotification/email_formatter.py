@@ -12,8 +12,7 @@ class EmailFormatter(object):
     '''
     classdocs
     '''
-
-
+    
     def __init__(self, steam_id, current_price, initial_price, steam_link):
         '''
         Constructor
