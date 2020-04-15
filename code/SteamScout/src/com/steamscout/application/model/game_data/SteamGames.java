@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.steamscout.application.model.autocomplete.trie.TitlePredictor;
+import com.steamscout.application.model.autocomplete.trie.Trie;
 import com.steamscout.application.util.IterationSpeed;
 import com.steamscout.application.util.ParallelIterable;
 
@@ -19,7 +21,8 @@ import com.steamscout.application.util.ParallelIterable;
  *
  */
 public class SteamGames {
-
+	
+	private TitlePredictor predictor;
 	private Map<String, Integer> games;
 	
 	/**
@@ -30,6 +33,7 @@ public class SteamGames {
 	 */
 	public SteamGames() {
 		this.games = Collections.synchronizedMap(new HashMap<String, Integer>());
+		this.predictor = new TitlePredictor(TitlePredictor.MINIMUM_SEARCH_CHARACTERS);
 	}
 	
 	/**
@@ -60,6 +64,20 @@ public class SteamGames {
 		}
 		
 		this.games.putAll(games);
+		this.predictor.populate(this.games.keySet());
+	}
+	
+	/**
+	 * Makes a prediction using this object's trie.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param term the search term.
+	 * @return the list of matching game titles.
+	 */
+	public List<String> makePrediction(String term) {
+		return this.predictor.predict(term);
 	}
 	
 	@Override
@@ -79,6 +97,7 @@ public class SteamGames {
 	 */
 	public void clear() {
 		this.games.clear();
+		this.predictor.clear();
 	}
 	
 	/**
