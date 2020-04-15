@@ -46,13 +46,13 @@ public class TestPredictions {
 	@Test
 	public void testBrowsePagePredictions() {
 		List<String> results = ViewModel.get().makeBrowsePagePrediction("chick");
-		assertEquals(true, results.contains("chicken little"));
+		assertEquals(true, results.contains("Chicken Little"));
 	}
 
 	@Test
 	public void testWatchlistPagePredictions() {
 		List<String> results = ViewModel.get().makeWatchlistPagePrediction("oria");
-		assertEquals(true, results.contains("orianna's revenge"));
+		assertEquals(true, results.contains("Orianna's Revenge"));
 	}
 	
 }

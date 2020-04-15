@@ -70,6 +70,6 @@ public class TestInitializeGames {
 		this.games.initializeGames(data);
 		
 		List<String> results = this.games.makePrediction("Mine");
-		assertEquals(true, results.contains("minecraft: 3-year old edition"));
+		assertEquals(true, results.contains("Minecraft: 3-year old edition"));
 	}
 }

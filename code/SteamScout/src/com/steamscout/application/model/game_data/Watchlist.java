@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.steamscout.application.model.autocomplete.trie.TitlePredictor;
 import com.steamscout.application.model.autocomplete.trie.Trie;
 import com.steamscout.application.model.notification.NotificationCriteria;
 
@@ -21,7 +22,7 @@ public class Watchlist implements Collection<Game> {
 
 	private List<Game> games;
 	private Map<Game, NotificationCriteria> criteria;
-	private Trie trie;
+	private TitlePredictor predictor;
 	
 	/**
 	 * Creates a new Watchlist object.
@@ -32,7 +33,7 @@ public class Watchlist implements Collection<Game> {
 	public Watchlist() {
 		this.games = new ArrayList<Game>();
 		this.criteria = new HashMap<Game, NotificationCriteria>();
-		this.trie = new Trie(3);
+		this.predictor = new TitlePredictor(TitlePredictor.MINIMUM_SEARCH_CHARACTERS);
 	}
 	
 	/**
@@ -71,7 +72,7 @@ public class Watchlist implements Collection<Game> {
 	 * @return the list of all matches.
 	 */
 	public List<String> makePrediction(String term) {
-		return this.trie.predict(term);
+		return this.predictor.predict(term);
 	}
 	
 	/**
@@ -120,7 +121,7 @@ public class Watchlist implements Collection<Game> {
 	public void clear() {
 		this.games.clear();
 		this.criteria.clear();
-		this.trie.clear();
+		this.predictor.clear();
 	}
 
 	@Override
@@ -140,7 +141,7 @@ public class Watchlist implements Collection<Game> {
 		}
 		
 		if (!this.contains(game)) {
-			this.trie.populateWord(game.getTitle());
+			this.predictor.populateWord(game.getTitle());
 			return this.games.add(game);
 		}
 		
@@ -183,7 +184,7 @@ public class Watchlist implements Collection<Game> {
 		this.criteria.remove(game);
 		if (game instanceof Game) {
 			Game target = (Game) game;
-			this.trie.remove(target.getTitle());
+			this.predictor.remove(target.getTitle());
 		}
 		return this.games.remove(game);
 	}
