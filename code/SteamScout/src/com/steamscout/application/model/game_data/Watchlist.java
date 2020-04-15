@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.steamscout.application.model.autocomplete.trie.TitlePredictor;
-import com.steamscout.application.model.autocomplete.trie.Trie;
 import com.steamscout.application.model.notification.NotificationCriteria;
 
 /**

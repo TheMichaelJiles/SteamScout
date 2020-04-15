@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.steamscout.application.model.autocomplete.trie.TitlePredictor;
-import com.steamscout.application.model.autocomplete.trie.Trie;
 import com.steamscout.application.util.IterationSpeed;
 import com.steamscout.application.util.ParallelIterable;
 
