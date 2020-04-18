@@ -54,8 +54,11 @@ public class PageConnectionUtility {
 	 * 
 	 * @param filePath the path to the fxml file to which the Stage's pane will be based on.
 	 * @param stage the current stage.
+	 * @param controller the class object representing the controller
+	 * @param <T> the controller class
+	 * @return the controller class of type T
 	 */
-	public static void openModal(String filePath, Stage stage) {
+	public static <T> T openModal(String filePath, Stage stage, Class<T> controller) {
 		try {
 			Path pagePath = Paths.get(".", "view", "fxml", filePath);
 			URL pageUrl = Main.class.getResource(pagePath.toString());
@@ -69,9 +72,12 @@ public class PageConnectionUtility {
 			newStage.initOwner(stage);
 			newStage.setResizable(false);
 			newStage.show();
+			
+			return loader.getController();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 }

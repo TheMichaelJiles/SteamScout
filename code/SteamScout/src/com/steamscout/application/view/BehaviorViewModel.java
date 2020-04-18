@@ -196,13 +196,21 @@ public class BehaviorViewModel extends ViewModel {
 
 	@Override
 	public void loadWatchlist(WatchlistFetchService watchlistSystem) {
+		String username = this.userProperty().getValue().getCredentials().getUsername();
+		this.userProperty().getValue().setWatchlist(this.fetchWatchlistFor(username, watchlistSystem));
+		this.resetWatchlistProperty();
+	}
+	
+	@Override
+	public Watchlist fetchWatchlistFor(String username, WatchlistFetchService watchlistSystem) {
+		if (username == null) {
+			throw new IllegalArgumentException("username should not be null here");
+		}
 		if (watchlistSystem == null) {
 			throw new IllegalArgumentException("watchlist system should not be null");
 		}
-
-		String username = this.userProperty().getValue().getCredentials().getUsername();
-		this.userProperty().getValue().setWatchlist(watchlistSystem.fetchWatchlist(username));
-		this.resetWatchlistProperty();
+		
+		return watchlistSystem.fetchWatchlist(username);
 	}
 
 	@Override

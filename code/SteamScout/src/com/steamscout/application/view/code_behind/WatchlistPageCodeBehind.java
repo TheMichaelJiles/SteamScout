@@ -77,7 +77,7 @@ public class WatchlistPageCodeBehind {
     
     @FXML
     private void onLinkSteamWishlistButtonAction(ActionEvent event) {
-    	PageConnectionUtility.openModal(UIFilePaths.LINK_STEAM_WISHLIST_PAGE, this.getCurrentStage());
+    	PageConnectionUtility.openModal(UIFilePaths.LINK_STEAM_WISHLIST_PAGE, this.getCurrentStage(), LinkSteamWishlistPageCodeBehind.class);
     }
     
     @FXML
@@ -99,7 +99,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void onModifyButtonAction(ActionEvent event) {
-    	PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
+    	PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage(), NotificationCriteriaPageCodeBehind.class);
     }
 
     @FXML
@@ -139,7 +139,7 @@ public class WatchlistPageCodeBehind {
     private void setUpListeners() {
     	this.watchlistListView.setOnMouseClicked(event -> {
     		if (this.watchlistListView.getSelectionModel().getSelectedItem() != null && event.getClickCount() == 2) {
-    			PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
+    			PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage(), NotificationCriteriaPageCodeBehind.class);
     		}
     	});
     }

@@ -2,6 +2,7 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.User;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.steamscout.application.connection.interfaces.CreateAccountService;
@@ -15,6 +16,7 @@ import com.steamscout.application.connection.interfaces.WatchlistModificationSer
 import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
+import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.Notification;
 
 import javafx.beans.property.ListProperty;
@@ -184,6 +186,20 @@ public abstract class ViewModel {
 	 * @param watchlistSystem the system used to get the new watchlist.
 	 */
 	public abstract void loadWatchlist(WatchlistFetchService watchlistSystem);
+	
+	
+	/**
+	 * Sets the watchlist for the user with the specified username using the 
+	 * specified WatchlistFetchService.
+	 * 
+	 * @precondition watchlistSystem != null && username != null
+	 * @postcondition none
+	 * 
+	 * @param username the name of the account to get the watchlist for.
+	 * @param watchlistSystem the system used to get the new watchlist.
+	 * @return the specified username's watchlist.
+	 */
+	public abstract Watchlist fetchWatchlistFor(String username, WatchlistFetchService watchlistSystem);
 	
 	/**
 	 * Links a Steam wishlist with the currently logged in user's watchlist.

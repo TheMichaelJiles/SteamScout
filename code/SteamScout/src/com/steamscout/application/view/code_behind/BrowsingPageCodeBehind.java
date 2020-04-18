@@ -78,7 +78,7 @@ public class BrowsingPageCodeBehind {
     	if (!isSuccessfullyAdded) {
     		this.gameAlreadyAddedLabel.setVisible(true);
     	} else {
-    		PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage());
+    		PageConnectionUtility.openModal(UIFilePaths.NOTIFICATION_CRITERIA_PAGE_FILENAME, this.getCurrentStage(), NotificationCriteriaPageCodeBehind.class);
     	}
     }
 
