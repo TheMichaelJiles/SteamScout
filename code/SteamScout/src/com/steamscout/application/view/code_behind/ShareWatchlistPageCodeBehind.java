@@ -3,12 +3,15 @@ package com.steamscout.application.view.code_behind;
 import com.steamscout.application.connection.ServerWatchlistAdditionService;
 import com.steamscout.application.connection.ServerWatchlistFetchService;
 import com.steamscout.application.model.game_data.Game;
+import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.view.ViewModel;
 import com.steamscout.application.view.game_listcell.GameListCell;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -53,7 +56,17 @@ public class ShareWatchlistPageCodeBehind {
      */
     public void load(String username) {
     	this.displayedUsernameLabel.textProperty().setValue(username);
-    	this.watchlistListView.setItems(FXCollections.observableArrayList(ViewModel.get().fetchWatchlistFor(username, new ServerWatchlistFetchService())));
+    	Watchlist loadedWatchlist = ViewModel.get().fetchWatchlistFor(username, new ServerWatchlistFetchService());
+    	if (!loadedWatchlist.isEmpty()) {
+    		this.watchlistListView.setItems(FXCollections.observableArrayList(loadedWatchlist));
+    	} else {
+    		Stage currentStage = (Stage) this.pane.getScene().getWindow();
+    		currentStage.close();
+    		Alert badLoadAlert = new Alert(AlertType.ERROR);
+    		badLoadAlert.setHeaderText("Watchlist Not Found: " + username);
+    		badLoadAlert.setContentText("Invalid Username");
+    		badLoadAlert.showAndWait();
+    	}
     }
     
     @FXML

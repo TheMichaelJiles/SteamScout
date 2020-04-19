@@ -26,6 +26,9 @@ public class TitlePredictor {
 	 * 
 	 * @precondition none
 	 * @postcondition none
+	 * 
+	 * @param minimumNumberOfCharacters the minimum number of characters that need to be 
+	 * entered before a valid prediction can be made.
 	 */
 	public TitlePredictor(int minimumNumberOfCharacters) {
 		this.wordMap = new HashMap<String, String>();
