@@ -50,21 +50,8 @@ public class BehaviorViewModel extends ViewModel {
 		if (additionSystem == null) {
 			throw new IllegalArgumentException("additionSystem should not be null.");
 		}
-		User currentUser = this.userProperty().getValue();
-		Credentials userCredentials = currentUser.getCredentials();
 		Game gameToAdd = this.browsePageSelectedGameProperty().getValue();
-		try {
-			Watchlist newWatchlist = additionSystem.addGameToWatchlist(userCredentials, gameToAdd);
-			currentUser.setWatchlist(newWatchlist);
-			if (newWatchlist == null) {
-				throw new IllegalArgumentException("New watchlist was null");
-			}
-			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
-			return true;
-		} catch (InvalidAdditionException e) {
-			System.err.print(e.getMessage());
-			return false;
-		}
+		return this.addGameToWatchlist(gameToAdd, additionSystem);
 	}
 
 	@Override
@@ -250,6 +237,23 @@ public class BehaviorViewModel extends ViewModel {
 	@Override
 	public List<String> makeWatchlistPagePrediction(String text) {
 		return this.userProperty().getValue().getWatchlist().makePrediction(text);
+	}
+
+	@Override
+	public boolean addGameToWatchlist(Game game, WatchlistAdditionService service) {
+		User currentUser = this.userProperty().getValue();
+		Credentials userCredentials = currentUser.getCredentials();
+		try {
+			Watchlist newWatchlist = service.addGameToWatchlist(userCredentials, game);
+			currentUser.setWatchlist(newWatchlist);
+			if (newWatchlist == null) {
+				throw new IllegalArgumentException("New watchlist was null");
+			}
+			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
+			return true;
+		} catch (InvalidAdditionException e) {
+			return false;
+		}
 	}
 
 }

@@ -48,6 +48,9 @@ public class WatchlistPageCodeBehind {
     
     @FXML
     private Button linkSteamWishlistButton;
+    
+    @FXML
+    private Button importButton;
 
     @FXML
     private BorderPane watchlistPageBorderPane;
@@ -81,6 +84,11 @@ public class WatchlistPageCodeBehind {
     }
     
     @FXML
+    private void onImportButtonAction(ActionEvent event) {
+    	PageConnectionUtility.openModal(UIFilePaths.SHARE_WATCHLIST_USERNAME_PAGE, this.getCurrentStage(), ShareWatchlistUsernamePageCodeBehind.class);
+    }
+    
+    @FXML
     private void onClearSearchButtonAction(ActionEvent event) {
     	ViewModel.get().resetWatchlistProperty();
     	this.searchBarTextField.textProperty().setValue(null);
@@ -89,12 +97,12 @@ public class WatchlistPageCodeBehind {
     
     @FXML
     private void onBrowsePageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.BROWSING_PAGE_FILENAME, this.getCurrentStage());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.BROWSING_PAGE_FILENAME, this.getCurrentStage(), BrowsingPageCodeBehind.class);
     }
 
     @FXML
     private void onLogoutButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage(), LoginPageCodeBehind.class);
     }
 
     @FXML
@@ -104,7 +112,7 @@ public class WatchlistPageCodeBehind {
 
     @FXML
     private void onNotificationPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage(), NotificationsPageCodeBehind.class);
     }
 
     @FXML

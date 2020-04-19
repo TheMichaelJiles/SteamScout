@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.steamscout.application.view.code_behind.ShareWatchlistUsernamePageCodeBehind">
+   <children>
+      <Label layoutX="111.0" layoutY="157.0" text="Whose watchlist do you want to look at?" />
+      <TextField fx:id="usernameTextField" layoutX="111.0" layoutY="194.0" prefHeight="26.0" prefWidth="380.0" />
+      <Button fx:id="fetchButton" layoutX="352.0" layoutY="235.0" mnemonicParsing="false" onAction="#onFetchButtonAction" prefHeight="26.0" prefWidth="139.0" text="Fetch" />
+   </children>
+</AnchorPane>

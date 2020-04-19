@@ -2,7 +2,6 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.User;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.steamscout.application.connection.interfaces.CreateAccountService;
@@ -225,6 +224,20 @@ public abstract class ViewModel {
 	 */
 	public abstract boolean addSelectedGameToWatchlist(WatchlistAdditionService additionSystem);
 
+	/**
+	 * Adds the specified game to the user's watchlist and updates the watchlist property 
+	 * accordingly.
+	 * 
+	 * @precondition none
+	 * @postcondition if userProperty().getValue() != null, then
+	 *                watchlistProperty().getValue().size() ==
+	 *                watchlistProperty().getValue().size()@prev + 1
+	 * @param game the game to add.
+	 * @param service the interface used to make the addition persistent.
+	 * @return true if the addition was successful; false otherwise.
+	 */
+	public abstract boolean addGameToWatchlist(Game game, WatchlistAdditionService service);
+	
 	/**
 	 * Removes the game selected in the watchlist page listview and watchlist
 	 * 

@@ -9,8 +9,6 @@ import json
 import handler
 from api.apihandler import APIHandler
 
-from Tools.demo.mcast import sender
-
 class Server(object):
     '''
     Contains functionality to start and run the SteamScout back-end

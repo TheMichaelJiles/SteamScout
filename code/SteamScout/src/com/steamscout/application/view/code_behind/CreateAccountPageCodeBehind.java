@@ -53,7 +53,7 @@ public class CreateAccountPageCodeBehind {
     private void onCreateButtonAction(ActionEvent event) {
     	boolean isCreated = ViewModel.get().createUserAccount(new ServerCreateAccountService());
     	if (isCreated) {
-    		PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, (Stage) this.createButton.getScene().getWindow());
+    		PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, (Stage) this.createButton.getScene().getWindow(), LoginPageCodeBehind.class);
     	}
     	
     	this.usernameTextField.textProperty().setValue("");
@@ -63,6 +63,6 @@ public class CreateAccountPageCodeBehind {
 
     @FXML
     private void onBackButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, (Stage) this.createButton.getScene().getWindow());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, (Stage) this.createButton.getScene().getWindow(), LoginPageCodeBehind.class);
     }
 }

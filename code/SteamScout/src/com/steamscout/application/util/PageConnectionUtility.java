@@ -31,8 +31,11 @@ public class PageConnectionUtility {
 	 * @param filePath the path to the fxml file to which the scene should be
 	 *                 switched.
 	 * @param stage    the current stage
+	 * @param controller the controller for the loaded page.
+	 * @param <T> the controller type.
+	 * @return the controller class.
 	 */
-	public static void transitionPageTo(String filePath, Stage stage) {
+	public static <T> T transitionPageTo(String filePath, Stage stage, Class<T> controller) {
 		try {
 			Path pagePath = Paths.get(".", "view", "fxml", filePath);
 			URL pageUrl = Main.class.getResource(pagePath.toString());
@@ -40,9 +43,11 @@ public class PageConnectionUtility {
 			Pane pane = loader.load();
 			Scene scene = new Scene(pane);
 			stage.setScene(scene);
+			return loader.getController();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	/**

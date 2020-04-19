@@ -23,6 +23,7 @@
                </font>
             </Label>
             <Button fx:id="linkSteamWishlistButton" layoutX="34.0" layoutY="366.0" mnemonicParsing="false" onAction="#onLinkSteamWishlistButtonAction" text="Link Steam Wishlist" />
+            <Button fx:id="importButton" layoutX="192.0" layoutY="364.0" mnemonicParsing="false" onAction="#onImportButtonAction" text="Import" />
          </children>
       </AnchorPane>
    </right>

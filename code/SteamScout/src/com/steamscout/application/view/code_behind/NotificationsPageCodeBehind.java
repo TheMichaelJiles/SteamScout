@@ -38,17 +38,17 @@ public class NotificationsPageCodeBehind {
 
     @FXML
     private void onBrowsePageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.BROWSING_PAGE_FILENAME, this.getCurrentStage());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.BROWSING_PAGE_FILENAME, this.getCurrentStage(), BrowsingPageCodeBehind.class);
     }
 
     @FXML
     private void onLogoutButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage(), LoginPageCodeBehind.class);
     }
 
     @FXML
     private void onWatchlistPageButtonAction(ActionEvent event) {
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage(), WatchlistPageCodeBehind.class);
     }
     
     private Stage getCurrentStage() {

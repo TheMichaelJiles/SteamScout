@@ -1,5 +1,6 @@
 package com.steamscout.application.view.code_behind;
 
+import com.steamscout.application.connection.ServerWatchlistAdditionService;
 import com.steamscout.application.connection.ServerWatchlistFetchService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.view.ViewModel;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * This page is used for a user to add games to their watchlist from
@@ -38,7 +40,7 @@ public class ShareWatchlistPageCodeBehind {
     @FXML
     private void initialize() {
     	this.watchlistListView.setCellFactory(view -> new GameListCell());
-    	this.watchlistListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    	this.watchlistListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); 
     }
     
     /**
@@ -56,7 +58,10 @@ public class ShareWatchlistPageCodeBehind {
     
     @FXML
     private void onAddToWatchlistButtonAction(ActionEvent event) {
-
+    	Iterable<Game> games = this.watchlistListView.getSelectionModel().getSelectedItems();
+    	games.forEach(game -> ViewModel.get().addGameToWatchlist(game, new ServerWatchlistAdditionService()));
+    	Stage currentStage = (Stage) this.pane.getScene().getWindow();
+    	currentStage.close();
     }
 	
 }
