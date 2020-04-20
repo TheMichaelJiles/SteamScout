@@ -7,6 +7,7 @@ Created on Mar 21, 2020
 import json
 import os
 
+from dataupdates.fileaccess import FileAccess
 from api.gamerequestapi import GameRequestAPI
 from api.apihandler import APIHandler
 
@@ -36,9 +37,9 @@ class WatchlistUpdater(object):
         game_filename = 'game_table_test.json' if test_mode else 'game_table.json'
         updated_ids = []
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_filename), 'r') as watchlist_jsonfile:
-            watchlist_data = json.load(watchlist_jsonfile)
+            watchlist_data = FileAccess.read_watchlist_table(lambda watchlist_jsonfile: self._read_data(watchlist_jsonfile), watchlist_filename)
             with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_filename), 'r') as game_jsonfile:
-                game_data = json.load(game_jsonfile)
+                game_data = FileAccess.read_game_table(lambda game_jsonfile: self._read_data(game_jsonfile), game_filename)
                 for key in watchlist_data:
                     current_steamid = watchlist_data[key]['steamid']
                     if current_steamid in updated_ids:
@@ -52,9 +53,15 @@ class WatchlistUpdater(object):
                         game_data[str(current_steamid)]['onsale'] = result['onsale']
                 
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_filename), 'w') as jsonfile:
-            json.dump(game_data, jsonfile)
+            FileAccess.write_game_table(lambda game_data, jsonfile: self._write_data(game_data, jsonfile), game_filename, game_data)
             
         self.api.stop_timer()
+        
+    def _read_data(self, file):
+        return json.load(file)
+    
+    def _write_data(self, data, file):
+        json.dump(data, file)
             
 if __name__ == '__main__':
     updater = WatchlistUpdater()

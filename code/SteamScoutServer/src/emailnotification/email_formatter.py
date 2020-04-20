@@ -5,6 +5,7 @@ Created on Apr 8, 2020
 '''
 from email.mime.text import MIMEText;
 from email.mime.multipart import MIMEMultipart;
+from dataupdates.fileaccess import FileAccess
 import os
 import json
 
@@ -21,7 +22,7 @@ class EmailFormatter(object):
         self.steam_game_name = "game not found";
         
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
-            game_table = json.load(jsonfile)
+            game_table = FileAccess.read_game_table(lambda jsonfile: self._read_data(jsonfile), 'game_table.json')
             self.steam_game_name = game_table[str(steam_id)]['title']
         
         self.current_price = current_price;
@@ -51,4 +52,7 @@ class EmailFormatter(object):
         
         message.attach(body)
         return message
+    
+    def _read_data(self, file):
+        return json.load(file)
         

@@ -7,6 +7,7 @@ Created on Mar 22, 2020
 import json, os
 
 from api.gamepull import GamePull
+from dataupdates.fileaccess import FileAccess
 
 class GameUpdater(object):
     '''
@@ -31,26 +32,32 @@ class GameUpdater(object):
         games = puller.pull_games(test_mode)
         puller.cleanup()
         if test_mode:
-            path = os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table_test.json')
+            filename = 'game_table_test.json'
         else:
-            path = os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json')  
+            filename = 'game_table.json' 
         try:
-            with open(path, 'r') as jsonfile:
-                game_data = json.load(jsonfile)
+            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
+                game_data = FileAccess.read_game_table(lambda jsonfile: self._read_data(jsonfile), filename)
                 for steamid in games:
                     game_data[steamid] = {'title': games[steamid],
                                           'initialprice': 0.0,
                                           'actualprice': 0.0,
                                           'onsale': False}
-            with open(path, 'w') as jsonfile:
-                json.dump(game_data, jsonfile)
+            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
+                FileAccess.write_game_table(lambda game_data, jsonfile: self._write_data(game_data, jsonfile), filename, game_data)
                 
         except (IOError, TypeError):
             print('Failed to update game table')
             return False
         
-        print(f'Completed Loading {len(games)} Games Into ' + path)
+        print(f'Completed Loading {len(games)} Games Into ' + os.path.join(os.path.dirname(__file__), '..', 'test_data', filename))
         return True
+    
+    def _read_data(self, file):
+        return json.load(file)
+    
+    def _write_data(self, data, file):
+        json.dump(data, file)
             
 if __name__ == '__main__':
     update = GameUpdater()
