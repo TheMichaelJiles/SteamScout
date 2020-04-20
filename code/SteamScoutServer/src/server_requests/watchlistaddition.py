@@ -6,6 +6,7 @@ Created on Mar 18, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class WatchlistAddition(object):
@@ -38,7 +39,7 @@ class WatchlistAddition(object):
         service = _WatchlistAdditionService()
         watchlist_path = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
         game_table_path = 'game_table_test.json' if test_mode else 'game_table.json'
-        return service.attempt_addition(self.username, self.game_steamid, watchlist_path, game_table_path)
+        return FileAccess.access_file(service.attempt_addition(self.username, self.game_steamid, watchlist_path, game_table_path))
         
 class _WatchlistAdditionService(object):
     '''

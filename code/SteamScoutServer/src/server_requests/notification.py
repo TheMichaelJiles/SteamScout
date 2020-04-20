@@ -6,6 +6,7 @@ Created on Mar 3, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 
 class Notification(object):
     '''
@@ -37,7 +38,9 @@ class Notification(object):
         @return: The json string containing the notification data to send back to the client.
         '''
         service = _NotificationService()
-        return service.attempt_fetch_notifications(self.user_name, 'watchlist_table_test.json' if test_mode else 'watchlist_table.json', 'game_table_test.json' if test_mode else 'game_table.json')
+        watchlist_filename = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
+        game_filename = 'game_table_test.json' if test_mode else 'game_table.json'
+        return FileAccess.access_file(service.attempt_fetch_notifications(self.user_name, watchlist_filename, game_filename))
     
 class _NotificationService(object):
     '''

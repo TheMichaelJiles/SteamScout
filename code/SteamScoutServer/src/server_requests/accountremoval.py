@@ -6,6 +6,7 @@ Created on Mar 19, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 
 class AccountRemoval(object):
     '''
@@ -35,7 +36,8 @@ class AccountRemoval(object):
         was removed. If the result is false, then the account was not removed.
         '''
         service = _AccountRemovalService()
-        return service.remove_account(self.username, self.password, 'user_table_test.json' if test_mode else 'user_table.json')
+        filename = 'user_table_test.json' if test_mode else 'user_table.json'
+        return FileAccess.access_file(service.remove_account(self.username, self.password, filename))
         
 class _AccountRemovalService(object):
     '''

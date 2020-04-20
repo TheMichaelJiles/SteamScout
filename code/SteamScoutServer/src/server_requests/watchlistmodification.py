@@ -5,6 +5,7 @@ Created on Mar 19, 2020
 '''
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class WatchlistModification(object):
@@ -40,7 +41,8 @@ class WatchlistModification(object):
         WatchlistModification class. Otherwise, use the test class.
         '''
         service = _WatchlistModificationService()
-        return service.make_watchlist_modification(self.user_name, self.steam_id, self.on_sale_selected, self.price_threshold, self.target_price_selected, 'watchlist_table_test.json' if test_mode else 'watchlist_table.json')
+        filename = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
+        return FileAccess.access_file(service.make_watchlist_modification(self.user_name, self.steam_id, self.on_sale_selected, self.price_threshold, self.target_price_selected, filename))
         
 class _WatchlistModificationService(object):
     '''

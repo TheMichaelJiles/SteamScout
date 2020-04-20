@@ -6,6 +6,7 @@ Created on Mar 18, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class WatchlistRemoval(object):
@@ -36,7 +37,8 @@ class WatchlistRemoval(object):
         @return: the users new watchlist information after the removal processing.
         '''
         service = _WatchlistRemovalService()
-        return service.attempt_removal(self.username, self.game_steamid, 'watchlist_table_test.json' if test_mode else 'watchlist_table.json')
+        filename = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
+        return FileAccess.access_file(service.attempt_removal(self.username, self.game_steamid, filename))
         
 class _WatchlistRemovalService(object):
     '''

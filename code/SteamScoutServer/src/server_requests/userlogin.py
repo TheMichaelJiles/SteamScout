@@ -6,6 +6,7 @@ Created on Mar 1, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class UserLogin(object):
@@ -49,7 +50,8 @@ class UserLogin(object):
         @return: the json response to the client
         '''
         service = _UserLoginService()
-        return service.attempt_login(self.user_name, self.password, 'user_table_test.json' if test_mode else 'user_table.json')
+        filename = 'user_table_test.json' if test_mode else 'user_table.json'
+        return FileAccess.access_file(service.attempt_login(self.user_name, self.password, filename))
         
     
 class _UserLoginService(object):

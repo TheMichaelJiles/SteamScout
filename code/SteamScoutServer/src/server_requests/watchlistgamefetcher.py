@@ -5,7 +5,7 @@ Created on Mar 18, 2020
 '''
 import json
 import os
-
+from dataupdates.fileaccess import FileAccess
 class WatchlistGameFetcher(object):
     '''
     This service fetches all games on a user's watchlist and returns 
@@ -33,7 +33,7 @@ class WatchlistGameFetcher(object):
         service = _WatchlistGameFetchingService()
         watchlist_path = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
         game_table_path = 'game_table_test.json' if test_mode else 'game_table.json'
-        return service.fetch_games_on_watchlist(self.username, watchlist_path, game_table_path)
+        return FileAccess.access_file(service.fetch_games_on_watchlist(self.username, watchlist_path, game_table_path))
         
     
 class _WatchlistGameFetchingService(object):

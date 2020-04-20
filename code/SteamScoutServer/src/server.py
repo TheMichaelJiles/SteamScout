@@ -7,6 +7,8 @@ Created on Mar 1, 2020
 import zmq
 import json
 import handler
+from dataupdates.fileaccess import FileAccess
+from dataupdates.watchlistupdater import WatchlistUpdater
 from api.apihandler import APIHandler
 
 class Server(object):
@@ -40,6 +42,8 @@ class Server(object):
         
         api = APIHandler(timer_reset_seconds=300, limit=175)
         
+        '''FileAccess.access_file(watchlist_updater(), watchlist_updater.perform_updates, "path")'''
+            
         while True:
             # Wait for client connections.
             json_message = self.socket.recv_string()

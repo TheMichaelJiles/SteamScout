@@ -6,6 +6,7 @@ Created on Mar 1, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 
 class AccountCreator(object):
     '''
@@ -45,7 +46,8 @@ class AccountCreator(object):
         @return: the json response to the client
         '''
         service = _AccountCreatorService()
-        return service.attempt_create_account(self.user_name, self.password, self.email, 'user_table_test.json' if test_mode else 'user_table.json')
+        filename = 'user_table_test.json' if test_mode else 'user_table.json'
+        return FileAccess.access_file(service.attempt_create_account(self.user_name, self.password, self.email, filename))
         
 class _AccountCreatorService(object):
     '''

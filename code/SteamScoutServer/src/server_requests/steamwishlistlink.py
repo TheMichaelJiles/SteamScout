@@ -4,8 +4,6 @@ Created on Mar 3, 2020
 @author: Luke Whaley, Nathan Lightholder, Michael Jiles
 '''
 
-import os, json
-
 from api.steam_user_wishlist import WishlistRequestAPI
 from server_requests.watchlistaddition import WatchlistAddition
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher

@@ -6,7 +6,7 @@ Created on Mar 1, 2020
 
 import json
 import os
-
+from dataupdates.fileaccess import FileAccess
 class GameFetcher(object):
     '''
     Provides a service that retrieve's all games in the system.
@@ -31,7 +31,8 @@ class GameFetcher(object):
         @return: the json response to the client
         '''
         service = _GameFetchingService()
-        return service.attempt_fetch_games('game_table_test.json' if test_mode else 'game_table.json')
+        filename = 'game_table_test.json' if test_mode else 'game_table.json'
+        return FileAccess.access_file(service.attempt_fetch_games(filename))
         
 class _GameFetchingService(object):
     '''
