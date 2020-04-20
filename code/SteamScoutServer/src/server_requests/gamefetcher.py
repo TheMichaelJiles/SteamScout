@@ -32,7 +32,7 @@ class GameFetcher(object):
         '''
         service = _GameFetchingService()
         filename = 'game_table_test.json' if test_mode else 'game_table.json'
-        return FileAccess.access_file(service.attempt_fetch_games(filename))
+        return service.attempt_fetch_games(filename)
         
 class _GameFetchingService(object):
     '''
@@ -47,13 +47,17 @@ class _GameFetchingService(object):
         
         @return: The json response object.
         '''
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
-            games = json.load(jsonfile)
-            list_of_game_dicts = []
-            for steamid in games:
-                game = {}
-                game['steamid'] = int(steamid)
-                game.update(games[steamid])
-                list_of_game_dicts.append(game)
-            return {"games": list_of_game_dicts}
-
+        
+        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as file:   
+            return FileAccess.read_game_table(lambda file: self._parse_games_file(file), filename)
+        
+    def _parse_games_file(self, file):
+        
+        games = json.load(file)
+        list_of_game_dicts = []
+        for steamid in games:
+            game = {}
+            game['steamid'] = int(steamid)
+            game.update(games[steamid])
+            list_of_game_dicts.append(game)
+        return {"games": list_of_game_dicts}

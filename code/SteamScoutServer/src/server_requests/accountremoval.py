@@ -37,7 +37,7 @@ class AccountRemoval(object):
         '''
         service = _AccountRemovalService()
         filename = 'user_table_test.json' if test_mode else 'user_table.json'
-        return FileAccess.access_file(service.remove_account(self.username, self.password, filename))
+        return service.remove_account(self.username, self.password, filename)
         
 class _AccountRemovalService(object):
     '''
@@ -59,14 +59,21 @@ class _AccountRemovalService(object):
         '''
         can_remove = False
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
-            user_data = json.load(jsonfile)
+            user_data = FileAccess.read_user_table(lambda jsonfile: self._read_user_table(jsonfile), filename)
             if username in user_data and user_data[username]['password'] == password:
                 can_remove = True
         
         if can_remove:
             user_data.pop(username, None)
             with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
-                json.dump(user_data, jsonfile)
+                FileAccess.write_user_table(lambda user_data, jsonfile: self._write_user_table(user_data, jsonfile), filename, user_data)
                 
         return {'result': can_remove}
+    
+    def _read_user_table(self, file):
+        user_data = json.load(file)
+        return user_data;
+    
+    def _write_user_table(self, user_data, file):
+        return json.dump(user_data, file)
         

@@ -33,7 +33,7 @@ class WatchlistGameFetcher(object):
         service = _WatchlistGameFetchingService()
         watchlist_path = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
         game_table_path = 'game_table_test.json' if test_mode else 'game_table.json'
-        return FileAccess.access_file(service.fetch_games_on_watchlist(self.username, watchlist_path, game_table_path))
+        return service.fetch_games_on_watchlist(self.username, watchlist_path, game_table_path)
         
     
 class _WatchlistGameFetchingService(object):
@@ -58,7 +58,7 @@ class _WatchlistGameFetchingService(object):
         '''
         watchlist_info = []
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_path), 'r') as jsonfile:
-            watchlist_table = json.load(jsonfile)
+            watchlist_table = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), watchlist_path)
             for key in watchlist_table:
                 if watchlist_table[key]['username'] == username:
                     watchlist_info.append({'steamid': watchlist_table[key]['steamid'],
@@ -68,7 +68,7 @@ class _WatchlistGameFetchingService(object):
            
         games = []   
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_table_path), 'r') as jsonfile:
-            game_data = json.load(jsonfile)
+            game_data = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), game_table_path)
             for info in watchlist_info:
                 current_game = {}
                 current_game['steamid'] = info['steamid']
@@ -81,5 +81,8 @@ class _WatchlistGameFetchingService(object):
                 current_game['targetprice_selected'] = info['targetprice_selected']
                 games.append(current_game)
         return {'username': username, 'games_on_watchlist': games}
+    
+    def _read_data(self, file):
+        return json.load(file)
                 
         

@@ -40,7 +40,7 @@ class Notification(object):
         service = _NotificationService()
         watchlist_filename = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
         game_filename = 'game_table_test.json' if test_mode else 'game_table.json'
-        return FileAccess.access_file(service.attempt_fetch_notifications(self.user_name, watchlist_filename, game_filename))
+        return service.attempt_fetch_notifications(self.user_name, watchlist_filename, game_filename)
     
 class _NotificationService(object):
     '''
@@ -59,7 +59,7 @@ class _NotificationService(object):
         '''
         id_info = []
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_filename), 'r') as watchlist_file:
-            watchlist_data = json.load(watchlist_file)
+            watchlist_data = FileAccess.read_watchlist_table(lambda watchlist_file: self._read_data(watchlist_file), watchlist_filename)
             for key in watchlist_data:
                 if watchlist_data[key]['username'] == user_name:
                     id_info.append({'steamid': watchlist_data[key]['steamid'],
@@ -69,7 +69,7 @@ class _NotificationService(object):
                     
         game_notifications = []
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_filename), 'r') as game_file:
-            game_data = json.load(game_file)
+            game_data = FileAccess.read_watchlist_table(lambda game_file: self._read_data(game_file), game_filename)
             for info in id_info:
                 onsale = info['onsale_selected'] and game_data[str(info['steamid'])]['onsale']
                 below_criteria = info['targetprice_selected'] and game_data[str(info['steamid'])]['actualprice'] <= info['targetprice_criteria']
@@ -80,5 +80,9 @@ class _NotificationService(object):
                     game_notifications.append(game)
         
         return {'notifications': game_notifications}
+    
+    def _read_data(self, file):
+        return json.load(file)
+    
 
     

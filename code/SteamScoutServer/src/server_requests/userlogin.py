@@ -51,7 +51,7 @@ class UserLogin(object):
         '''
         service = _UserLoginService()
         filename = 'user_table_test.json' if test_mode else 'user_table.json'
-        return FileAccess.access_file(service.attempt_login(self.user_name, self.password, filename))
+        return service.attempt_login(self.user_name, self.password, filename)
         
     
 class _UserLoginService(object):
@@ -72,7 +72,7 @@ class _UserLoginService(object):
         '''
         is_valid = False
         with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as user_json:
-            user_data = json.load(user_json)
+            user_data = FileAccess.read_user_table(lambda user_json: self._read_user_table(user_json), filename)
             if user_name in user_data and user_data[user_name]['password'] == password:
                 is_valid = True
                     
@@ -80,3 +80,7 @@ class _UserLoginService(object):
         results = watchlist_game_fetch.process_service(test_mode=(filename == 'user_table_test.json'))
             
         return {"result": is_valid, "watchlist": results['games_on_watchlist'] if is_valid else []}
+    
+    def _read_user_table(self, file):
+        user_data = json.load(file)
+        return user_data;
