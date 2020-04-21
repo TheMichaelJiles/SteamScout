@@ -47,9 +47,8 @@ class _GameFetchingService(object):
         
         @return: The json response object.
         '''
-        
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as file:   
-            return FileAccess.read_game_table(lambda file: self._parse_games_file(file), filename)
+           
+        return FileAccess.read_game_table(lambda file: self._parse_games_file(file), filename)
         
     def _parse_games_file(self, file):
         

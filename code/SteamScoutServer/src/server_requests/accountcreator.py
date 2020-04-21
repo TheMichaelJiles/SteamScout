@@ -66,16 +66,14 @@ class _AccountCreatorService(object):
         
         @return: The json response object.
         '''
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as file:
-            user_data = FileAccess.read_user_table(lambda file: self._read_user_table(file), filename)
-            username_already_exists = user_name in user_data
-            username_doesnt_already_exist = not username_already_exists
+        user_data = FileAccess.read_user_table(lambda file: self._read_user_table(file), filename)
+        username_already_exists = user_name in user_data
+        username_doesnt_already_exist = not username_already_exists
         if username_doesnt_already_exist:
             user_data[user_name] = {'password': password,
                                     'email': email,
                                     'steamid': 0}
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as file:
-                FileAccess.write_user_table(lambda user_data, file: self._write_user_table(user_data, file), filename, user_data)
+        FileAccess.write_user_table(lambda user_data, file: self._write_user_table(user_data, file), filename, user_data)
         
         details = 'Creation Successful.' if username_doesnt_already_exist else 'Creation Unsuccessful: Username Already Taken.'
         json_response = {"result": username_doesnt_already_exist, "details": details}

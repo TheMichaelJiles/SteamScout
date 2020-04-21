@@ -36,24 +36,21 @@ class WatchlistUpdater(object):
         watchlist_filename = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
         game_filename = 'game_table_test.json' if test_mode else 'game_table.json'
         updated_ids = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_filename), 'r') as watchlist_jsonfile:
-            watchlist_data = FileAccess.read_watchlist_table(lambda watchlist_jsonfile: self._read_data(watchlist_jsonfile), watchlist_filename)
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_filename), 'r') as game_jsonfile:
-                game_data = FileAccess.read_game_table(lambda game_jsonfile: self._read_data(game_jsonfile), game_filename)
-                for key in watchlist_data:
-                    current_steamid = watchlist_data[key]['steamid']
-                    if current_steamid in updated_ids:
-                        continue
-                    updated_ids.append(current_steamid)
-                    request = GameRequestAPI(current_steamid, self.api)
-                    result = request.get_info(test_mode)
-                    if result != None:
-                        game_data[str(current_steamid)]['initialprice'] = result['initialprice']
-                        game_data[str(current_steamid)]['actualprice'] = result['actualprice']
-                        game_data[str(current_steamid)]['onsale'] = result['onsale']
+        watchlist_data = FileAccess.read_watchlist_table(lambda watchlist_jsonfile: self._read_data(watchlist_jsonfile), watchlist_filename)
+        game_data = FileAccess.read_game_table(lambda game_jsonfile: self._read_data(game_jsonfile), game_filename)
+        for key in watchlist_data:
+            current_steamid = watchlist_data[key]['steamid']
+            if current_steamid in updated_ids:
+                continue
+            updated_ids.append(current_steamid)
+            request = GameRequestAPI(current_steamid, self.api)
+            result = request.get_info(test_mode)
+            if result != None:
+                game_data[str(current_steamid)]['initialprice'] = result['initialprice']
+                game_data[str(current_steamid)]['actualprice'] = result['actualprice']
+                game_data[str(current_steamid)]['onsale'] = result['onsale']
                 
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_filename), 'w') as jsonfile:
-            FileAccess.write_game_table(lambda game_data, jsonfile: self._write_data(game_data, jsonfile), game_filename, game_data)
+        FileAccess.write_game_table(lambda game_data, jsonfile: self._write_data(game_data, jsonfile), game_filename, game_data)
             
         self.api.stop_timer()
         

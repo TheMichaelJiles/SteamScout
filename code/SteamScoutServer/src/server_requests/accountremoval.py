@@ -58,15 +58,13 @@ class _AccountRemovalService(object):
         was removed. If the result is false, then the account was not removed.
         '''
         can_remove = False
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
-            user_data = FileAccess.read_user_table(lambda jsonfile: self._read_user_table(jsonfile), filename)
-            if username in user_data and user_data[username]['password'] == password:
-                can_remove = True
+        user_data = FileAccess.read_user_table(lambda jsonfile: self._read_user_table(jsonfile), filename)
+        if username in user_data and user_data[username]['password'] == password:
+            can_remove = True
         
         if can_remove:
             user_data.pop(username, None)
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
-                FileAccess.write_user_table(lambda user_data, jsonfile: self._write_user_table(user_data, jsonfile), filename, user_data)
+            FileAccess.write_user_table(lambda user_data, jsonfile: self._write_user_table(user_data, jsonfile), filename, user_data)
                 
         return {'result': can_remove}
     

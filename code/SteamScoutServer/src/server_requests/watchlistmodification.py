@@ -4,7 +4,6 @@ Created on Mar 19, 2020
 @author: Michael Jiles
 '''
 import json
-import os
 from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
@@ -72,17 +71,15 @@ class _WatchlistModificationService(object):
         @return the updated watchlist data including if the table was altered.
         '''
         was_modified = False
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as watchlist_file:
-            watchlist_table = FileAccess.read_watchlist_table(lambda watchlist_file: self._read_data(watchlist_file), filename)
-            for key in watchlist_table:
-                if watchlist_table[key]['username'] == user_name and watchlist_table[key]['steamid'] == steam_id:
-                    watchlist_table[key]['targetprice_criteria'] = price_threshold
-                    watchlist_table[key]['onsale_selected'] = on_sale_selected
-                    watchlist_table[key]['targetprice_selected'] = target_price_selected
-                    was_modified = True
+        watchlist_table = FileAccess.read_watchlist_table(lambda watchlist_file: self._read_data(watchlist_file), filename)
+        for key in watchlist_table:
+            if watchlist_table[key]['username'] == user_name and watchlist_table[key]['steamid'] == steam_id:
+                watchlist_table[key]['targetprice_criteria'] = price_threshold
+                watchlist_table[key]['onsale_selected'] = on_sale_selected
+                watchlist_table[key]['targetprice_selected'] = target_price_selected
+                was_modified = True
                     
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as write_watchlist_file:
-            FileAccess.write_watchlist_table(lambda watchlist_table, write_watchlist_file: self._write_data(watchlist_table, write_watchlist_file), filename, watchlist_table) 
+        FileAccess.write_watchlist_table(lambda watchlist_table, write_watchlist_file: self._write_data(watchlist_table, write_watchlist_file), filename, watchlist_table) 
         watchlist_fetcher = WatchlistGameFetcher(user_name)
         watchlist_data = watchlist_fetcher.process_service(test_mode = (filename == 'watchlist_table_test.json'))
         watchlist_data.update({'result' : was_modified})

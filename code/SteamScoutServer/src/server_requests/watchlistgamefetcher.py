@@ -4,7 +4,6 @@ Created on Mar 18, 2020
 @author: Luke Whaley, Nathan Lightholder, Michael Jiles
 '''
 import json
-import os
 from dataupdates.fileaccess import FileAccess
 class WatchlistGameFetcher(object):
     '''
@@ -57,29 +56,27 @@ class _WatchlistGameFetchingService(object):
         @return: the dictionary in the format described above.
         '''
         watchlist_info = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_path), 'r') as jsonfile:
-            watchlist_table = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), watchlist_path)
-            for key in watchlist_table:
-                if watchlist_table[key]['username'] == username:
-                    watchlist_info.append({'steamid': watchlist_table[key]['steamid'],
-                                     'targetprice_criteria': watchlist_table[key]['targetprice_criteria'],
-                                     'onsale_selected': watchlist_table[key]['onsale_selected'],
-                                     'targetprice_selected': watchlist_table[key]['targetprice_selected']})
+        watchlist_table = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), watchlist_path)
+        for key in watchlist_table:
+            if watchlist_table[key]['username'] == username:
+                watchlist_info.append({'steamid': watchlist_table[key]['steamid'],
+                                    'targetprice_criteria': watchlist_table[key]['targetprice_criteria'],
+                                    'onsale_selected': watchlist_table[key]['onsale_selected'],
+                                    'targetprice_selected': watchlist_table[key]['targetprice_selected']})
            
         games = []   
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_table_path), 'r') as jsonfile:
-            game_data = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), game_table_path)
-            for info in watchlist_info:
-                current_game = {}
-                current_game['steamid'] = info['steamid']
-                current_game['title'] = game_data[str(info['steamid'])]['title']
-                current_game['initialprice'] = game_data[str(info['steamid'])]['initialprice']
-                current_game['actualprice'] = game_data[str(info['steamid'])]['actualprice']
-                current_game['onsale'] = game_data[str(info['steamid'])]['onsale']
-                current_game['targetprice_criteria'] = info['targetprice_criteria']
-                current_game['onsale_selected'] = info['onsale_selected']
-                current_game['targetprice_selected'] = info['targetprice_selected']
-                games.append(current_game)
+        game_data = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), game_table_path)
+        for info in watchlist_info:
+            current_game = {}
+            current_game['steamid'] = info['steamid']
+            current_game['title'] = game_data[str(info['steamid'])]['title']
+            current_game['initialprice'] = game_data[str(info['steamid'])]['initialprice']
+            current_game['actualprice'] = game_data[str(info['steamid'])]['actualprice']
+            current_game['onsale'] = game_data[str(info['steamid'])]['onsale']
+            current_game['targetprice_criteria'] = info['targetprice_criteria']
+            current_game['onsale_selected'] = info['onsale_selected']
+            current_game['targetprice_selected'] = info['targetprice_selected']
+            games.append(current_game)
         return {'username': username, 'games_on_watchlist': games}
     
     def _read_data(self, file):

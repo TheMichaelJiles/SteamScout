@@ -21,9 +21,9 @@ class EmailFormatter(object):
         self.steam_id = steam_id;
         self.steam_game_name = "game not found";
         
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
-            game_table = FileAccess.read_game_table(lambda jsonfile: self._read_data(jsonfile), 'game_table.json')
-            self.steam_game_name = game_table[str(steam_id)]['title']
+        
+        game_table = FileAccess.read_game_table(lambda jsonfile: self._read_data(jsonfile), 'game_table.json')
+        self.steam_game_name = game_table[str(steam_id)]['title']
         
         self.current_price = current_price;
         self.initial_price = initial_price;

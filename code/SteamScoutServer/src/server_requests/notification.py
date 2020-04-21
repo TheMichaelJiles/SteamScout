@@ -58,26 +58,24 @@ class _NotificationService(object):
         @return: The json string to send back to the user.
         '''
         id_info = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_filename), 'r') as watchlist_file:
-            watchlist_data = FileAccess.read_watchlist_table(lambda watchlist_file: self._read_data(watchlist_file), watchlist_filename)
-            for key in watchlist_data:
-                if watchlist_data[key]['username'] == user_name:
-                    id_info.append({'steamid': watchlist_data[key]['steamid'],
-                                    'onsale_selected': watchlist_data[key]['onsale_selected'],
-                                    'targetprice_selected': watchlist_data[key]['targetprice_selected'],
-                                    'targetprice_criteria': watchlist_data[key]['targetprice_criteria']})
+        watchlist_data = FileAccess.read_watchlist_table(lambda watchlist_file: self._read_data(watchlist_file), watchlist_filename)
+        for key in watchlist_data:
+            if watchlist_data[key]['username'] == user_name:
+                id_info.append({'steamid': watchlist_data[key]['steamid'],
+                                'onsale_selected': watchlist_data[key]['onsale_selected'],
+                                'targetprice_selected': watchlist_data[key]['targetprice_selected'],
+                                'targetprice_criteria': watchlist_data[key]['targetprice_criteria']})
                     
         game_notifications = []
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_filename), 'r') as game_file:
-            game_data = FileAccess.read_watchlist_table(lambda game_file: self._read_data(game_file), game_filename)
-            for info in id_info:
-                onsale = info['onsale_selected'] and game_data[str(info['steamid'])]['onsale']
-                below_criteria = info['targetprice_selected'] and game_data[str(info['steamid'])]['actualprice'] <= info['targetprice_criteria']
-                if onsale or below_criteria:
-                    game = {}
-                    game['steamid'] = info['steamid']
-                    game.update(game_data[str(info['steamid'])])
-                    game_notifications.append(game)
+        game_data = FileAccess.read_watchlist_table(lambda game_file: self._read_data(game_file), game_filename)
+        for info in id_info:
+            onsale = info['onsale_selected'] and game_data[str(info['steamid'])]['onsale']
+            below_criteria = info['targetprice_selected'] and game_data[str(info['steamid'])]['actualprice'] <= info['targetprice_criteria']
+            if onsale or below_criteria:
+                game = {}
+                game['steamid'] = info['steamid']
+                game.update(game_data[str(info['steamid'])])
+                game_notifications.append(game)
         
         return {'notifications': game_notifications}
     

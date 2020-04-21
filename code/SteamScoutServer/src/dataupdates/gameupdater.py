@@ -36,15 +36,14 @@ class GameUpdater(object):
         else:
             filename = 'game_table.json' 
         try:
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
-                game_data = FileAccess.read_game_table(lambda jsonfile: self._read_data(jsonfile), filename)
-                for steamid in games:
-                    game_data[steamid] = {'title': games[steamid],
-                                          'initialprice': 0.0,
-                                          'actualprice': 0.0,
-                                          'onsale': False}
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
-                FileAccess.write_game_table(lambda game_data, jsonfile: self._write_data(game_data, jsonfile), filename, game_data)
+            game_data = FileAccess.read_game_table(lambda jsonfile: self._read_data(jsonfile), filename)
+            for steamid in games:
+                game_data[steamid] = {'title': games[steamid],
+                                      'initialprice': 0.0,
+                                      'actualprice': 0.0,
+                                      'onsale': False}
+            
+            FileAccess.write_game_table(lambda game_data, jsonfile: self._write_data(game_data, jsonfile), filename, game_data)
                 
         except (IOError, TypeError):
             print('Failed to update game table')

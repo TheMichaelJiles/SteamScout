@@ -7,6 +7,7 @@ Created on Mar 1, 2020
 import zmq
 import json
 import handler
+from threading import Thread
 from datetime import datetime
 from dataupdates.watchlistupdater import WatchlistUpdater
 from api.apihandler import APIHandler
@@ -23,7 +24,7 @@ class Server(object):
         port 5555. The one created field is self.socket,
         this socket represents the server's socket and all incoming
         connections must be made to this socket. Sets the time for
-        performing watchlist updates in UTC time.
+        performing watchlist updates in UTC time on a separate thread.
         '''
         context = zmq.Context()
         self.socket = context.socket(zmq.REP)
@@ -71,7 +72,8 @@ class Server(object):
         current_time = datetime.utcnow()
         if current_time.hour == self.updateHour and self.updateComplete is False:
             print(f'Performing updates to user watchlists at {current_time}...')
-            self.watchlist_updater.perform_updates(test_mode)
+            update_thread = Thread(target = self.watchlist_updater.perform_updates(test_mode))
+            update_thread.start()
             self.updateComplete = True
             print('Updates complete.')  
         else:

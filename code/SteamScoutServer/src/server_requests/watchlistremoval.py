@@ -5,7 +5,6 @@ Created on Mar 18, 2020
 '''
 
 import json
-import os
 from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
@@ -60,14 +59,13 @@ class _WatchlistRemovalService(object):
         @see: server_requests.gamefetcher.WatchlistGameFetcher for the returned results.
         '''
         key_to_remove = None
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
-            watchlist_data = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), filename)
-            for key in watchlist_data:
-                if watchlist_data[key]['username'] == username and watchlist_data[key]['steamid'] == game_steamid:
-                    key_to_remove = key
+        watchlist_data = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), filename)
+        for key in watchlist_data:
+            if watchlist_data[key]['username'] == username and watchlist_data[key]['steamid'] == game_steamid:
+                key_to_remove = key
         watchlist_data.pop(key_to_remove, None)
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
-            FileAccess.write_watchlist_table(lambda watchlist_data, jsonfile: self._write_data(watchlist_data, jsonfile), filename, watchlist_data) 
+        
+        FileAccess.write_watchlist_table(lambda watchlist_data, jsonfile: self._write_data(watchlist_data, jsonfile), filename, watchlist_data) 
         
         watchlist_game_fetcher = WatchlistGameFetcher(username)
         return watchlist_game_fetcher.process_service(test_mode=(filename == 'watchlist_table_test.json'))

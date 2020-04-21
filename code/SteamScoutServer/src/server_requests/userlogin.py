@@ -71,10 +71,9 @@ class _UserLoginService(object):
         @return: The json response object.
         '''
         is_valid = False
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as user_json:
-            user_data = FileAccess.read_user_table(lambda user_json: self._read_user_table(user_json), filename)
-            if user_name in user_data and user_data[user_name]['password'] == password:
-                is_valid = True
+        user_data = FileAccess.read_user_table(lambda user_json: self._read_user_table(user_json), filename)
+        if user_name in user_data and user_data[user_name]['password'] == password:
+            is_valid = True
                     
         watchlist_game_fetch = WatchlistGameFetcher(user_name)
         results = watchlist_game_fetch.process_service(test_mode=(filename == 'user_table_test.json'))
