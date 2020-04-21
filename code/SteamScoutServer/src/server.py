@@ -7,7 +7,7 @@ Created on Mar 1, 2020
 import zmq
 import json
 import handler
-from dataupdates.fileaccess import FileAccess
+from datetime import datetime
 from dataupdates.watchlistupdater import WatchlistUpdater
 from api.apihandler import APIHandler
 
@@ -28,6 +28,11 @@ class Server(object):
         self.socket = context.socket(zmq.REP)
         self.socket.bind('tcp://127.0.0.1:5555')
         
+        self.watchlist_updater = WatchlistUpdater()
+        self.updateHour = 1
+        self.updateComplete = False
+        
+        
     def start(self, test_mode = False):
         '''
         Starts this server. It begins listening for incoming connections.
@@ -45,6 +50,9 @@ class Server(object):
         '''FileAccess.access_file(watchlist_updater(), watchlist_updater.perform_updates, "path")'''
             
         while True:
+            #Updates user watchlists at specified time 
+            self._update(test_mode)
+            
             # Wait for client connections.
             json_message = self.socket.recv_string()
             message = json.loads(json_message)
@@ -57,6 +65,17 @@ class Server(object):
             # Send the Response back to the client.
             json_response = json.dumps(response)
             self.socket.send_string(json_response)
+            
+    def _update(self, test_mode):
+        current_time = datetime.utcnow()
+        if current_time.hour == self.updateHour and self.updateComplete is False:
+            print(f'Performing updates to user watchlists at {current_time}...')
+            self.watchlist_updater.perform_updates(test_mode)
+            self.updateComplete = True
+            print('Updates complete.')  
+        else:
+            if current_time.hour > self.updateHour:
+                self.updateComplete = False
 
 if __name__ == '__main__':
     '''
