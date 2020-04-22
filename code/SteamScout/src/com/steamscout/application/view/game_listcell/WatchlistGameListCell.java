@@ -21,6 +21,7 @@ public class WatchlistGameListCell extends ListCell<Game> {
 	
 	private Label titleLabel;
 	private Label notificationLabel;
+	private HBox container;
 	
 	/**
 	 * Creates a new GameListCell object.
@@ -33,19 +34,18 @@ public class WatchlistGameListCell extends ListCell<Game> {
 		
 		this.titleLabel = new Label();
 		this.notificationLabel = new Label();
-		HBox box = new HBox();
-		box.getChildren().addAll(this.titleLabel, this.notificationLabel);
+		this.container = new HBox();
+		this.container.getChildren().addAll(this.titleLabel, this.notificationLabel);
 		
 		this.notificationLabel.setPadding(new Insets(0, 0, 0, 5));
 		this.notificationLabel.setTextFill(Color.DARKRED);
-		this.setGraphic(box);
 	}
 	
 	@Override
 	protected void updateItem(Game game, boolean empty) {
 		super.updateItem(game, empty);
 		if (empty) {
-			this.setText(null);
+			this.setGraphic(null);
 		} else {
 			this.titleLabel.setText(game.getTitle());
 			boolean needsNotificationCriteria = !ViewModel.get().containsNotificationCriteria(game);
@@ -54,6 +54,7 @@ public class WatchlistGameListCell extends ListCell<Game> {
 			} else {
 				this.notificationLabel.setText("");
 			}
+			this.setGraphic(this.container);
 		}
 	}
 	
