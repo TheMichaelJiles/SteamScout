@@ -26,7 +26,8 @@ class EmailNotificationService(object):
             notification_data = notification_service.process_service(test_mode)['notifications']
             print(notification_data)
             for data in notification_data:
-                formatter = EmailFormatter(data['steamid'], data['actualprice'], data['initialprice'], f'https://store.steampowered.com/app/{data["steamid"]}')
+                print(data)
+                formatter = EmailFormatter(data['steamid'], data['actualprice'], data['initialprice'], f'https://store.steampowered.com/app/{data["steamid"]}', test_mode)
                 formatted_email = formatter.format_for_email()
                 sender = EmailSender(user_data[username]['email'], formatted_email)
                 sender.send_email()

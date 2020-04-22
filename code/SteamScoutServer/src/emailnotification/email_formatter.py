@@ -14,7 +14,7 @@ class EmailFormatter(object):
     classdocs
     '''
     
-    def __init__(self, steam_id, current_price, initial_price, steam_link):
+    def __init__(self, steam_id, current_price, initial_price, steam_link, test_mode):
         '''
         Constructor
         '''
@@ -22,7 +22,7 @@ class EmailFormatter(object):
         self.steam_game_name = "game not found";
         
         
-        game_table = FileAccess.read_game_table(lambda jsonfile: self._read_data(jsonfile), 'game_table.json')
+        game_table = FileAccess.read_game_table(lambda jsonfile: self._read_data(jsonfile), 'game_table_test.json' if test_mode else 'game_table.json')
         self.steam_game_name = game_table[str(steam_id)]['title']
         
         self.current_price = current_price;
