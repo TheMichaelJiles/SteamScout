@@ -6,6 +6,7 @@ Created on Mar 1, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class UserLogin(object):
@@ -49,7 +50,8 @@ class UserLogin(object):
         @return: the json response to the client
         '''
         service = _UserLoginService()
-        return service.attempt_login(self.user_name, self.password, 'user_table_test.json' if test_mode else 'user_table.json')
+        filename = 'user_table_test.json' if test_mode else 'user_table.json'
+        return service.attempt_login(self.user_name, self.password, filename)
         
     
 class _UserLoginService(object):
@@ -69,12 +71,15 @@ class _UserLoginService(object):
         @return: The json response object.
         '''
         is_valid = False
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as user_json:
-            user_data = json.load(user_json)
-            if user_name in user_data and user_data[user_name]['password'] == password:
-                is_valid = True
+        user_data = FileAccess.read_user_table(lambda user_json: self._read_user_table(user_json), filename)
+        if user_name in user_data and user_data[user_name]['password'] == password:
+            is_valid = True
                     
         watchlist_game_fetch = WatchlistGameFetcher(user_name)
         results = watchlist_game_fetch.process_service(test_mode=(filename == 'user_table_test.json'))
             
         return {"result": is_valid, "watchlist": results['games_on_watchlist'] if is_valid else []}
+    
+    def _read_user_table(self, file):
+        user_data = json.load(file)
+        return user_data;

@@ -6,6 +6,7 @@ Created on Mar 1, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 
 class AccountCreator(object):
     '''
@@ -45,7 +46,8 @@ class AccountCreator(object):
         @return: the json response to the client
         '''
         service = _AccountCreatorService()
-        return service.attempt_create_account(self.user_name, self.password, self.email, 'user_table_test.json' if test_mode else 'user_table.json')
+        filename = 'user_table_test.json' if test_mode else 'user_table.json'
+        return service.attempt_create_account(self.user_name, self.password, self.email, filename)
         
 class _AccountCreatorService(object):
     '''
@@ -64,18 +66,23 @@ class _AccountCreatorService(object):
         
         @return: The json response object.
         '''
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
-            user_data = json.load(jsonfile)
-            username_already_exists = user_name in user_data
-            username_doesnt_already_exist = not username_already_exists
+        user_data = FileAccess.read_user_table(lambda file: self._read_user_table(file), filename)
+        username_already_exists = user_name in user_data
+        username_doesnt_already_exist = not username_already_exists
         if username_doesnt_already_exist:
             user_data[user_name] = {'password': password,
                                     'email': email,
                                     'steamid': 0}
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
-                json.dump(user_data, jsonfile)
+        FileAccess.write_user_table(lambda user_data, file: self._write_user_table(user_data, file), filename, user_data)
         
         details = 'Creation Successful.' if username_doesnt_already_exist else 'Creation Unsuccessful: Username Already Taken.'
         json_response = {"result": username_doesnt_already_exist, "details": details}
         return json_response
+    
+    def _read_user_table(self, file):
+        user_data = json.load(file)
+        return user_data;
+    
+    def _write_user_table(self, user_data, file):
+        return json.dump(user_data, file)
             

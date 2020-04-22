@@ -1,6 +1,7 @@
 package com.steamscout.application.view;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.steamscout.application.connection.exceptions.InvalidAccountException;
 import com.steamscout.application.connection.exceptions.InvalidAdditionException;
@@ -49,21 +50,8 @@ public class BehaviorViewModel extends ViewModel {
 		if (additionSystem == null) {
 			throw new IllegalArgumentException("additionSystem should not be null.");
 		}
-		User currentUser = this.userProperty().getValue();
-		Credentials userCredentials = currentUser.getCredentials();
 		Game gameToAdd = this.browsePageSelectedGameProperty().getValue();
-		try {
-			Watchlist newWatchlist = additionSystem.addGameToWatchlist(userCredentials, gameToAdd);
-			currentUser.setWatchlist(newWatchlist);
-			if (newWatchlist == null) {
-				throw new IllegalArgumentException("New watchlist was null");
-			}
-			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
-			return true;
-		} catch (InvalidAdditionException e) {
-			System.err.print(e.getMessage());
-			return false;
-		}
+		return this.addGameToWatchlist(gameToAdd, additionSystem);
 	}
 
 	@Override
@@ -195,13 +183,21 @@ public class BehaviorViewModel extends ViewModel {
 
 	@Override
 	public void loadWatchlist(WatchlistFetchService watchlistSystem) {
+		String username = this.userProperty().getValue().getCredentials().getUsername();
+		this.userProperty().getValue().setWatchlist(this.fetchWatchlistFor(username, watchlistSystem));
+		this.resetWatchlistProperty();
+	}
+	
+	@Override
+	public Watchlist fetchWatchlistFor(String username, WatchlistFetchService watchlistSystem) {
+		if (username == null) {
+			throw new IllegalArgumentException("username should not be null here");
+		}
 		if (watchlistSystem == null) {
 			throw new IllegalArgumentException("watchlist system should not be null");
 		}
-
-		String username = this.userProperty().getValue().getCredentials().getUsername();
-		this.userProperty().getValue().setWatchlist(watchlistSystem.fetchWatchlist(username));
-		this.resetWatchlistProperty();
+		
+		return watchlistSystem.fetchWatchlist(username);
 	}
 
 	@Override
@@ -231,6 +227,33 @@ public class BehaviorViewModel extends ViewModel {
 			containsCriteria = !criteria.isDefault();
 		}
 		return containsCriteria;
+	}
+
+	@Override
+	public List<String> makeBrowsePagePrediction(String text) {
+		return this.getSteamGames().makePrediction(text);
+	}
+
+	@Override
+	public List<String> makeWatchlistPagePrediction(String text) {
+		return this.userProperty().getValue().getWatchlist().makePrediction(text);
+	}
+
+	@Override
+	public boolean addGameToWatchlist(Game game, WatchlistAdditionService service) {
+		User currentUser = this.userProperty().getValue();
+		Credentials userCredentials = currentUser.getCredentials();
+		try {
+			Watchlist newWatchlist = service.addGameToWatchlist(userCredentials, game);
+			currentUser.setWatchlist(newWatchlist);
+			if (newWatchlist == null) {
+				throw new IllegalArgumentException("New watchlist was null");
+			}
+			this.watchlistProperty().setValue(FXCollections.observableArrayList(currentUser.getWatchlist()));
+			return true;
+		} catch (InvalidAdditionException e) {
+			return false;
+		}
 	}
 
 }

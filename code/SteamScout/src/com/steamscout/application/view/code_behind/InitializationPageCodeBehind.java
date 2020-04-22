@@ -50,7 +50,7 @@ public class InitializationPageCodeBehind {
 	
     private void transitionToApplication() {
     	Stage currentStage = (Stage) this.pane.getScene().getWindow();
-    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, currentStage);
+    	PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, currentStage, LoginPageCodeBehind.class);
     }
     
     private void startLoading() {

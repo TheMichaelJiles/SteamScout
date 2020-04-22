@@ -16,7 +16,6 @@ class EmailSender(object):
         Creates an instance of an EmailSender object, storing the email_target and message variables
         @precondition none
         @postcondition self.email_target == email_target, self.message == message
-        @return returns a dictionary containing all emails that rejected delivery of the message.
         '''
         self.email_target = email_target
         self.message = message
@@ -26,6 +25,7 @@ class EmailSender(object):
         Sends the message stored in this class to the target email
         @precondition none
         @postcondition the email is sent to the target
+        @return returns a dictionary containing all emails that rejected delivery of the message.
         ''' 
         email_server.starttls()
         email_server.login('steamscoutnotify@gmail.com', 'SteamScoutNotify')
@@ -33,7 +33,6 @@ class EmailSender(object):
         self.message['To']=self.email_target
         
         result = email_server.send_message(self.message)
-        
         email_server.quit()
         
         return result;

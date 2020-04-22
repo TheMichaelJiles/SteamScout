@@ -5,7 +5,7 @@ Created on Mar 18, 2020
 '''
 
 import json
-import os
+from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class WatchlistRemoval(object):
@@ -36,7 +36,8 @@ class WatchlistRemoval(object):
         @return: the users new watchlist information after the removal processing.
         '''
         service = _WatchlistRemovalService()
-        return service.attempt_removal(self.username, self.game_steamid, 'watchlist_table_test.json' if test_mode else 'watchlist_table.json')
+        filename = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
+        return service.attempt_removal(self.username, self.game_steamid, filename)
         
 class _WatchlistRemovalService(object):
     '''
@@ -58,15 +59,20 @@ class _WatchlistRemovalService(object):
         @see: server_requests.gamefetcher.WatchlistGameFetcher for the returned results.
         '''
         key_to_remove = None
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
-            watchlist_data = json.load(jsonfile)
-            for key in watchlist_data:
-                if watchlist_data[key]['username'] == username and watchlist_data[key]['steamid'] == game_steamid:
-                    key_to_remove = key
+        watchlist_data = FileAccess.read_watchlist_table(lambda jsonfile: self._read_data(jsonfile), filename)
+        for key in watchlist_data:
+            if watchlist_data[key]['username'] == username and watchlist_data[key]['steamid'] == game_steamid:
+                key_to_remove = key
         watchlist_data.pop(key_to_remove, None)
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
-            json.dump(watchlist_data, jsonfile)
+        
+        FileAccess.write_watchlist_table(lambda watchlist_data, jsonfile: self._write_data(watchlist_data, jsonfile), filename, watchlist_data) 
         
         watchlist_game_fetcher = WatchlistGameFetcher(username)
         return watchlist_game_fetcher.process_service(test_mode=(filename == 'watchlist_table_test.json'))
+    
+    def _read_data(self, file):
+        return json.load(file)
+    
+    def _write_data(self, data, file):
+        json.dump(data, file)
             

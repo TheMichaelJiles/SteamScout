@@ -67,24 +67,24 @@ public class NavigationBarCodeBehind {
 
 	@FXML
 	private void onBrowseButtonAction(ActionEvent event) {
-		PageConnectionUtility.transitionPageTo(UIFilePaths.BROWSING_PAGE_FILENAME, this.getCurrentStage());
+		PageConnectionUtility.transitionPageTo(UIFilePaths.BROWSING_PAGE_FILENAME, this.getCurrentStage(), BrowsingPageCodeBehind.class);
 	}
 
 	@FXML
 	private void onLogoutButtonAction(ActionEvent event) {
 		ViewModel.get().initializeProperties();
-		PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage());
+		PageConnectionUtility.transitionPageTo(UIFilePaths.LOGIN_PAGE_FILENAME, this.getCurrentStage(), LoginPageCodeBehind.class);
 	}
 
 	@FXML
 	private void onNotificationsButtonAction(ActionEvent event) {
 		ViewModel.get().populateNotifications(new ServerNotificationService());
-		PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage());
+		PageConnectionUtility.transitionPageTo(UIFilePaths.NOTIFICATIONS_PAGE_FILENAME, this.getCurrentStage(), NotificationsPageCodeBehind.class);
 	}
 
 	@FXML
 	private void onWatchlistPageButtonAction(ActionEvent event) {
-		PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
+		PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage(), WatchlistPageCodeBehind.class);
 	}
 	
 

@@ -6,6 +6,7 @@ Created on Mar 19, 2020
 
 import json
 import os
+from dataupdates.fileaccess import FileAccess
 
 class AccountRemoval(object):
     '''
@@ -35,7 +36,8 @@ class AccountRemoval(object):
         was removed. If the result is false, then the account was not removed.
         '''
         service = _AccountRemovalService()
-        return service.remove_account(self.username, self.password, 'user_table_test.json' if test_mode else 'user_table.json')
+        filename = 'user_table_test.json' if test_mode else 'user_table.json'
+        return service.remove_account(self.username, self.password, filename)
         
 class _AccountRemovalService(object):
     '''
@@ -56,15 +58,20 @@ class _AccountRemovalService(object):
         was removed. If the result is false, then the account was not removed.
         '''
         can_remove = False
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'r') as jsonfile:
-            user_data = json.load(jsonfile)
-            if username in user_data and user_data[username]['password'] == password:
-                can_remove = True
+        user_data = FileAccess.read_user_table(lambda jsonfile: self._read_user_table(jsonfile), filename)
+        if username in user_data and user_data[username]['password'] == password:
+            can_remove = True
         
         if can_remove:
             user_data.pop(username, None)
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', filename), 'w') as jsonfile:
-                json.dump(user_data, jsonfile)
+            FileAccess.write_user_table(lambda user_data, jsonfile: self._write_user_table(user_data, jsonfile), filename, user_data)
                 
         return {'result': can_remove}
+    
+    def _read_user_table(self, file):
+        user_data = json.load(file)
+        return user_data;
+    
+    def _write_user_table(self, user_data, file):
+        return json.dump(user_data, file)
         

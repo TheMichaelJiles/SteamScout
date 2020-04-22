@@ -31,3 +31,4 @@ class ClientHandler(object):
         '''
         service = ServiceFactory.create_service(self.client_json, api_handler)
         return service.process_service(test_mode)
+    

@@ -49,7 +49,7 @@ public class LoginPageCodeBehind {
 
 	@FXML
 	private void onCreateAccountPageButtonAction(ActionEvent event) {
-		PageConnectionUtility.transitionPageTo(UIFilePaths.CREATE_ACCOUNT_PAGE_FILENAME, this.getCurrentStage());
+		PageConnectionUtility.transitionPageTo(UIFilePaths.CREATE_ACCOUNT_PAGE_FILENAME, this.getCurrentStage(), CreateAccountPageCodeBehind.class);
 	}
 
 	@FXML
@@ -57,7 +57,7 @@ public class LoginPageCodeBehind {
 		boolean isSuccessful = ViewModel.get().loginUser(new ServerLoginService());
 		if (isSuccessful) {
 			ViewModel.get().loadWatchlist(new ServerWatchlistFetchService());
-			PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage());
+			PageConnectionUtility.transitionPageTo(UIFilePaths.WATCHLIST_PAGE_FILENAME, this.getCurrentStage(), WatchlistPageCodeBehind.class);
 		}
 		
 		this.usernameTextField.textProperty().setValue("");

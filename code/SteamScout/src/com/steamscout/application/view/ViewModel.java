@@ -2,6 +2,8 @@ package com.steamscout.application.view;
 
 import com.steamscout.application.model.user.User;
 
+import java.util.List;
+
 import com.steamscout.application.connection.interfaces.CreateAccountService;
 import com.steamscout.application.connection.interfaces.GameFetchService;
 import com.steamscout.application.connection.interfaces.LinkWishlistService;
@@ -13,6 +15,7 @@ import com.steamscout.application.connection.interfaces.WatchlistModificationSer
 import com.steamscout.application.connection.interfaces.WatchlistRemovalService;
 import com.steamscout.application.model.game_data.Game;
 import com.steamscout.application.model.game_data.SteamGames;
+import com.steamscout.application.model.game_data.Watchlist;
 import com.steamscout.application.model.notification.Notification;
 
 import javafx.beans.property.ListProperty;
@@ -83,7 +86,6 @@ public abstract class ViewModel {
 	 */
 	protected ViewModel() {
 		this.initializeProperties();
-
 		this.steamGames = new SteamGames();
 	}
 
@@ -97,6 +99,28 @@ public abstract class ViewModel {
 	 * @return true if the game has had notification criteria set; false otherwise.
 	 */
 	public abstract boolean containsNotificationCriteria(Game game);
+	
+	/**
+	 * Gets a list of all steam games that are relevant to the specified text.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param text the text to make the prediction from.
+	 * @return a list of all steam games that are relevant to the specified text.
+	 */
+	public abstract List<String> makeBrowsePagePrediction(String text);
+	
+	/**
+	 * Gets a list of all watchlist games that are relevant to the specified text.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param text the text to make the prediction from.
+	 * @return a list of all watchlist games that are relevant to the specified text.
+	 */
+	public abstract List<String> makeWatchlistPagePrediction(String text);
 	
 	/**
 	 * Inserts the specified data into the this view model for use by the SteamGames
@@ -162,6 +186,20 @@ public abstract class ViewModel {
 	 */
 	public abstract void loadWatchlist(WatchlistFetchService watchlistSystem);
 	
+	
+	/**
+	 * Sets the watchlist for the user with the specified username using the 
+	 * specified WatchlistFetchService.
+	 * 
+	 * @precondition watchlistSystem != null && username != null
+	 * @postcondition none
+	 * 
+	 * @param username the name of the account to get the watchlist for.
+	 * @param watchlistSystem the system used to get the new watchlist.
+	 * @return the specified username's watchlist.
+	 */
+	public abstract Watchlist fetchWatchlistFor(String username, WatchlistFetchService watchlistSystem);
+	
 	/**
 	 * Links a Steam wishlist with the currently logged in user's watchlist.
 	 * 
@@ -186,6 +224,20 @@ public abstract class ViewModel {
 	 */
 	public abstract boolean addSelectedGameToWatchlist(WatchlistAdditionService additionSystem);
 
+	/**
+	 * Adds the specified game to the user's watchlist and updates the watchlist property 
+	 * accordingly.
+	 * 
+	 * @precondition none
+	 * @postcondition if userProperty().getValue() != null, then
+	 *                watchlistProperty().getValue().size() ==
+	 *                watchlistProperty().getValue().size()@prev + 1
+	 * @param game the game to add.
+	 * @param service the interface used to make the addition persistent.
+	 * @return true if the addition was successful; false otherwise.
+	 */
+	public abstract boolean addGameToWatchlist(Game game, WatchlistAdditionService service);
+	
 	/**
 	 * Removes the game selected in the watchlist page listview and watchlist
 	 * 

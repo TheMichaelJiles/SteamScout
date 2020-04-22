@@ -12,7 +12,6 @@ class TestWatchlistAddition(unittest.TestCase):
     def test_add_mrburger_to_diamondminer74(self):
         addition_service = WatchlistAddition('diamondminer74', 15498)
         results = addition_service.process_service(test_mode=True)
-        print(results)
         self.assertTrue(results['result'])
         
         games_on_watchlist = results['games_on_watchlist']

@@ -13,8 +13,8 @@ class Test(unittest.TestCase):
 
 
     def test_format_for_email(self):
-        steam_id = 721740
-        with open(os.path.join(os.path.dirname(__file__), '..', '..', 'test_data', 'game_table.json'), 'r') as jsonfile:
+        steam_id = 1
+        with open(os.path.join(os.path.dirname(__file__), '..', '..', 'test_data', 'game_table_test.json'), 'r') as jsonfile:
             game_table = json.load(jsonfile)
             title = game_table[str(steam_id)]['title']
         
@@ -38,7 +38,6 @@ class Test(unittest.TestCase):
         message = formatter.format_for_email()
         result_payload = message.get_payload(0)
         result_body = result_payload.get_payload()
-        
         self.assertEqual(expected_subject, message['Subject'])
         self.assertEqual(result_body, html)
 

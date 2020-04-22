@@ -5,7 +5,7 @@ Created on Mar 18, 2020
 '''
 
 import json
-import os
+from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
 
 class WatchlistAddition(object):
@@ -65,16 +65,15 @@ class _WatchlistAdditionService(object):
         
         should_add = not_already_on_watchlist and does_game_exist
         if should_add:
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_path), 'r') as jsonfile:
-                watchlist_data = json.load(jsonfile)
-                keys = map(lambda x: int(x), watchlist_data.keys())
-                watchlist_data[max(keys, default = 0) + 1] = {'steamid': game_steamid,
-                                                           'username': username,
-                                                           'targetprice_criteria': 0.0,
-                                                           'onsale_selected': False,
-                                                           'targetprice_selected': False}
-            with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_path), 'w') as jsonfile:
-                json.dump(watchlist_data, jsonfile) 
+            watchlist_data = FileAccess.read_watchlist_table(lambda file: self._read_data(file), watchlist_path)
+            keys = map(lambda x: int(x), watchlist_data.keys())
+            watchlist_data[max(keys, default = 0) + 1] = {'steamid': game_steamid,
+                                                          'username': username,
+                                                          'targetprice_criteria': 0.0,
+                                                          'onsale_selected': False,
+                                                          'targetprice_selected': False}
+            
+            FileAccess.write_watchlist_table(lambda watchlist_data, file: self._write_data(watchlist_data, file), watchlist_path, watchlist_data) 
         
         watchlist_game_fetcher = WatchlistGameFetcher(username)
         results = watchlist_game_fetcher.process_service(test_mode=(watchlist_path == 'watchlist_table_test.json'))    
@@ -84,18 +83,22 @@ class _WatchlistAdditionService(object):
         return addition_result
     
     def _does_game_exist(self, game_steamid, game_table_path):
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', game_table_path), 'r') as jsonfile:
-            game_data = json.load(jsonfile)
-            return str(game_steamid) in game_data
+        game_data = FileAccess.read_watchlist_table(lambda file: self._read_data(file), game_table_path)
+        return str(game_steamid) in game_data
     
     def _is_not_already_on_watchlist(self, username, game_steamid, watchlist_path):
         not_already_on_watchlist = True
-        with open(os.path.join(os.path.dirname(__file__), '..', 'test_data', watchlist_path), 'r') as jsonfile:
-            watchlist_data = json.load(jsonfile)
-            for key in watchlist_data:
-                if watchlist_data[key]['username'] == username:
-                    if watchlist_data[key]['steamid'] == game_steamid:
-                        not_already_on_watchlist = False
+        watchlist_data = FileAccess.read_watchlist_table(lambda file: self._read_data(file), watchlist_path)
+        for key in watchlist_data:
+            if watchlist_data[key]['username'] == username:
+                if watchlist_data[key]['steamid'] == game_steamid:
+                    not_already_on_watchlist = False
         return not_already_on_watchlist
+    
+    def _read_data(self, file):
+        return json.load(file)
+    
+    def _write_data(self, data, file):
+        json.dump(data, file)
         
         
