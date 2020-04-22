@@ -32,7 +32,7 @@ class Server(object):
         self.socket.bind('tcp://127.0.0.1:5555')
         
         self.watchlist_updater = WatchlistUpdater()
-        self.updateHour = 0
+        self.updateHour = 1
         self.updateComplete = False
         
         

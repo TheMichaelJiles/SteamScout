@@ -33,7 +33,7 @@ class EmailFormatter(object):
         '''
         '''
         message = MIMEMultipart('alternative')
-        message['Subject'] = self.steam_game_name + 'is on Sale for ' + str(self.current_price)
+        message['Subject'] = self.steam_game_name + ' is on Sale for $' + str(self.current_price)
         message['From'] = "steamscoutnotify@gmail.com"
         
         if self.initial_price <= 0:
@@ -44,9 +44,9 @@ class EmailFormatter(object):
             <html>
                 <head></head>
                 <body>
-                    <p>Hi!<br>
-                       """ + self.steam_game_name + """ was on your watchlist, and has just gone on a """ + str(100 * discount) + """% discount, and is only $""" + str(self.current_price) + """!<br>
-                       Here is the <a href=""" + self.steam_link + """>link</a> to buy it.
+                    <p>Hi!<br><br>
+                       """ + self.steam_game_name + """ is on your watchlist, and has just gone on a """ + str(int(100 * discount)) + """% discount, and is only $""" + str(self.current_price) + """!<br><br>
+                       Buy it on <a href=""" + self.steam_link + """>Steam</a>.
                     </p>
                 </body>
             </html>
