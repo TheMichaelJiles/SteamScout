@@ -21,7 +21,7 @@ class Test(unittest.TestCase):
         current_price = 5.00
         initial_price = 10.00
 
-        expected_subject =  title + 'is on Sale for ' +str(current_price)
+        expected_subject =  title + ' is on Sale for $' +str(current_price)
         html = """\
             <html>
                 <head></head>
