@@ -7,6 +7,7 @@ Created on Mar 18, 2020
 import json
 from dataupdates.fileaccess import FileAccess
 from server_requests.watchlistgamefetcher import WatchlistGameFetcher
+from dataupdates.watchlistupdater import WatchlistUpdater
 
 class WatchlistAddition(object):
     '''
@@ -38,7 +39,11 @@ class WatchlistAddition(object):
         service = _WatchlistAdditionService()
         watchlist_path = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
         game_table_path = 'game_table_test.json' if test_mode else 'game_table.json'
-        return service.attempt_addition(self.username, self.game_steamid, watchlist_path, game_table_path)
+        result = service.attempt_addition(self.username, self.game_steamid, watchlist_path, game_table_path)
+        if not test_mode:
+            updater = WatchlistUpdater()
+            updater.perform_game_update(int(self.game_steamid), False)
+        return result
         
 class _WatchlistAdditionService(object):
     '''
@@ -80,6 +85,7 @@ class _WatchlistAdditionService(object):
         
         addition_result = {'result': should_add}
         addition_result.update(results)
+        
         return addition_result
     
     def _does_game_exist(self, game_steamid, game_table_path):

@@ -34,25 +34,27 @@ class WatchlistUpdater(object):
         @param test_mode : Whether or not to run the update in test mode.
         '''
         watchlist_filename = 'watchlist_table_test.json' if test_mode else 'watchlist_table.json'
-        game_filename = 'game_table_test.json' if test_mode else 'game_table.json'
         updated_ids = []
         watchlist_data = FileAccess.read_watchlist_table(lambda watchlist_jsonfile: self._read_data(watchlist_jsonfile), watchlist_filename)
-        game_data = FileAccess.read_game_table(lambda game_jsonfile: self._read_data(game_jsonfile), game_filename)
         for key in watchlist_data:
             current_steamid = watchlist_data[key]['steamid']
             if current_steamid in updated_ids:
                 continue
             updated_ids.append(current_steamid)
-            request = GameRequestAPI(current_steamid, self.api)
-            result = request.get_info(test_mode)
-            if result != None:
-                game_data[str(current_steamid)]['initialprice'] = result['initialprice']
-                game_data[str(current_steamid)]['actualprice'] = result['actualprice']
-                game_data[str(current_steamid)]['onsale'] = result['onsale']
-                
-        FileAccess.write_game_table(lambda game_data, jsonfile: self._write_data(game_data, jsonfile), game_filename, game_data)
+            self.perform_game_update(current_steamid, test_mode)
             
         self.api.stop_timer()
+        
+    def perform_game_update(self, steamid, test_mode=False):
+        game_filename = 'game_table_test.json' if test_mode else 'game_table.json'
+        game_data = FileAccess.read_game_table(lambda game_jsonfile: self._read_data(game_jsonfile), game_filename)
+        request = GameRequestAPI(steamid, self.api)
+        result = request.get_info(test_mode)
+        if result != None:
+            game_data[str(steamid)]['initialprice'] = result['initialprice']
+            game_data[str(steamid)]['actualprice'] = result['actualprice']
+            game_data[str(steamid)]['onsale'] = result['onsale']
+        FileAccess.write_game_table(lambda game_data, jsonfile: self._write_data(game_data, jsonfile), game_filename, game_data)
         
     def _read_data(self, file):
         return json.load(file)
