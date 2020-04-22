@@ -50,7 +50,7 @@ class WatchlistUpdater(object):
         game_data = FileAccess.read_game_table(lambda game_jsonfile: self._read_data(game_jsonfile), game_filename)
         request = GameRequestAPI(steamid, self.api)
         result = request.get_info(test_mode)
-        if result != None:
+        if result != None and str(steamid) in game_data:
             game_data[str(steamid)]['initialprice'] = result['initialprice']
             game_data[str(steamid)]['actualprice'] = result['actualprice']
             game_data[str(steamid)]['onsale'] = result['onsale']
