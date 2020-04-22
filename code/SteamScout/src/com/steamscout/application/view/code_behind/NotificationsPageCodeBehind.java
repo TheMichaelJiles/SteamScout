@@ -4,6 +4,7 @@ import com.steamscout.application.model.notification.Notification;
 import com.steamscout.application.util.PageConnectionUtility;
 import com.steamscout.application.view.UIFilePaths;
 import com.steamscout.application.view.ViewModel;
+import com.steamscout.application.view.game_listcell.NotificationListCell;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ public class NotificationsPageCodeBehind {
     @FXML
     void initialize() {
     	this.setUpNavigationBar();
+    	this.notificationsListView.setCellFactory(factory -> new NotificationListCell());
     	this.notificationsListView.itemsProperty().bind(ViewModel.get().notificationsProperty());
     	this.handleNoNotificationsWarning();
     }
