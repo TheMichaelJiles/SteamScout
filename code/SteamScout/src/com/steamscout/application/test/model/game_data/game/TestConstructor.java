@@ -28,6 +28,7 @@ public class TestConstructor {
 	@Test
 	public void testValidPostconditions() {
 		Game game = new Game(1, "bop");
+		Game gameTwo = new Game(2, "aop");
 		game.setCurrentPrice(4);
 		game.setInitialPrice(5);
 		game.setOnSale(false);
@@ -37,6 +38,7 @@ public class TestConstructor {
 				() -> assertEquals(4, game.getCurrentPrice(), 0.000001),
 				() -> assertEquals(5, game.getInitialPrice(), 0.000001),
 				() -> assertEquals(false, game.isOnSale()),
-				() -> assertEquals(1, game.getAppId()));
+				() -> assertEquals(1, game.getAppId()),
+				() -> assertEquals(1, game.compareTo(gameTwo)));
 	}
 }

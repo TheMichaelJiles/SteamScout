@@ -131,7 +131,9 @@ public class SteamGames {
 	public Collection<Game> getMatchingGames(String term) throws InterruptedException {
 		List<String> matchingTitles = this.getMatchingTitles(term);
 		
-		return matchingTitles.stream().map(match -> new Game(this.games.get(match), match)).collect(Collectors.toList());
+		var games = matchingTitles.stream().map(match -> new Game(this.games.get(match), match)).collect(Collectors.toList());
+		Collections.sort(games);
+		return games;
 	}
 	
 	/**

@@ -35,9 +35,6 @@ public class NotificationCriteriaPageCodeBehind {
 
     @FXML
     private Label gameTitleLabel;
-
-    @FXML
-    private Label gameIdLabel;
     
     @FXML
     private Label targetPriceLabel;
@@ -108,7 +105,6 @@ public class NotificationCriteriaPageCodeBehind {
     		game = browsePageGame;
     	}
     	this.gameTitleLabel.setText(game.getTitle());
-    	this.gameIdLabel.setText(String.valueOf(game.getAppId()));
     	this.targetPriceTextField.textProperty().setValue(TARGET_PRICE_DEFAULT);
     	
     	User currentUser = ViewModel.get().userProperty().getValue();

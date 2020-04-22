@@ -1,5 +1,6 @@
 package com.steamscout.application.view.code_behind;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -55,11 +56,13 @@ public class BrowsingPageCodeBehind {
     private BorderPane browsingPageBorderPane;
     
     @FXML
-    private void initialize() {
+    private void initialize() throws InterruptedException {
     	this.initializeTextField();
-    	
     	this.gameResultsListView.setCellFactory(listView -> new GameListCell());
     	this.setUpBindings();
+    	if (ViewModel.get().searchResultsProperty().isEmpty()) {
+    		ViewModel.get().searchResultsProperty().setValue(FXCollections.observableArrayList(ViewModel.get().getSteamGames().getMatchingGames("")));
+    	}
     	this.setUpNavigationBar();
     }
     

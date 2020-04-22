@@ -7,7 +7,7 @@ package com.steamscout.application.model.game_data;
  * @author Thomas Whaley
  *
  */
-public class Game {
+public class Game implements Comparable<Game> {
 
 	private int appId;
 	private String title;
@@ -35,7 +35,7 @@ public class Game {
 			throw new IllegalArgumentException("title cannot be null.");
 		}
 		
-		this.title = title;
+		this.title = title.trim();
 		this.appId = appId;
 		this.steamLink = "https://store.steampowered.com/app/" + appId;
 	}
@@ -187,6 +187,11 @@ public class Game {
 	 */
 	public String getSteamLink() {
 		return this.steamLink;
+	}
+
+	@Override
+	public int compareTo(Game game) {
+		return this.title.compareTo(game.getTitle());
 	}
 	
 	
