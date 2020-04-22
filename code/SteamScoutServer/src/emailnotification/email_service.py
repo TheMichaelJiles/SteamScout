@@ -12,12 +12,15 @@ from dataupdates.fileaccess import FileAccess
 
 class EmailNotificationService(object):
     '''
-    
+    This service uses the regular notification service to get the data
+    for the email notifications.
     '''
 
     def send_emails(self, test_mode=False):
         '''
+        Sends emails for all notifications that meet watchlist criteria.
         
+        @param test_mode : whether or not to run the service in test mode.
         '''
         print("Starting to Send E-Mails")
         user_data = FileAccess.read_user_table(lambda f: self._user_data_read(f), 'user_table_test.json' if test_mode else 'user_table.json')
