@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
             </html>
         """
         
-        formatter = EmailFormatter(steam_id, current_price, initial_price)
+        formatter = EmailFormatter(steam_id, current_price, initial_price, test_mode = True)
         message = formatter.format_for_email()
         result_payload = message.get_payload(0)
         result_body = result_payload.get_payload()
