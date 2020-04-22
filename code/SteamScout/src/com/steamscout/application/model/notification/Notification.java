@@ -108,10 +108,5 @@ public class Notification {
 	public double getReductionAsPercentage() {
 		return this.getPriceReduction() / this.initialPrice;
 	}
-	
-	@Override
-	public String toString() {
-		return this.title;
-	}
 
 }

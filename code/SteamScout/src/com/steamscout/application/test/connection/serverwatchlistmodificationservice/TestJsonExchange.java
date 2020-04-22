@@ -63,5 +63,14 @@ class TestJsonExchange {
 				() -> assertEquals(true, jsonobj.getJSONObject("data").getJSONObject("game").get("targetpriceselected")),
 				() -> assertEquals(true, jsonobj.getJSONObject("data").getJSONObject("game").get("onsaleselected")));
 	}
+	
+	@Test
+	public void testNotAdded() {
+		String json = "{\"result\": false}";
+		TestServerWatchlistModificationService service = new TestServerWatchlistModificationService();
+		Credentials credentials = new Credentials("twhal", "1234");
+		Watchlist result = service.interpretJsonString(credentials, json);
+		assertEquals(null, result);
+	}
 
 }
