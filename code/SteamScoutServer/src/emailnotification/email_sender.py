@@ -33,7 +33,7 @@ class EmailSender(object):
         self.message['To']=self.email_target
         
         email_server.send_message(self.message)
-        
+        print(f'E-Mail Sent to {self.email_target}')
         email_server.quit()
         
         

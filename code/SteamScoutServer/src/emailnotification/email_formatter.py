@@ -36,12 +36,16 @@ class EmailFormatter(object):
         message['Subject'] = self.steam_game_name + 'is on Sale for ' + str(self.current_price)
         message['From'] = "steamscoutnotify@gmail.com"
         
+        if self.initial_price <= 0:
+            discount = 0
+        else:
+            discount = self.current_price / self.initial_price
         html = """\
             <html>
                 <head></head>
                 <body>
                     <p>Hi!<br>
-                       """ + self.steam_game_name + """ was on your watchlist, and has just gone on a """ + str(100 * (self.current_price / self.initial_price)) + """% discount, and is only $""" + str(self.current_price) + """!<br>
+                       """ + self.steam_game_name + """ was on your watchlist, and has just gone on a """ + str(100 * discount) + """% discount, and is only $""" + str(self.current_price) + """!<br>
                        Here is the <a href=""" + self.steam_link + """>link</a> to buy it.
                     </p>
                 </body>

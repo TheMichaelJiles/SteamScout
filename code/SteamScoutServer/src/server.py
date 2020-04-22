@@ -10,6 +10,7 @@ import handler
 from threading import Thread
 from datetime import datetime
 from dataupdates.watchlistupdater import WatchlistUpdater
+from emailnotification.email_service import EmailNotificationService
 from api.apihandler import APIHandler
 
 class Server(object):
@@ -31,7 +32,7 @@ class Server(object):
         self.socket.bind('tcp://127.0.0.1:5555')
         
         self.watchlist_updater = WatchlistUpdater()
-        self.updateHour = 1
+        self.updateHour = 0
         self.updateComplete = False
         
         
@@ -72,13 +73,18 @@ class Server(object):
         current_time = datetime.utcnow()
         if current_time.hour == self.updateHour and self.updateComplete is False:
             print(f'Performing updates to user watchlists at {current_time}...')
-            update_thread = Thread(target = self.watchlist_updater.perform_updates(test_mode))
+            update_thread = Thread(target = self._update_process, args=(test_mode,))
             update_thread.start()
             self.updateComplete = True
             print('Updates complete.')  
         else:
             if current_time.hour > self.updateHour:
                 self.updateComplete = False
+                
+    def _update_process(self, test_mode):
+        self.watchlist_updater.perform_updates(test_mode)
+        service = EmailNotificationService()
+        service.send_emails(test_mode)
 
 if __name__ == '__main__':
     '''

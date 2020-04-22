@@ -5,7 +5,6 @@ Created on Mar 3, 2020
 '''
 
 import json
-import os
 from dataupdates.fileaccess import FileAccess
 
 class Notification(object):
@@ -70,7 +69,7 @@ class _NotificationService(object):
         game_data = FileAccess.read_watchlist_table(lambda game_file: self._read_data(game_file), game_filename)
         for info in id_info:
             onsale = info['onsale_selected'] and game_data[str(info['steamid'])]['onsale']
-            below_criteria = info['targetprice_selected'] and game_data[str(info['steamid'])]['actualprice'] <= info['targetprice_criteria']
+            below_criteria = info['targetprice_selected'] and game_data[str(info['steamid'])]['actualprice'] < info['targetprice_criteria']
             if onsale or below_criteria:
                 game = {}
                 game['steamid'] = info['steamid']
