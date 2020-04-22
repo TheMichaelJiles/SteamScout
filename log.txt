@@ -1,3 +1,644 @@
+commit fe222def388d8d43f6544bcae262f4b3195e9f7c
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 22 13:10:49 2020 -0400
+
+    Browse Page now shows all listings when search term is cleared.
+
+commit f81ca7e4b49037b34a3f839107034778f492f5e0
+Merge: a2e9c7f d1ee868
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 12:54:13 2020 -0400
+
+    Merge branch 'master'
+    
+    https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4.git
+    
+    Conflicts:
+            code/SteamScoutServer/src/emailnotification/__pycache__/email_formatter.cpython-37.pyc
+            code/SteamScoutServer/src/emailnotification/__pycache__/email_sender.cpython-37.pyc
+            code/SteamScoutServer/src/emailnotification/__pycache__/email_service.cpython-37.pyc
+            code/SteamScoutServer/src/server_requests/__pycache__/watchlistaddition.cpython-37.pyc
+            code/SteamScoutServer/src/test_data/watchlist_table.json
+
+commit a2e9c7fbe8c779ebf3f12375620553b67a0f1f37
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 12:52:18 2020 -0400
+
+    Pycache update
+
+commit 8d1935e1478fce1836ba4613782433da514fca37
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 12:51:48 2020 -0400
+
+    Browse page is now populated on load
+    
+    -Notification criteria no longer displays steam id
+    -Game class is now comparable
+
+commit d1ee8684af3a43be164009a50b0e1f2f22c80fc2
+Merge: 3c74c3d aee26a7
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 22 12:30:48 2020 -0400
+
+    PyCache Merge Resolution.
+
+commit 3c74c3ddade5d4b1f338ccbbb96914a3945cad20
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 22 12:30:19 2020 -0400
+
+    API is pulled whenever a game is added to a watchlist.
+
+commit aee26a70c4d04d187f2092b63c31c0a6095de87f
+Merge: da88091 2f39e5c
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 12:24:40 2020 -0400
+
+    Merge branch 'master'
+    
+    https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4.git
+    
+    Conflicts:
+            code/SteamScout/target/classes/com/steamscout/application/view/fxml/LoginPage.fxml
+
+commit da88091dd0c5b4350dcdb840dc6eacd60125a012
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 12:23:28 2020 -0400
+
+    Pycache
+
+commit a9293ccfae67038eb85ad4878c3b3faba89d85f5
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 12:23:15 2020 -0400
+
+    Fixed EmailFormatter unit test that was formatted incorrectly
+
+commit 726f4ad00c4cca7d2208df63ec4266189ebcbf90
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 12:21:03 2020 -0400
+
+    Watchlist updated after testing
+
+commit 35f93de4eaaefaaaa63b0027124248658063a8bd
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 12:20:42 2020 -0400
+
+    Added custom NotificationListCell
+    
+    -Created fxml for NotificationListCell
+    -Enter will not log you in after entering valid credentials on Login
+    Page
+    -Created NotificationListCellCodeBehind
+
+commit 2f39e5cdcf9a55882b9045ad7acca3d968b4f421
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 22 10:33:43 2020 -0400
+
+    Fixed graphical list view bug when removing items.
+    
+    The listcell's graphic property was not being reset to null when the item was removed.
+
+commit e1d59ac864a2aa09ac2eb8918bb33b7d5ad2c4c8
+Merge: a215706 32a9e42
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 22 10:20:10 2020 -0400
+
+    Pycache Merge Conflict.
+
+commit a2157062f408bbc16321af5a2117d0d2bfaadfa0
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 22 10:19:20 2020 -0400
+
+    Pycache Merge Resolution.
+
+commit 32a9e42aae67a340cfaedc1ce060351240efad0e
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 09:51:22 2020 -0400
+
+    Pycache commit
+
+commit d5d794e8f2876dfd4ab10a6bd4a06ca220c445de
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 09:51:08 2020 -0400
+
+    Updated Email Tests For Merge
+    
+    -Updated tests to account for no more link parameter, and test_mode
+    parameter.
+
+commit 4bc58c72bf50fcc71c76c65f405b26f19ac3f2c9
+Merge: 2a2039a 38f2d3f
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 09:48:10 2020 -0400
+
+    Merge branch 'master'
+    
+    https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4.git
+    
+    Conflicts:
+            code/SteamScoutServer/src/emailnotification/__pycache__/email_formatter.cpython-37.pyc
+            code/SteamScoutServer/src/emailnotification/email_formatter.py
+            code/SteamScoutServer/src/emailnotification/email_sender.py
+            code/SteamScoutServer/src/test/emailnotification/__pycache__/test_EmailFormatter.cpython-37.pyc
+            code/SteamScoutServer/src/test/emailnotification/test_EmailFormatter.py
+
+commit 2a2039aff2d3742875df5b9ee4f62ecefecdac7c
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 22 09:42:44 2020 -0400
+
+    All Email Functionality Tested
+    
+    -Slightly refactored EmailFormatter to no longer take in the steam link
+    -Fully tested the sending of emails.
+
+commit 38f2d3fe78bdb02ae2000a06ac64d38022a1966a
+Merge: 99ba367 8aa1436
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Tue Apr 21 22:46:06 2020 -0400
+
+    Merge Resolution. Pycache conflict.
+
+commit 99ba3677667b075a833c3b847e7a65c19f40e668
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Tue Apr 21 22:44:31 2020 -0400
+
+    Tested ServiceFactory.
+    
+    Achievied 100% coverage for the ServiceFactory.createService method.
+
+commit 8aa1436ebbf0792bc5c0a5278cbbf8eda729367e
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Tue Apr 21 22:33:18 2020 -0400
+
+    Added .gitignore's for pycache files
+    
+    pycache files now shouldn't have to be staged as they are ignored
+
+commit 581f815b2d03501840313046aa0123178cc09cc0
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Tue Apr 21 22:29:55 2020 -0400
+
+    Tested handler module
+    
+    Tested handler module for correct behavior, by checking what method is
+    called.
+
+commit 9e0af516196fcaf52b5d2805a44d8eafefa07111
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Tue Apr 21 21:37:25 2020 -0400
+
+    Eliminated trailing 0's in email format
+    
+    Eliminated the trailing 0's on the percentage off, in the generated
+    email. Also fixed some minor spacing issues.
+
+commit 45da71ed419c137608665758a0c9eaba010a2b76
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Tue Apr 21 21:14:49 2020 -0400
+
+    Tested the email notification service
+    
+    Tests ensure the service is executing. Edited which file is read for
+    service using test_mode parameter.
+
+commit 00e1f937805bfd6b35eb6850c0ad4626c5825756
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Tue Apr 21 21:12:45 2020 -0400
+
+    Merge commit
+
+commit 92b4e8938726bb15f00a32a8ac3e677cfbc79dd8
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Tue Apr 21 20:50:27 2020 -0400
+
+    Server now sends e-mails to all clients with games that match their notification criteria.
+    
+    E-mails are sent out every time the server updates its game data from the steam api. This time interval can be hard-coded in server.py
+
+commit 7d3b42bf0339b7cf7d7a7b20e6249a0edf542c5e
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Tue Apr 21 13:19:18 2020 -0400
+
+    Finished removing with statements, and put watchlist_updater on its own
+    thread
+    
+    Watchlistupdater is now on its own thread that starts once the update
+    conditions are met in the server module. All with statements accessing
+    the application data have been replaced by fileaccess
+
+commit 536de9eed7cee15e1ceb8685bd30e7db965e4e46
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Tue Apr 21 12:44:56 2020 -0400
+
+    Edited comments in light of changes and began removing with statements
+    from modules using fileaccess
+
+commit 1d29d803a7d2fe708045d62ba8e37adc22cc8bf2
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Tue Apr 21 12:08:15 2020 -0400
+
+    Added watchlist updater call to server
+    
+    Using datetime's utcnow to check the current hour in unviersal time. a
+    helper method checks the time and runs the update if an update has not
+    already been performed during the hour an update is set to occur.
+
+commit ba3246b29b02160d8bb387d6241d0a2d600d192a
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Mon Apr 20 04:15:36 2020 -0400
+
+    Missed a few classes when updating classes to use fileaccess
+    
+    Added the new implementation to email formatter, game updater, and
+    watchlist updater. Added documentation to File Access.
+
+commit b08c5738d17aa2a121fd477bcb8f41889d56b9ba
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Mon Apr 20 03:37:28 2020 -0400
+
+    Addressed major oversight regarding fileaccess
+    
+    Functions were passed incorrectly and did not provide the desired
+    behavior, and only one lock was being used for all off the files
+    restricting access even when a different file was needed. Both issues
+    have been addressed.
+
+commit 9df924ce0add9fb82a8133d1a6c5eb183722f3af
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Mon Apr 20 00:15:49 2020 -0400
+
+    Added fileaccess class to handle access to application data
+    
+    Created a class that executes a method with a lock to prevent multiple
+    threads from acting on the data files at the same time.
+
+commit 622a268ca3da4f87fac561cb118349d251ccf9a9
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Sun Apr 19 12:14:11 2020 -0400
+
+    Completed Watchlist Sharing Feature.
+    
+    On the watchlist page, the user can click the Import button. Then, a dialog appears for them to enter the username of the account whose watchlist they want to import, if the username is valid, then a new dialog is shown that displays all of the games on the entered usernames watchlist. The user can select which games they want to add to their own watchlist. If the username is invalid, then an alert is shown that tells the user that the username they entered is invalid.
+
+commit 391a03afe910694fba33581d87cb9be2413218e8
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Sat Apr 18 22:31:17 2020 -0400
+
+    Sunny Day Tests for importing friend's watchlist is working.
+    
+    Still need to account for a rainy day.
+
+commit b854fe68b9c2491c439ab52b96de981110509054
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Sat Apr 18 14:02:13 2020 -0400
+
+    Created ShareWatchlistPage.
+    
+    The page now exists and has a code behind that contains functionality to initially populate the modal dialog with the correct information.
+
+commit 431b00898f43ef342eb42ccb7c74fed17f38ad01
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Thu Apr 16 17:34:07 2020 -0400
+
+    Added Spring 3 Backlog.
+
+commit 7c292262a35e4ab5c8a3ea37b4fee57f9129a111
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 15 14:30:06 2020 -0400
+
+    Removed some unnecessary imports.
+
+commit 5bdb5975abff663792410e04460de4537e836905
+Merge: f24310a 1546794
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 15 14:28:53 2020 -0400
+
+    Resolving Merge Conflict : Classpath Issue
+
+commit 1546794df467d74087e6f118b468d524587e026b
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Wed Apr 15 14:25:08 2020 -0400
+
+    Added TitlePredictor to ensure proper capitalization of names
+    
+    Names of games from the auto predict drop down was giving results in all
+    lower case resulting in not getting results for typing in the proper
+    name. Title Predictor gives correct results.
+
+commit f24310afb41918a3c384db929ad29910d5da647c
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Tue Apr 14 20:51:39 2020 -0400
+
+    Created EmailSender class
+    
+    Class will take in a target email and a MIMEMultipart object, and send
+    the object to the target email from steamscoutnotify@gmail.com. The
+    password for the email is SteamScoutNotify. Both classes will be
+    refactored soon, but are currently functional.
+
+commit 864e7c7c6b1bb2494bcec9da64494ef1322ad7c5
+Merge: 29e0ed2 4eb3e55
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Tue Apr 14 13:45:47 2020 -0400
+
+    Merge branch 'master' of
+    
+    https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4.git
+    
+    Conflicts:
+            code/SteamScoutServer/src/api/__pycache__/gamepull.cpython-37.pyc
+            code/SteamScoutServer/src/api/__pycache__/gamerequestapi.cpython-37.pyc
+            code/SteamScoutServer/src/dataupdates/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/dataupdates/__pycache__/gameupdater.cpython-37.pyc
+            code/SteamScoutServer/src/dataupdates/__pycache__/watchlistupdater.cpython-37.pyc
+            code/SteamScoutServer/src/server_requests/__pycache__/accountremoval.cpython-37.pyc
+            code/SteamScoutServer/src/test/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/apihandler/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/apihandler/__pycache__/test_APIHandler.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/gamepull/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/gamepull/__pycache__/test_gamepull.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/gamerequestapi/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/gamerequestapi/__pycache__/test_gamerequestapi.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/steam_user_wishlist/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/steam_user_wishlist/__pycache__/test_steam_user_wishlist.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/gameupdater/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/gameupdater/__pycache__/test_GameUpdater.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/watchlistupdater/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/watchlistupdater/__pycache__/test_WatchlistUpdater.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/accountcreator/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/accountcreator/__pycache__/test_AccountCreator.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/accountremoval/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/accountremoval/__pycache__/test_AccountRemoval.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/gamefetcher/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/gamefetcher/__pycache__/test_GameFetcher.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/notification/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/notification/__pycache__/test_Notification.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/steamwishlistlink/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/steamwishlistlink/__pycache__/test_SteamWishlistLink.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/userlogin/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/userlogin/__pycache__/test_UserLogin.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistaddition/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistaddition/__pycache__/test_WatchlistAddition.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistgamefetcher/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistgamefetcher/__pycache__/test_WatchlistGameFetcher.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistmodificationservice/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistmodificationservice/__pycache__/test_WatchlistModification.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistremoval/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistremoval/__pycache__/test_WatchlistRemoval.cpython-37.pyc
+
+commit 29e0ed2a5f33e94a66ed0fc3cb73c98813dcb5bd
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Tue Apr 14 13:44:21 2020 -0400
+
+    Local Commit For Pull
+
+commit f462648af6ef63ef6607270889f1eb3c6284f902
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Mon Apr 13 14:05:19 2020 -0400
+
+    Implemented Tries into Watchlist and SteamGames classes.
+    
+    The Watchlist and SteamGames classes each have their own tries that are populated when adding games into each of them. The ViewModel has two new prediction methods, one for the watchlist and one for the browse page. These are used to populate the context menus on each page.
+
+commit 1104bfb405b32fe5352cc6a06736697dce4f5e2a
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Mon Apr 13 12:31:15 2020 -0400
+
+    Created PredictionTextField class.
+    
+    This class incorporates a context menu. Whenever the textProperty() of the text field changes, the getPrediction function is called.
+    If the returned list of strings is non-empty, then a context menu is shown with the results.
+
+commit 47e68a873c260171c029cb410037d50ebad97218
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Mon Apr 13 11:45:26 2020 -0400
+
+    Trie Data Structure Implemented and Tested.
+    
+    This is the data structure that will be used for autopredict.
+
+commit 4eb3e5589f1aa1efa867b8c06f4eff942a4ac2e2
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 8 19:23:00 2020 -0400
+
+    Made a new listcell for watchlist games.
+    
+    This listcell alerts the user to which games on the watchlist are lacking notification criteria. This was needed due to the recent feature of adding in games from a Steam wishlist. Disregarding the wishlist linking feature, this is a nice quality of life update to alert the user that they may not be getting notifications for games when they think that they should.
+
+commit fa5ca999d898daf891bb8623057adae2932bbdb7
+Merge: 7b2f05c 400b0ed
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 8 16:49:17 2020 -0400
+
+    Merge branch 'wishlist-link'
+    
+    Merging the wishlist-link branch into master because the feature is complete.
+
+commit 400b0ed29ea3888d9d0c4a6944b68247b46e69e5
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 8 16:46:28 2020 -0400
+
+    Improved link steam wishlist modal dialog.
+    
+    The modal dialog now only allows integers to be entered into the textfield. Also, the dialog now closes itself upon completion of the linking process. Also, on the watchlist page, when removing elements from the watchlist, after the removal the first item in the list is selected so that the remove button can be spam clicked.
+
+commit f9237fdedf0f55c21c9028b05b72be29317dcaf3
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Wed Apr 8 16:30:27 2020 -0400
+
+    Updated steamwishlistlink to account for bad id's
+    
+    Added a conditional to check the success of the call to handle incorrect
+    or invalid id's
+
+commit bfd0812ee6e566fe44d1cfca774b62716f0a895b
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Wed Apr 8 16:16:49 2020 -0400
+
+    Fixed JSON format in service factory for wishlists
+    
+    Removed save paramter from service factory and initialized the length
+    property in the LinkSteamWishlistPageCodeBehind
+
+commit 63882021753eec452c3560ac70a559687cb2b1ea
+Merge: c57cd2d de45017
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Wed Apr 8 16:03:17 2020 -0400
+
+    Merge branch 'wishlist-link' of
+    https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4.git
+    into wishlist-link
+    
+    Conflicts:
+            code/SteamScoutServer/src/test/requests/__pycache__/__init__.cpython-37.pyc
+
+commit c57cd2d872bee480954ba36b866a927e50d9f3cb
+Author: Nathaniel Lightholder <nlighth1@my.westga.edu>
+Date:   Wed Apr 8 16:02:21 2020 -0400
+
+    Removed save Id option from steamwishlistlink
+    
+    Removed boolean associated with saving the steam ID given by a user.
+    Then updated tests for steamwishlistlink and steam_user_wishlist to
+    reflect changes.
+
+commit de450176fd0c50bdfd6a64ff327a7b5208d2b4b0
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 8 15:37:25 2020 -0400
+
+    Improved link wishlist modal dialog.
+    
+    The modal dialog now has a tooltip that explains how to find a user's Steam account id. It also does not allow for the button to be pressed unless the id textfield has a length of 17.
+
+commit 43a2006c449d5d4c123ea136a4086695e524f4f6
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 8 15:26:20 2020 -0400
+
+    Removed save option for Steam account id.
+    
+    Me and Nathan agreed that this option would add unnecessary functionality. This choice is supported by the fact that Steam frowns upon storing of account information like that.
+
+commit d4afd1c149ab54775977dc936baaf795e27cc0a2
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Wed Apr 8 15:09:41 2020 -0400
+
+    Link Steam Account to SteamScout
+    
+    The client side functionality is completely done for this feature. Still need to work on and test the server-side portion.
+
+commit 7a2fb6815168dd058f0fb55ea0a1481d32ba06bd
+Merge: e4d2772 7b2f05c
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 8 10:24:28 2020 -0400
+
+    Merge branch 'master' of
+    https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4.git
+    
+    Conflicts:
+            code/SteamScoutServer/src/api/__pycache__/gamepull.cpython-37.pyc
+            code/SteamScoutServer/src/api/__pycache__/gamerequestapi.cpython-37.pyc
+            code/SteamScoutServer/src/dataupdates/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/dataupdates/__pycache__/gameupdater.cpython-37.pyc
+            code/SteamScoutServer/src/dataupdates/__pycache__/watchlistupdater.cpython-37.pyc
+            code/SteamScoutServer/src/server_requests/__pycache__/accountremoval.cpython-37.pyc
+            code/SteamScoutServer/src/test/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/apihandler/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/apihandler/__pycache__/test_APIHandler.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/gamepull/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/gamepull/__pycache__/test_gamepull.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/gamerequestapi/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/gamerequestapi/__pycache__/test_gamerequestapi.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/steam_user_wishlist/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/api/steam_user_wishlist/__pycache__/test_steam_user_wishlist.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/gameupdater/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/gameupdater/__pycache__/test_GameUpdater.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/watchlistupdater/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/dataupdates/watchlistupdater/__pycache__/test_WatchlistUpdater.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/accountcreator/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/accountcreator/__pycache__/test_AccountCreator.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/accountremoval/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/accountremoval/__pycache__/test_AccountRemoval.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/gamefetcher/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/gamefetcher/__pycache__/test_GameFetcher.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/notification/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/notification/__pycache__/test_Notification.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/steamwishlistlink/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/steamwishlistlink/__pycache__/test_SteamWishlistLink.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/userlogin/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/userlogin/__pycache__/test_UserLogin.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistaddition/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistaddition/__pycache__/test_WatchlistAddition.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistgamefetcher/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistgamefetcher/__pycache__/test_WatchlistGameFetcher.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistmodificationservice/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistmodificationservice/__pycache__/test_WatchlistModification.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistremoval/__pycache__/__init__.cpython-37.pyc
+            code/SteamScoutServer/src/test/requests/watchlistremoval/__pycache__/test_WatchlistRemoval.cpython-37.pyc
+
+commit e4d2772a9ff5285cec1f6790e544c0bce8782348
+Author: TheMichaelJiles <sjiles1@my.westga.edu>
+Date:   Wed Apr 8 10:23:12 2020 -0400
+
+    Pycache
+
+commit 7b2f05c6ca7c9a3d1e4bf39f2d7e4f7cb1288396
+Author: Thomas Whaley <47234518+twhaley1@users.noreply.github.com>
+Date:   Tue Mar 31 06:57:17 2020 -0400
+
+    Update README
+
+commit 4581446a6c7225f672b4d0bbcaf5175188116480
+Merge: 9de2767 ffe4bba
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Tue Mar 31 01:20:47 2020 -0400
+
+    Merge branch 'master' of https://github.com/UWG-Software-Engineering/UWG-SE2-Spring20-Group4
+
+commit 9de2767d8def65ca4e1b9d3e6b95d3ee05478382
+Author: Thomas Whaley <twhaley1@my.westga.edu>
+Date:   Tue Mar 31 01:20:37 2020 -0400
+
+    Added one line of additional documentation and included the git log text file.
+
+commit ffe4bba81236ce9cb2950f02a8366cba162b5513
+Author: Thomas Whaley <47234518+twhaley1@users.noreply.github.com>
+Date:   Tue Mar 31 01:16:48 2020 -0400
+
+    Update README
+
+commit 5707cb9c9b748b93898a5bdf0e3b271d998bee29
+Author: TheMichaelJiles <56607709+TheMichaelJiles@users.noreply.github.com>
+Date:   Tue Mar 31 01:11:52 2020 -0400
+
+    Delete Sprint Backlog & Burndown.xlsx
+
+commit 0c27f55c4ecea4d9f510e37ecf62e61c27582aa2
+Author: TheMichaelJiles <56607709+TheMichaelJiles@users.noreply.github.com>
+Date:   Tue Mar 31 01:10:35 2020 -0400
+
+    Add files via upload
+
+commit 21a7722133d350af663cfa51b19c30b7e3cc22e3
+Author: TheMichaelJiles <56607709+TheMichaelJiles@users.noreply.github.com>
+Date:   Tue Mar 31 01:08:52 2020 -0400
+
+    Add files via upload
+
+commit ff39a06c7b8e8d9486de2863b0a103b720dcf5cf
+Author: TheMichaelJiles <56607709+TheMichaelJiles@users.noreply.github.com>
+Date:   Tue Mar 31 01:07:47 2020 -0400
+
+    Add files via upload
+
+commit 60118c8161e9bfd0562ea6eaa19d0582903bcb4d
+Author: TheMichaelJiles <56607709+TheMichaelJiles@users.noreply.github.com>
+Date:   Tue Mar 31 01:07:23 2020 -0400
+
+    Delete Sprint2UseCaseScenarios.txt
+
+commit 34186c34c42fd19ba87413088d364390f9829e7b
+Author: TheMichaelJiles <56607709+TheMichaelJiles@users.noreply.github.com>
+Date:   Tue Mar 31 01:06:07 2020 -0400
+
+    Add files via upload
+
+commit 4d1840c2d46d148babaa5e6ba271f0ef0efff845
+Author: TheMichaelJiles <56607709+TheMichaelJiles@users.noreply.github.com>
+Date:   Tue Mar 31 01:04:27 2020 -0400
+
+    Add files via upload
+
+commit 8e520ca091b647194566ea8b371b63f828ec9a0c
+Author: TheMichaelJiles <56607709+TheMichaelJiles@users.noreply.github.com>
+Date:   Tue Mar 31 01:03:10 2020 -0400
+
+    Add files via upload
+
 commit ddbd57812b895f3f15a776d15550e01c8088b36c
 Author: TheMichaelJiles <sjiles1@my.westga.edu>
 Date:   Mon Mar 30 22:25:00 2020 -0400

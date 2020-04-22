@@ -51,7 +51,7 @@ public class NotificationListCell extends ListCell<Notification> {
 			this.setGraphic(null);
 		} else {
 			this.controller.updateLabels(notification);
-			this.setGraphic(notificationPane);
+			this.setGraphic(this.notificationPane);
 		}
 	}
 

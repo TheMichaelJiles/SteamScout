@@ -1,0 +1,16 @@
+Use case: Add Game to Watchlist.
+
+Context: The user is on the browsing page and performed a search. Games that match the search criteria are already displayed.
+Activities:
+The user selects a game that they want to add to their watchlist.
+The user selects the Add to Watchlist button.
+The user is prompted with a pop up to enter notification criteria.
+The user enters notification criteria for the selected game.
+The user selects the Submit Criteria button.
+The system adds the selected game to the user’s watchlist with the entered notification criteria..
+
+Alternative:
+     A3. The system notifies the user that the selected game is already on the user’s watchlist.
+
+Alternative:
+     A3. The user selects the Cancel button and is returned to the browsing page.

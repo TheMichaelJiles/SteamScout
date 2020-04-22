@@ -12,6 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * This defines the behavior for each list cell on the
+ * notifications page.
+ * 
+ * @author Michael Jiles
+ *
+ */
 public class NotificationListCellCodeBehind {
 
     @FXML
@@ -65,6 +72,11 @@ public class NotificationListCellCodeBehind {
         }
     }
     
+    /**
+     * Updates the labels for this list cell code behind.
+     * 
+     * @param notification the notification object to pull the data from.
+     */
     public void updateLabels(Notification notification) {
     	this.gameTitleLabel.setText(notification.getTitle());
     	this.gameOnSaleLabel.setVisible(notification.getPriceReduction() > 0);

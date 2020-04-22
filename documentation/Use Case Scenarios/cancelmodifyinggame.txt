@@ -1,0 +1,6 @@
+Use case: Cancel Modifying a Game
+
+Context: The user is on the change notification criteria page.
+Activities:
+The user selects the Cancel button.
+The change notification page closes.

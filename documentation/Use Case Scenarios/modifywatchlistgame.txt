@@ -1,0 +1,14 @@
+Use case: Modify a Game on My Watchlist.
+
+Context: The user is on the watchlist page.
+Activities:
+The user selects a game.
+The user selects Modify.
+The system prompts the user to enter new criteria.
+The user enters new notification criteria.
+The user selects Submit.
+The system saves the changes.
+
+
+Alternative: 
+     A2. The user double clicks on the selected game.

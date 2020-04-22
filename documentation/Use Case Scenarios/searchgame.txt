@@ -1,0 +1,11 @@
+Use case: Search for Game.
+
+Context: The user is on the browsing page.
+Activities:
+The user enters text into a search bar (TextField).
+The user presses Search.
+The system compares the search term to the games in the steam database looking for a match.
+The system displays the results to the user in a scrollable format (ListView).
+
+Alternative:
+     A4. The system displays a Label saying that no results were found that match the entered    information.

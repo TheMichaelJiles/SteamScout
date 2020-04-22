@@ -1,0 +1,11 @@
+Use case: Login
+
+Context: The user is on the login page
+Activities:
+The user enters credentials into appropriate fields, then selects login.
+The system validates the entered credentials
+The system sets the current user with the entered credentials, then displays the watchlist page for that user.
+
+Alternative:
+      A2. The user enters credentials for a non-existing user.
+      A3. The system displays a message to the user that the entered credentials are invalid

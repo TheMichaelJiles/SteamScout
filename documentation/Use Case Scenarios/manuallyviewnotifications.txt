@@ -1,0 +1,10 @@
+Use case: Manually View Notifications
+
+Context: The user is logged in to the system.
+Activities:
+The user selects to navigate to the notifications page.
+The system pulls data from the server based on the most recent pull from the steam database to retrieve accurate game information for each game in the watchlist.
+The system displays all notifications on the notifications page.
+
+Alternative:
+    A3. The system displays a message stating that none of the games on the watchlist meet their notification criteria.

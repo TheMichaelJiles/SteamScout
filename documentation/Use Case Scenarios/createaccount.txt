@@ -1,0 +1,9 @@
+Use case: Create an Account
+
+Context: The user is on the login page
+Activities:
+The user selects Create Account.
+The system navigates to the Create Account Page.
+The user enters a valid username and password. (button is disabled with invalid input)
+The user selects Create Account.
+The system creates a User based on the username and password enters, and returns the user to the login page.

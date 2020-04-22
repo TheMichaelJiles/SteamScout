@@ -1,0 +1,7 @@
+Use case: Remove Game from Watchlist.
+
+Context: The user is on the watchlist page
+Activities:
+The user selects a game on their watchlist.
+The user selects the Remove Game button.
+The system then removes that game from the watchlist.
