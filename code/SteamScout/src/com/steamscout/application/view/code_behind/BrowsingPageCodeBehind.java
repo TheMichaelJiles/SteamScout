@@ -56,14 +56,23 @@ public class BrowsingPageCodeBehind {
     private BorderPane browsingPageBorderPane;
     
     @FXML
-    private void initialize() throws InterruptedException {
+    private void initialize() {
     	this.initializeTextField();
     	this.gameResultsListView.setCellFactory(listView -> new GameListCell());
     	this.setUpBindings();
     	if (ViewModel.get().searchResultsProperty().isEmpty()) {
-    		ViewModel.get().searchResultsProperty().setValue(FXCollections.observableArrayList(ViewModel.get().getSteamGames().getMatchingGames("")));
+    		this.showDefault();
     	}
     	this.setUpNavigationBar();
+    }
+    
+    private void showDefault() {
+    	try {
+			ViewModel.get().searchResultsProperty().setValue(FXCollections.observableArrayList(ViewModel.get().getSteamGames().getMatchingGames("")));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			ViewModel.get().searchResultsProperty().setValue(FXCollections.observableArrayList());
+		}
     }
     
     private void initializeTextField() {
@@ -96,6 +105,7 @@ public class BrowsingPageCodeBehind {
     	ViewModel.get().searchResultsProperty().getValue().clear();
     	this.searchBarTextField.setText(null);
     	this.noResultsLabel.setVisible(false);
+    	this.showDefault();
     }
 
 	private void displayNoResultsLabelIfNecessary() {
