@@ -11,12 +11,15 @@ import json
 
 class EmailFormatter(object):
     '''
-    classdocs
+    Class responsible for formatting an email notification
     '''
     
-    def __init__(self, steam_id, current_price, initial_price, steam_link, test_mode):
+    def __init__(self, steam_id, current_price, initial_price, test_mode):
         '''
-        Constructor
+        Creates a new EmailFormatter
+        @precondition none
+        @postcondition self.steam_id == steam_id, self.current_price == current_price,
+                       self.initial_price == initial_price, self.steam_game_name == name pulled from game_table with the steam_id.
         '''
         self.steam_id = steam_id;
         self.steam_game_name = "game not found";
@@ -27,10 +30,16 @@ class EmailFormatter(object):
         
         self.current_price = current_price;
         self.initial_price = initial_price;
-        self.steam_link = steam_link;
     
     def format_for_email(self):
         '''
+        Formats a notification as follows:
+        Hi!
+        <game name> was on your watchlist, and has just gone on a <discount_percent>% discount, and is only $<current_price>!<br>
+                       Here is the link to buy it.
+        @precondition none
+        @postcondition none
+        @return the formatted email notification message.
         '''
         message = MIMEMultipart('alternative')
         message['Subject'] = self.steam_game_name + ' is on Sale for $' + str(self.current_price)
@@ -44,9 +53,9 @@ class EmailFormatter(object):
             <html>
                 <head></head>
                 <body>
-                    <p>Hi!<br><br>
-                       """ + self.steam_game_name + """ is on your watchlist, and has just gone on a """ + str(int(100 * discount)) + """% discount, and is only $""" + str(self.current_price) + """!<br><br>
-                       Buy it on <a href=""" + self.steam_link + """>Steam</a>.
+                    <p>Hi!<br>
+                       """ + self.steam_game_name + """ was on your watchlist, and has just gone on a """ + str(100 * (self.current_price / self.initial_price)) + """% discount, and is only $""" + str(self.current_price) + """!<br>
+                       Here is the <a href=""" + "https://store.steampowered.com/app/" + str(self.steam_id) + """>link</a> to buy it.
                     </p>
                 </body>
             </html>

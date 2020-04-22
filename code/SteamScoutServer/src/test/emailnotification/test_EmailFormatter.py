@@ -18,16 +18,28 @@ class Test(unittest.TestCase):
             game_table = json.load(jsonfile)
             title = game_table[str(steam_id)]['title']
         
-        current_price = 25.00
-        initial_price = 60.00
-        steam_link = "https://store.steampowered.com/app/" + str(steam_id)
+        current_price = 5.00
+        initial_price = 10.00
+
+        expected_subject =  title + 'is on Sale for ' +str(current_price)
+        html = """\
+            <html>
+                <head></head>
+                <body>
+                    <p>Hi!<br>
+                       """ + title + """ was on your watchlist, and has just gone on a """ + str(100 * (current_price / initial_price)) + """% discount, and is only $""" + str(current_price) + """!<br>
+                       Here is the <a href=""" + "https://store.steampowered.com/app/" + str(steam_id) + """>link</a> to buy it.
+                    </p>
+                </body>
+            </html>
+        """
         
-        formatter = EmailFormatter(steam_id, current_price, initial_price, steam_link, True)
+        formatter = EmailFormatter(steam_id, current_price, initial_price, test_mode = True)
         message = formatter.format_for_email()
-        expected_subject =  title + ' is on Sale for $' +str(current_price)
-        print(message)
-        print(message.get_payload())
+        result_payload = message.get_payload(0)
+        result_body = result_payload.get_payload()
         self.assertEqual(expected_subject, message['Subject'])
+        self.assertEqual(result_body, html)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
